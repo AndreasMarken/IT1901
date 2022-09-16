@@ -1,1 +1,1 @@
-Lager en personlig filmdatabase der man kan sette opp en watchlist.
+Lager en personlig filmdatabase der man kan sette opp en watchlist. Kildekoden ligger i pmdb.
