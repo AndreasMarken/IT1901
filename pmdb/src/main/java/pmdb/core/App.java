@@ -1,4 +1,4 @@
-package pmdb;
+package pmdb.core;
 
 /**
  * Hello world!
