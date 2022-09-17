@@ -68,4 +68,9 @@ public class Rating implements IRating {
     private boolean isValidComment(String comment) {
         return comment != null;
     }
+
+    @Override
+    public String toString() {
+        return "Rating [comment=" + comment + ", rating=" + rating + "]";
+    }
 }
