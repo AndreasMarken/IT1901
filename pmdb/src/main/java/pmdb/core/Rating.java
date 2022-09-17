@@ -44,6 +44,7 @@ public class Rating implements IRating {
     @Override
     public void setComment(String comment) throws IllegalArgumentException {
         if (!isValidComment(comment)) throw new IllegalArgumentException("Your input comment cannot be empty.");
+        this.comment = comment;
     }
 
     @Override
