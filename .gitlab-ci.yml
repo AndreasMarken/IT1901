@@ -1,0 +1,12 @@
+image: maven:latest
+stages:
+  - compile
+
+
+compile:
+  stage: compile
+  script:
+    - cd pmdb
+    - mvn compile
+
+
