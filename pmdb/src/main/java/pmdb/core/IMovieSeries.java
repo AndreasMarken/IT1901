@@ -2,6 +2,7 @@ package pmdb.core;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
 
 public interface IMovieSeries {
     
@@ -9,7 +10,7 @@ public interface IMovieSeries {
     Date getReleaseDate();
     Time getDuration();
     void setRating(Rating rating);
-    Rating getRating();
+    List<Rating> getRating();
     void setOnTakeOfWatchlist(Boolean trueOrFalse);
     Boolean getWatchlist();    
 }
