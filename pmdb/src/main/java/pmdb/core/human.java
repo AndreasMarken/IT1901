@@ -30,7 +30,7 @@ public abstract class human {
 
     @Override
     public String toString() {
-        return "[age=" + age + ", name=" + name + "]";
+        return name;
     }
 
 

@@ -12,8 +12,12 @@ public class Serie extends Movie{
 
     public Serie(String title, Time duration, List<Actor> actors, Date releaseDate,int seasons, int episodes) {
         super(title, duration, actors, releaseDate);
-        this.seasons = seasons;
-        this.episodes = episodes;
+        if (checkInputValue(seasons)){
+            this.seasons = seasons;
+        }
+        if (checkInputValue(episodes)){
+            this.episodes = episodes;
+        }
     }
 
     public int getSeasons() {
@@ -24,14 +28,11 @@ public class Serie extends Movie{
         return episodes;
     }
 
-
-
-
-
-    public static void main(String[] args) {
-        Actor actor = new Actor("ole", 11);
-        List <Actor> list = new ArrayList<>();
-        list.add(actor);
+    private Boolean checkInputValue(int input){
+        if (input == 0){
+            throw new IllegalArgumentException("Cannot have inputvalue = 0 in the fields seasons or episodes");
+        }
+        return true;
     }
     
 }

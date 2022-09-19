@@ -14,13 +14,21 @@ public class Movie implements IMovieSeries {
     private Time duration;
     private Rating rating;
     private Boolean watchlist;
-
+    
     public Movie(String title, Time duration, List<Actor> actors, Date releaseDate) {
-        this.duration = duration;
-        this.title = title;
-        this.actors = actors;
-        addMovieToActor(actors);
-        this.releaseDate = releaseDate;
+        if (checkIfNull(duration)){
+            this.duration = duration;
+        }
+        if (checkIfNull(title)){
+            this.title = title;
+        }
+        if (checkIfNull(actors)){
+            this.actors = actors;
+            addMovieToActor(actors);
+        }
+        if (checkIfNull(releaseDate)){
+            this.releaseDate = releaseDate;
+        }
     }
 
 
@@ -66,11 +74,17 @@ public class Movie implements IMovieSeries {
 
     public void addMovieToActor(List <Actor> actors){
         for (Actor actor : actors) {
-            actor.addMovie(this);
+                actor.addMovie(this);
         }
     }
 
-    
+    private Boolean checkIfNull(Object input){
+        if(input == null){
+            throw new IllegalArgumentException("Input value is null on one of the following fields: Title, duration, actors, release date");
+        }
+        return true;
+
+    }
 
 
     @Override
