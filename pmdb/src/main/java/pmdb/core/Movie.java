@@ -2,9 +2,10 @@ package pmdb.core;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Movie implements AppInterface {
+public class Movie implements IMovieSeries {
 
 
     private String title;
@@ -18,8 +19,7 @@ public class Movie implements AppInterface {
         this.duration = duration;
         this.title = title;
         this.actors = actors;
-        for (Actor actor : actors) {
-        }
+        addMovieToActor(actors);
         this.releaseDate = releaseDate;
     }
 
@@ -62,6 +62,41 @@ public class Movie implements AppInterface {
     @Override
     public Boolean getWatchlist(){
         return this.watchlist;
+    }
+
+    public void addMovieToActor(List <Actor> actors){
+        for (Actor actor : actors) {
+            actor.addMovie(this);
+        }
+    }
+
+    
+
+
+    @Override
+    public String toString() {
+        return "Movie [actors=" + actors + ", duration=" + duration + ", rating=" + rating + ", releaseDate="
+                + releaseDate + ", title=" + title + ", watchlist=" + watchlist + "]";
+    }
+
+
+    public static void main(String[] args) {
+        
+        List <Actor> liste = new ArrayList<>();
+        List <Actor> liste2 = new ArrayList<>();
+        Date dato = new Date(1990, 05, 22);
+        Time tid = new Time(02, 00, 00);
+        liste.add(ole);
+        liste.add(cornelia);
+        liste.add(markus);
+        liste2.add(ole);
+        liste2.add(cornelia);
+        Movie film = new Movie("Yeag", tid, liste, dato);
+        Movie film2 = new Movie("URHPFIAUH", tid, liste2 , dato);
+        Person person = new Person("ole", 33, 'C', "aiuerhpiueh", "ipeuhafpiurehf");
+        Person person2 = new Person("ole", 33, 'C', "aiuerhpiueh", "ipeuhafpiurehf");
+        System.out.println(person.getId());
+        
     }
 
    
