@@ -14,9 +14,9 @@ public class MovieSerializer extends JsonSerializer<Movie> {
     /*
      * Format:
      * {
-     * "title": title
-     * "releaseDate": dd.mm.yyyy
-     * "duration": hh.mm
+     * "title": "title"
+     * "releaseDate": "yyyy-mm-dd"
+     * "duration": "hh:mm:ss"
      * "rating": [...]
      * "watchlist": true/false
      * }
@@ -26,8 +26,8 @@ public class MovieSerializer extends JsonSerializer<Movie> {
     public void serialize(Movie movie, JsonGenerator jsonGen, SerializerProvider serializerProvider) throws IOException {
         jsonGen.writeStartObject();
         jsonGen.writeStringField("title", movie.getTitle());
-        jsonGen.writeStringField("realeaseDate", movie.getReleaseDate().toString());
-        jsonGen.writeStringField("duration", movie.getDuration().toString());
+        jsonGen.writeStringField("releaseDate", movie.getReleaseDate().toString()); //toString: yyyy-mm-dd
+        jsonGen.writeStringField("duration", movie.getDuration().toString()); //toString: hh:mm:ss
         jsonGen.writeArrayFieldStart("rating");
         for (Rating rating : movie.getRating()) {
             jsonGen.writeObject(rating);
