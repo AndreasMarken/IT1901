@@ -33,6 +33,7 @@ public class MovieTest {
         Assertions.assertEquals("Star Trek", starTrek.getTitle());
         Assertions.assertEquals(duration , starTrek.getDuration());
         Assertions.assertEquals(releaseDate, starTrek.getReleaseDate());
+        Assertions.assertEquals(false, starTrek.getWatchlist());
         
     }
 

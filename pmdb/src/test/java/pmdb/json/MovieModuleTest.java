@@ -35,7 +35,6 @@ public class MovieModuleTest {
         Time time = new Time(1, 50, 0);
         Movie movie = new Movie("Bond", time, date);
         movie.setRating(new Rating(9, "Very good."));
-        movie.setOnTakeOfWatchlist(false);
         movie.setRating(new Rating(2));
         try {
             Assertions.assertEquals(movieWithTwoRatings, mapper.writeValueAsString(movie));
@@ -51,7 +50,6 @@ public class MovieModuleTest {
         Time time = new Time(1, 50, 0);
         Movie movie = new Movie("Bond", time, date);
         movie.setRating(new Rating(9, "Very good."));
-        movie.setOnTakeOfWatchlist(false);
         movie.setRating(new Rating(2));
         
         try {

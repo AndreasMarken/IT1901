@@ -12,7 +12,7 @@ public class Movie implements IMovieSeries {
     private Date releaseDate;
     private Time duration;
     private List<Rating> rating = new ArrayList<>();
-    private Boolean watchlist;
+    private Boolean watchlist = false;
     
     public Movie(String title, Time duration, Date releaseDate) {
         if (checkIfNull(duration)){
