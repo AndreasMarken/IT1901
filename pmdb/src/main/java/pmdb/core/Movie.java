@@ -2,6 +2,8 @@ package pmdb.core;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Movie implements IMovieSeries {
 
@@ -9,7 +11,7 @@ public class Movie implements IMovieSeries {
     private String title;
     private Date releaseDate;
     private Time duration;
-    private Rating rating;
+    private List<Rating> rating = new ArrayList<>();
     private Boolean watchlist;
     
     public Movie(String title, Time duration, Date releaseDate) {
@@ -42,11 +44,11 @@ public class Movie implements IMovieSeries {
 
     @Override
     public void setRating(Rating rating) {
-        this.rating = rating;
+        this.rating.add(rating);
     }
 
     @Override
-    public Rating getRating() {
+    public List<Rating> getRating() {
         return this.rating;
     }
 
