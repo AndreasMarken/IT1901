@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pmdb.fxui.PmdbController">
    <children>
       <GridPane layoutX="1.0" prefHeight="400.0" prefWidth="600.0">
         <columnConstraints>
@@ -35,7 +35,7 @@
                <children>
                   <StackPane alignment="BOTTOM_CENTER" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="21.0" text="+">
+                        <Button onAction="#handleAddMovie" mnemonicParsing="false" prefHeight="31.0" prefWidth="21.0" text="+">
                            <font>
                               <Font size="22.0" />
                            </font>
@@ -45,7 +45,7 @@
                         </Button>
                      </children>
                   </StackPane>
-                  <ListView prefHeight="200.0" prefWidth="200.0" />
+                  <ListView fx:id="movieView" prefHeight="200.0" prefWidth="200.0" />
                </children>
             </GridPane>
             <GridPane>
