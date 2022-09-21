@@ -27,18 +27,15 @@ public class PmdbController {
     @FXML
     ListView<Movie> movieView = new ListView<>(movieList);
 
-
     @FXML
     public void handleAddMovie() {
         Dialog<Movie> dialog = new Dialog<>();
         dialog.setTitle("PMDB");
         dialog.setHeaderText("Add a movie to the database");
                 
-        // Set the button types.
         ButtonType addMovie = new ButtonType("Add movie", ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(addMovie, ButtonType.CANCEL);
         
-        // Create the username and password labels and fields.
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -83,5 +80,11 @@ public class PmdbController {
         });
         
         dialog.showAndWait();
+    }
+
+    @FXML
+    public void handleSave(){
+        //TODO
+        //Add code for saving to file here
     }
 }
