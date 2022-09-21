@@ -35,7 +35,7 @@
                <children>
                   <StackPane alignment="BOTTOM_CENTER" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="21.0" text="+">
+                        <Button onAction="#handleAddMovie" mnemonicParsing="false" prefHeight="31.0" prefWidth="21.0" text="+">
                            <font>
                               <Font size="22.0" />
                            </font>
@@ -45,7 +45,7 @@
                         </Button>
                      </children>
                   </StackPane>
-                  <ListView prefHeight="200.0" prefWidth="200.0" />
+                  <ListView fx:id="movieView" prefHeight="200.0" prefWidth="200.0" />
                </children>
             </GridPane>
             <GridPane>
