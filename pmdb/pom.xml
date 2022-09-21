@@ -92,7 +92,6 @@
             </argLine>
         </configuration>
       </plugin>
-<<<<<<< pmdb/pom.xml
 
 
       <plugin>
@@ -127,10 +126,6 @@
         </configuration>
       </plugin>
 
-
-=======
-      
->>>>>>> pmdb/pom.xml
     </plugins>
 
   </build>
