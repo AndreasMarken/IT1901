@@ -1,8 +1,13 @@
 image: maven:latest
 stages:
+  - lint
   - compile
   - test
 
+lint:commit:
+  stage: lint
+  script:
+    - echo "${CI_COMMIT_MESSAGE}" | npx commitlint
 
 compile:
   stage: compile
@@ -15,5 +20,6 @@ test:
   script:
     - cd pmdb
     - mvn test
+
 
 
