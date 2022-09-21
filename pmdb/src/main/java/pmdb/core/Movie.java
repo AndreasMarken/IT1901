@@ -72,7 +72,11 @@ public class Movie implements IMovieSeries {
 
     @Override
     public String toString() {
-        return "Movie [duration=" + duration + ", rating=" + rating + ", releaseDate="
-                + releaseDate + ", title=" + title + ", watchlist=" + watchlist + "]";
+        return "Movie title: " + getTitle() + "\n"
+        + "Duration: " + getDuration().getHours() + " hours " + getDuration().getMinutes() + " minutes" + "\n"
+        + "Release date: " + getReleaseDate() + "\n"
+        + "Rating: " + getRating() + "\n"
+        + "Watchlist: " + getWatchlist() + "\n"
+        ;
     }    
 }
