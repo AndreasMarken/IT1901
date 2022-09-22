@@ -5,7 +5,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Movie implements IMovieSeries {
+public class Movie implements IMovie {
 
 
     private String title;
