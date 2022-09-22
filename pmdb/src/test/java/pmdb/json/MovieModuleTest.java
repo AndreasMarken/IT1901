@@ -26,7 +26,10 @@ public class MovieModuleTest {
         
     }
 
-    private final static String movieWithTwoRatings = "{\"title\":\"Bond\",\"releaseDate\":\"3903-01-02\",\"duration\":\"01:50:00\",\"rating\":[{\"rating\":9,\"comment\":\"Very good.\"},{\"rating\":2,\"comment\":\"\"}],\"watchlist\":false}";
+    //private final static String movieWithTwoRatings = "{\"title\":\"Bond\",\"releaseDate\":\"3903-01-02\",\"duration\":\"01:50:00\",\"rating\":[{\"rating\":9,\"comment\":\"Very good.\"},{\"rating\":2,\"comment\":\"\"}],\"watchlist\":false}";
+    //private final static String movieWithOneRating = "{\"title\":\"Bond\",\"releaseDate\":\"3903-01-02\",\"duration\":\"01:50:00\",\"rating\":[{\"rating\":9,\"comment:\"Very good.\"}],\"watchlist\":false}";
+    private final static String movieWithOneRating = "{\"title\":\"Bond\",\"releaseDate\":\"3903-01-02\",\"duration\":\"01:50:00\",\"rating\":[{\"rating\":9,\"comment\":\"Very good.\"}],\"watchlist\":false}";
+
 
     @Test
     @DisplayName("Test that the Movie and Rating serializers works as intended.")
@@ -35,9 +38,8 @@ public class MovieModuleTest {
         Time time = new Time(1, 50, 0);
         Movie movie = new Movie("Bond", time, date);
         movie.setRating(new Rating(9, "Very good."));
-        movie.setRating(new Rating(2));
         try {
-            Assertions.assertEquals(movieWithTwoRatings, mapper.writeValueAsString(movie));
+            Assertions.assertEquals(movieWithOneRating, mapper.writeValueAsString(movie));
         } catch (JsonProcessingException e) {
             Assertions.fail();
         }
@@ -50,14 +52,18 @@ public class MovieModuleTest {
         Time time = new Time(1, 50, 0);
         Movie movie = new Movie("Bond", time, date);
         movie.setRating(new Rating(9, "Very good."));
-        movie.setRating(new Rating(2));
+
+        Assertions.assertEquals("Bond", movie.getTitle());
+        Assertions.assertEquals("Very good.", movie.getRating().getComment());
+
         
         try {
             Movie movie2 = mapper.readValue(mapper.writeValueAsString(movie), Movie.class);
 
             Assertions.assertEquals("Bond", movie2.getTitle());
-            Assertions.assertEquals("Very good.", movie2.getRating().get(0).getComment());
-            Assertions.assertEquals(9, movie2.getRating().get(0).getRating());
+            Assertions.assertEquals("Very good.", movie2.getRating().getComment());
+            Assertions.assertEquals(9, movie2.getRating().getRating());
+            
         } catch (JsonProcessingException e) {
             Assertions.fail();
         } 

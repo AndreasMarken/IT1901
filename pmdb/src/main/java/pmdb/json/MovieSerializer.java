@@ -29,9 +29,15 @@ public class MovieSerializer extends JsonSerializer<Movie> {
         jsonGen.writeStringField("releaseDate", movie.getReleaseDate().toString()); //toString: yyyy-mm-dd
         jsonGen.writeStringField("duration", movie.getDuration().toString()); //toString: hh:mm:ss
         jsonGen.writeArrayFieldStart("rating");
-        for (Rating rating : movie.getRating()) {
-            jsonGen.writeObject(rating);
-        }
+
+        //TODO
+        //Movie has no ratinglist yet!
+
+        // for (Rating rating : movie.getRating()) {
+        //     jsonGen.writeObject(rating);
+        // }
+        
+        jsonGen.writeObject(movie.getRating());
         jsonGen.writeEndArray();
         jsonGen.writeBooleanField("watchlist", movie.getWatchlist());
     }
