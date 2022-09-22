@@ -6,12 +6,12 @@ stages:
 compile:
   stage: compile
   script:
-    - cd pmdb
+    - cd mmt
     - mvn compile
 
 test:
   stage: test
   script:
-    - cd pmdb
+    - cd mmt
     - mvn test
 
