@@ -32,7 +32,7 @@ The deserializing prosess consists of the following classes:
 - [MovieDeserializer.java](../mmt/src/main/java/mmt/json/MovieDeserializer.java)
 - [RatingDeserializer.java](../mmt/src/main/java/mmt/json/RatingDeserializer.java)
 
-And all these JSON serializers/deserializers are set up using the [MovieModule.java](../mmt/main/java/mmt/json/MovieModule.java) which extends the SimpleModule, and allows for serializing and deserializing of java objects.
+And all these JSON serializers/deserializers are set up using the [MovieModule.java](../mmt/src/main/java/mmt/json/MovieModule.java) which extends the SimpleModule, and allows for serializing and deserializing of java objects.
 
 
 
