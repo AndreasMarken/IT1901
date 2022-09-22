@@ -46,3 +46,13 @@ After you have run the test, there will open a new folder in the target folder. 
 
 ### Building the project in GitPod
 To build the project in gitpod, simply press the button at the top of this file. From here, a code enviroment will open. To run the project, use the same commands stated above.
+
+## Finished product
+When the project is finished, the plan is that a user can add search up movies in the database, give them ratings and add them to their watchlist. You will also be able to sort movies, based on ratings and categories. Currently, uploading movies is the only part of the project that is working. 
+
+### Main page
+![Image was not shown](images/MainPage.png)
+As you can see on the picture above, the user can add a movie to the database by clicking the "+" sign. From there, the user will be guided to a new screen, see the picture below, where you the user will be able to give the movie a name, as well as duration and release date.
+
+![Image was not shown](images/AddMovie.png)
+When the "Add movie" button is pressed, the new movie will be added to the main page. Where the user can choose to add more movies to the database, or save them to a file.
