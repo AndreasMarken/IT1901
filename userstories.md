@@ -17,6 +17,6 @@ What to do:
 
 
 Frontpage:
-![Image was not shown](pmdb/Images/itp1.png)
+![Image was not shown](mmt/images/itp1.png)
 Add movie:
-![Image was not shown](pmdb/Images/itp2.png)
+![Image was not shown](mmt/images/itp2.png)
