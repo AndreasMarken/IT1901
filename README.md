@@ -1,6 +1,6 @@
 # Welcome to My Movie Tracker :movie_camera:
 
-My Movie Tracker is an application whose main purpose is to help you track the movies you have seen, so that you at a later time know which one to watch again or have a broad selection of movies to recommend for your friends.
+My Movie Tracker is an application whose main purpose is to help you track the movies you have seen, so that you, at a later time, know which movie to watch again or have a broad selection of movies to recommend for your friends.
 
 ## Workflow
 
@@ -62,7 +62,7 @@ We have created our own MR template for what our MRs should contain.
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2022/gr2238/gr2238/-/tree/develop/)
 
 1. Click on gitpod tag above.
-2. Navigate to the correct folder: `cd /workspace/gr2238/pmdb` when in the workspace.
+2. Navigate to the correct folder: `cd /workspace/gr2238/mmt` when in the workspace.
 3. run command `mvn javafx:run`.
 4. click "remote explorer" in the toolbar to the left.
 5. click "GITPOD WORKSPACE" -> "Ports".
