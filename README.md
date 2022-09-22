@@ -2,6 +2,11 @@
 
 My Movie Tracker is an application whose main purpose is to help you track the movies you have seen, so that you, at a later time, know which movie to watch again or have a broad selection of movies to recommend for your friends.
 
+#TODO MARKEN - skriv mer utfyllende tekst til "The codeproject"
+## The codeproject
+
+The codeproject is located in the mmt folder.
+
 ## Workflow
 
 For us to deliver the highest standard of quality in a fast-paced project we have chosen the Scrum Workflow for our project.
