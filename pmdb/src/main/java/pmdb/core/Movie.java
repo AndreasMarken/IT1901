@@ -26,6 +26,15 @@ public class Movie implements IMovieSeries {
         }
     }
 
+    public Movie(String title, Time duration) {
+        if (checkIfNull(duration)){
+            this.duration = duration;
+        }
+        if (checkIfNull(title)){
+            this.title = title;
+        }
+    }
+
 
     @Override
     public String getTitle() {
@@ -72,7 +81,11 @@ public class Movie implements IMovieSeries {
 
     @Override
     public String toString() {
-        return "Movie [duration=" + duration + ", rating=" + rating + ", releaseDate="
-                + releaseDate + ", title=" + title + ", watchlist=" + watchlist + "]";
+        return "Movie title: " + getTitle() + "\n"
+        + "Duration: " + getDuration().getHours() + " hours " + getDuration().getMinutes() + " minutes" + "\n"
+        + "Release date: " + getReleaseDate() + "\n"
+        + "Rating: " + getRating() + "\n"
+        + "Watchlist: " + getWatchlist() + "\n"
+        ;
     }    
 }

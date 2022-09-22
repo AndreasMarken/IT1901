@@ -27,18 +27,15 @@ public class PmdbController {
     @FXML
     ListView<Movie> movieView = new ListView<>(movieList);
 
-
     @FXML
     public void handleAddMovie() {
         Dialog<Movie> dialog = new Dialog<>();
         dialog.setTitle("PMDB");
         dialog.setHeaderText("Add a movie to the database");
                 
-        // Set the button types.
         ButtonType addMovie = new ButtonType("Add movie", ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(addMovie, ButtonType.CANCEL);
         
-        // Create the username and password labels and fields.
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -53,7 +50,7 @@ public class PmdbController {
         SpinnerValueFactory<Integer> hoursValue = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 85, 0);
         Spinner<Integer> durationHours = new Spinner<>(hoursValue);
 
-        SpinnerValueFactory<Integer> minutesValue = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 85, 0);
+        SpinnerValueFactory<Integer> minutesValue = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 0);
         Spinner<Integer> durationMinutes = new Spinner<>(minutesValue);        
         
         grid.add(new Label("Title:"), 0, 0);
@@ -76,12 +73,24 @@ public class PmdbController {
         
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == addMovie) {
-                movieList.add(new Movie(title.getText(), new Time(durationHours.getValue(), durationMinutes.getValue(), 00), Date.valueOf(releaseDate.getValue())));
-                movieView.getItems().setAll(movieList);
+                try{
+                    movieList.add(new Movie(title.getText(), new Time(durationHours.getValue(), durationMinutes.getValue(), 00), Date.valueOf(releaseDate.getValue())));
+                    movieView.getItems().setAll(movieList);
+                }catch(NullPointerException e){
+                    movieList.add(new Movie(title.getText(), new Time(durationHours.getValue(), durationMinutes.getValue(), 00)));
+                    movieView.getItems().setAll(movieList);
+                }
+                
             }
             return null;
         });
         
         dialog.showAndWait();
+    }
+
+    @FXML
+    public void handleSave(){
+        //TODO
+        //Add code for saving to file here
     }
 }
