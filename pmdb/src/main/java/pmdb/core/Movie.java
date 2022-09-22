@@ -11,7 +11,7 @@ public class Movie implements IMovie {
     private String title;
     private Date releaseDate;
     private Time duration;
-    private List<Rating> rating = new ArrayList<>();
+    private IRating rating;
     private Boolean watchlist = false;
     
     public Movie(String title, Time duration, Date releaseDate) {
@@ -52,12 +52,12 @@ public class Movie implements IMovie {
     }
 
     @Override
-    public void setRating(Rating rating) {
-        this.rating.add(rating);
+    public void setRating(IRating rating) {
+        this.rating = rating;
     }
 
     @Override
-    public List<Rating> getRating() {
+    public IRating getRating() {
         return this.rating;
     }
 
@@ -87,5 +87,8 @@ public class Movie implements IMovie {
         + "Rating: " + getRating() + "\n"
         + "Watchlist: " + getWatchlist() + "\n"
         ;
-    }    
+    }
+
+    
+        
 }

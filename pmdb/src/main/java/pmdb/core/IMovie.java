@@ -27,13 +27,13 @@ public interface IMovie {
     /**
      * Method that sets the rating to the movie.
      */
-    void setRating(Rating rating);
+    void setRating(IRating rating);
 
     /**
      * Method that retrieves the Rating of the object.
      * @return returns the rating.
      */
-    Rating getRating();
+    IRating getRating();
 
     /**
      * Method to take a Movie/Serie object on and of the watchlist.
