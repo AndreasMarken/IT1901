@@ -50,7 +50,7 @@ public class PmdbController {
         SpinnerValueFactory<Integer> hoursValue = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 85, 0);
         Spinner<Integer> durationHours = new Spinner<>(hoursValue);
 
-        SpinnerValueFactory<Integer> minutesValue = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 85, 0);
+        SpinnerValueFactory<Integer> minutesValue = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 0);
         Spinner<Integer> durationMinutes = new Spinner<>(minutesValue);        
         
         grid.add(new Label("Title:"), 0, 0);
@@ -73,8 +73,14 @@ public class PmdbController {
         
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == addMovie) {
-                movieList.add(new Movie(title.getText(), new Time(durationHours.getValue(), durationMinutes.getValue(), 00), Date.valueOf(releaseDate.getValue())));
-                movieView.getItems().setAll(movieList);
+                try{
+                    movieList.add(new Movie(title.getText(), new Time(durationHours.getValue(), durationMinutes.getValue(), 00), Date.valueOf(releaseDate.getValue())));
+                    movieView.getItems().setAll(movieList);
+                }catch(NullPointerException e){
+                    movieList.add(new Movie(title.getText(), new Time(durationHours.getValue(), durationMinutes.getValue(), 00)));
+                    movieView.getItems().setAll(movieList);
+                }
+                
             }
             return null;
         });

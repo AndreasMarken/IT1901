@@ -26,6 +26,15 @@ public class Movie implements IMovieSeries {
         }
     }
 
+    public Movie(String title, Time duration) {
+        if (checkIfNull(duration)){
+            this.duration = duration;
+        }
+        if (checkIfNull(title)){
+            this.title = title;
+        }
+    }
+
 
     @Override
     public String getTitle() {
