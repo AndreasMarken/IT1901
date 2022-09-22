@@ -35,7 +35,7 @@ For simplicity and effectiveness, we create a new branch for each issue. The nam
 ```
 
 ### Commits
-We strive to follow Conventional Commits 1.0.0, to have a consistency our commit messages and automatically generate human readable changelogs. 
+We strive to follow Conventional Commits 1.0.0, to keep a consistency in our commit messages and automatically generate human readable changelogs. 
 
 Example (short version):
 
@@ -45,14 +45,14 @@ docs: update userstories
 feat: add sorting functionality to movieList
 ```
 
-Here are different types that you can use:
+Below you can find a table of suggestions, inspired NTNUI Sprint.
 
 | type | description |
 | --- | --- |
-| build | Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm) |
-| ci | Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs) |
+| build | Changes that affect the build system or external dependencies |
+| ci | Changes to CI configuration files and scripts |
 | docs | Documentation only changes |
-|feat | A new feature |
+|feature | A new feature |
 | fix | A bug fix |
 | perf | A code change that improves performance |
 | refactor | A code change that neither fixes a bug nor adds a feature |
