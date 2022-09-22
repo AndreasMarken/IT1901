@@ -1,11 +1,17 @@
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2022/gr2238/gr2238/-/tree/master/)
 # Welcome to My Movie Tracker :movie_camera:
 
 My Movie Tracker is an application whose main purpose is to help you track the movies you have seen, so that you, at a later time, know which movie to watch again or have a broad selection of movies to recommend for your friends.
 
-#TODO MARKEN - skriv mer utfyllende tekst til "The codeproject"
 ## The codeproject
 
-The codeproject is located in the mmt folder.
+The codeproject is located in the mmt folder, which can be accessed using `cd mmt` in a terminal from the root folder. The application is built using standard Maven directory layout. To run the project, you can either run it directly from the class or use the maven commands listed in the [README in mmt folder](mmt/README.md).
+
+The application currently only consist of one module, which is the mmt folder. In here we have three folders:
+- core, which is the backend of the project.
+- fxui, which consist of the user-interface.
+- json, where saving movie objects are handled.
+
 
 ## Workflow
 
@@ -29,7 +35,7 @@ For simplicity and effectiveness, we create a new branch for each issue. The nam
 ```
 
 ### Commits
-We strive to follow Conventional Commits 1.0.0, to have a consistency our commit messages and automatically generate human readable changelogs. 
+We strive to follow Conventional Commits 1.0.0, to keep a consistency in our commit messages and automatically generate human readable changelogs. 
 
 Example (short version):
 
@@ -39,14 +45,14 @@ docs: update userstories
 feat: add sorting functionality to movieList
 ```
 
-Here are different types that you can use:
+Below you can find a table of suggestions, inspired NTNUI Sprint.
 
 | type | description |
 | --- | --- |
-| build | Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm) |
-| ci | Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs) |
+| build | Changes that affect the build system or external dependencies |
+| ci | Changes to CI configuration files and scripts |
 | docs | Documentation only changes |
-|feat | A new feature |
+|feature | A new feature |
 | fix | A bug fix |
 | perf | A code change that improves performance |
 | refactor | A code change that neither fixes a bug nor adds a feature |
@@ -64,10 +70,9 @@ We have created our own MR template for what our MRs should contain.
 
 ## Running in Gitpod
 
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2022/gr2238/gr2238/-/tree/develop/)
 
-1. Click on gitpod tag above.
-2. Navigate to the correct folder: `cd /workspace/gr2238/mmt` when in the workspace.
+1. Click on gitpod tag at the top of the page.
+2. Navigate to the correct folder: `cd /workspace/gr2238/mmt` when in the workspace. This should automaticly be done when you open gitpod from the project.
 3. run command `mvn javafx:run`.
 4. click "remote explorer" in the toolbar to the left.
 5. click "GITPOD WORKSPACE" -> "Ports".
