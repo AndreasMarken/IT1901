@@ -24,6 +24,15 @@ The app loads the fxml file, and the logic is specified in the controller.
 
 ## JSON
 The [JSON folder](../mmt/src/main/java/mmt/json) is used when saving the current state of our app.
+The JSON set up is currently by serializing the Movie and Rating objects:
+- [MovieSerializer.java](../mmt/src/main/java/mmt/json/MovieSerializer.java)
+- [RatingSerializer.java](../mmt/src/main/java/mmt/json/RatingSerializer.java)
+
+The deserializing prosess consists of the following classes:
+- [MovieDeserializer.java](../mmt/src/main/java/mmt/json/MovieDeserializer.java)
+- [RatingDeserializer.java](../mmt/src/main/java/mmt/json/RatingDeserializer.java)
+
+And all these JSON serializers/deserializers are set up using the [MovieModule.java](../mmt/main/java/mmt/json/MovieModule.java) which extends the SimpleModule, and allows for serializing and deserializing of java objects.
 
 
 
