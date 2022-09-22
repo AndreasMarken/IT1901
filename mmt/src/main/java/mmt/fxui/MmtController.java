@@ -1,7 +1,11 @@
 package mmt.fxui;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -19,10 +23,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 import mmt.core.Movie;
+import mmt.json.MovieModule;
 
 public class MmtController {
 
     ObservableList<Movie> movieList= FXCollections.observableArrayList();
+    private ObjectMapper mapper = new ObjectMapper();
 
     @FXML
     ListView<Movie> movieView = new ListView<>(movieList);
@@ -90,7 +96,15 @@ public class MmtController {
 
     @FXML
     public void handleSave(){
-        //TODO
-        //Add code for saving to file here
+        mapper.registerModule(new MovieModule());
+        String savingString = "";
+        for (Movie movie : movieList) {
+            try {
+                savingString += mapper.writeValueAsString(movie);
+                mapper.writeValue(new File("mmt/src/main/resources/mmt/json/movie.json"), savingString);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
