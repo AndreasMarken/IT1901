@@ -15,5 +15,3 @@ test:
     - cd pmdb
     - mvn test
 
-
-
