@@ -35,7 +35,11 @@ public class MovieDeserializer extends JsonDeserializer<Movie> {
     @Override
     public Movie deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JacksonException {
         TreeNode treeNode = p.getCodec().readTree(p);
-        if (treeNode instanceof ObjectNode objectNode) {
+        return deserialize((JsonNode) treeNode);
+    }
+
+    public Movie deserialize(JsonNode jsonNode) {
+        if (jsonNode instanceof ObjectNode objectNode) {
             JsonNode titleNode = objectNode.get("title");
             JsonNode releaseDateNode = objectNode.get("releaseDate");
             JsonNode durationNode = objectNode.get("duration");
