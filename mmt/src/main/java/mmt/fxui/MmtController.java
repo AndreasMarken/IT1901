@@ -22,12 +22,15 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
+import mmt.core.IMovie;
 import mmt.core.Movie;
+import mmt.core.MovieList;
 import mmt.json.MovieModule;
 
 public class MmtController {
 
     ObservableList<Movie> movieList= FXCollections.observableArrayList();
+    private MovieList movieList2 = new MovieList();
     private ObjectMapper mapper = new ObjectMapper();
 
     @FXML
@@ -82,9 +85,11 @@ public class MmtController {
                 try{
                     movieList.add(new Movie(title.getText(), new Time(durationHours.getValue(), durationMinutes.getValue(), 00), Date.valueOf(releaseDate.getValue())));
                     movieView.getItems().setAll(movieList);
+                    movieList2.addMovie(new Movie(title.getText(), new Time(durationHours.getValue(), durationMinutes.getValue(), 00), Date.valueOf(releaseDate.getValue())));
                 }catch(NullPointerException e){
                     movieList.add(new Movie(title.getText(), new Time(durationHours.getValue(), durationMinutes.getValue(), 00)));
                     movieView.getItems().setAll(movieList);
+                    movieList2.addMovie(new Movie(title.getText(), new Time(durationHours.getValue(), durationMinutes.getValue(), 00)));
                 }
                 
             }
@@ -97,14 +102,39 @@ public class MmtController {
     @FXML
     public void handleSave(){
         mapper.registerModule(new MovieModule());
-        String savingString = "";
-        for (Movie movie : movieList) {
+        //String savingString = "";
+        // for (Movie movie : movieList) {
+        //     try {
+        //         savingString += mapper.writeValueAsString(movie);
+        //         mapper.writeValue(new File("mmt/src/main/resources/mmt/json/movie.json"), savingString);
+        //     } catch (IOException e) {
+        //         e.printStackTrace();
+        //     }
+        // }
             try {
-                savingString += mapper.writeValueAsString(movie);
-                mapper.writeValue(new File("mmt/src/main/resources/mmt/json/movie.json"), savingString);
+                mapper.writeValue(new File("mmt/src/main/resources/mmt/json/movie.json"), movieList2);
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("fail");
+            }   
+    }
+
+    @FXML
+    public void handleLoad() {
+        mapper.registerModule(new MovieModule());
+        try {
+            MovieList tmp = mapper.readValue(new File("mmt/src/main/resources/mmt/json/movie.json"), MovieList.class);
+            for (IMovie movie : tmp) {
+                try {
+                    movieList2.addMovie(movie);
+                    movieList.add(new Movie(movie.getTitle(), movie.getDuration(), movie.getReleaseDate()));
+                    movieView.getItems().setAll(movieList);
+                } catch(IllegalArgumentException e) {
+                    System.out.println("Skipping already added movie.");
+                }
+                
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

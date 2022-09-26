@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mmt.fxui.MmtController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mmt.fxui.MmtController">
    <children>
       <GridPane layoutX="1.0" prefHeight="400.0" prefWidth="600.0">
         <columnConstraints>
@@ -45,11 +45,12 @@
                      <children>
                         <StackPane alignment="TOP_CENTER" prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Button onAction="#handleSave" mnemonicParsing="false" text="Save">
+                              <Button mnemonicParsing="false" onAction="#handleSave" text="Save">
                                  <StackPane.margin>
                                     <Insets top="20.0" />
                                  </StackPane.margin>
                               </Button>
+                              <Button mnemonicParsing="false" onAction="#handleLoad" text="Load" />
                            </children>
                         </StackPane>
                         <StackPane alignment="BOTTOM_CENTER" prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="1">
