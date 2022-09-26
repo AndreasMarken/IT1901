@@ -12,6 +12,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import mmt.core.Movie;
+import mmt.core.MovieList;
 import mmt.core.Rating;
 
 public class MovieModuleTest {
@@ -29,6 +30,7 @@ public class MovieModuleTest {
     //private final static String movieWithTwoRatings = "{\"title\":\"Bond\",\"releaseDate\":\"3903-01-02\",\"duration\":\"01:50:00\",\"rating\":[{\"rating\":9,\"comment\":\"Very good.\"},{\"rating\":2,\"comment\":\"\"}],\"watchlist\":false}";
     //private final static String movieWithOneRating = "{\"title\":\"Bond\",\"releaseDate\":\"3903-01-02\",\"duration\":\"01:50:00\",\"rating\":[{\"rating\":9,\"comment:\"Very good.\"}],\"watchlist\":false}";
     private final static String movieWithOneRating = "{\"title\":\"Bond\",\"releaseDate\":\"3903-01-02\",\"duration\":\"01:50:00\",\"rating\":[{\"rating\":9,\"comment\":\"Very good.\"}],\"watchlist\":false}";
+    private final static String movieListWithThreeMovies = "{\"movies\":[{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":[null],\"watchlist\":false},{\"title\":\"Lange flate ballær\",\"releaseDate\":\"2022-09-05\",\"duration\":\"02:03:00\",\"rating\":[null],\"watchlist\":false},{\"title\":\"iodhosa\",\"releaseDate\":\"2022-09-02\",\"duration\":\"02:02:00\",\"rating\":[null],\"watchlist\":false}]}";
 
 
     @Test
@@ -67,5 +69,20 @@ public class MovieModuleTest {
         } catch (JsonProcessingException e) {
             Assertions.fail();
         } 
+    }
+
+    @Test
+    @DisplayName("Test the movielist serializer")
+    public void testMovieListSerializer() {
+        MovieList movieList = new MovieList();
+        movieList.addMovie(new Movie("James Bond ", new Time(2,2,0), new Date(2022-1900, 8, 9)));
+        movieList.addMovie(new Movie("Lange flate ballær", new Time(2, 3, 0), new Date(2022-1900, 8, 5)));
+        movieList.addMovie(new Movie("iodhosa", new Time(2, 2, 0), new Date(2022-1900, 8, 2)));
+
+        try {
+            Assertions.assertEquals(movieListWithThreeMovies, mapper.writeValueAsString(movieList));
+        } catch (JsonProcessingException e) {
+            Assertions.fail();
+        }
     }
 }

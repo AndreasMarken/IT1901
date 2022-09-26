@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import mmt.core.Movie;
+import mmt.core.MovieList;
 import mmt.core.Rating;
 
 public class MovieModule extends SimpleModule {
@@ -21,20 +22,7 @@ public class MovieModule extends SimpleModule {
         addSerializer(Movie.class, new MovieSerializer());
         addDeserializer(Rating.class, new RatingDeserializer());
         addDeserializer(Movie.class, new MovieDeserializer());
-    }
-
-    public static void main(String[] args) {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new MovieModule());
-        Movie movie = new Movie("James Bond", new Time(1, 30, 45), new Date(0135, 5, 12));
-        movie.setOnTakeOfWatchlist(true);
-        movie.setRating(new Rating(2, "fe"));
-
-        try {
-            String json = mapper.writeValueAsString(movie);
-            Movie movie2 = mapper.readValue(json, Movie.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        addSerializer(MovieList.class, new MovieListSerializer());
+        addDeserializer(MovieList.class, new MovieListDeserializer());
     }
 }
