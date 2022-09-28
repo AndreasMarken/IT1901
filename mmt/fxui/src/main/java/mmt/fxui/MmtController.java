@@ -112,7 +112,8 @@ public class MmtController {
         //     }
         // }
             try {
-                mapper.writeValue(new File("mmt/src/main/resources/mmt/json/movie.json"), movieList2);
+                mapper.writeValue(new File("../core/src/main/resources/mmt/json/movie.json"), movieList2);
+                //src/main/resources/mmt/json/
             } catch (IOException e) {
                 System.out.println("fail");
             }   
@@ -122,7 +123,8 @@ public class MmtController {
     public void handleLoad() {
         mapper.registerModule(new MovieModule());
         try {
-            MovieList tmp = mapper.readValue(new File("mmt/src/main/resources/mmt/json/movie.json"), MovieList.class);
+            
+            MovieList tmp = mapper.readValue(new File("../core/src/main/resources/mmt/json/movie.json"), MovieList.class);
             for (IMovie movie : tmp) {
                 try {
                     movieList2.addMovie(movie);
