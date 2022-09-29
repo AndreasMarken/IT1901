@@ -1,12 +1,18 @@
 # Userstories
 
-The MMT enables the user to add different types of movies to a database.
+Most of us have used software apps that were both enjoyable and easy to use. Most of us have probably experienced quite the opposite aswell. What is it that "makes or breaks" an app?
 
-As a user it is important to see what movies that has been added to the database. The database is shown in the frontpage of the MMT app and will refresh as soon as a new movie is added. The user will also be able to add movies to the database. Fields like title, release date and duration will be up to the user to set.
+To develop a great software app, we have to create a product that matches the users mental model for how it is supposed to work. 
 
-**Important to see:**
-- Database/list of movies.
+To achive this, we have to make ends meet between the conceptual model of our product, and the users conceptual model.
 
-**Important things to do:**
-- Add new movies
-- Set title, release date and duration of the movie
+# Personas
+
+## Live Langåsen
+![Image was not shown](images-userstories/Live.jpeg)
+
+### Description
+
+Live works as a doctor at the St. Olavs hospital. Her days are usually quite busy. When she is not working, she loves spending quality time with her husband and two young children. They often watch a movie together. If it is a good movie, Live would like to recommend it for her friends, her colleagues and her patients. In Lives opinion, movies are always a great subject to talk about, to get the conversation going. When talking about movies with others, she also often recive recommendations. Sadly, due to busy days of work, she forgets the movie she was recomended. 
+
+ 
