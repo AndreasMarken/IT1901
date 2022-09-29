@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Collections;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -22,6 +23,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
+import mmt.core.Comparators;
 import mmt.core.IMovie;
 import mmt.core.Movie;
 import mmt.core.MovieList;
@@ -138,5 +140,23 @@ public class MmtController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+    }
+    @FXML
+    public void handleSortRating(){
+        Collections.sort(movieList, Comparators.sortByHighestRating());
+        movieView.getItems().setAll(movieList);
+    }
+
+    @FXML
+    public void handleSortTitle(){
+        Collections.sort(movieList, Comparators.sortByTitle());
+        movieView.getItems().setAll(movieList);
+    }
+
+    @FXML
+    public void handleSortDuration(){
+        Collections.sort(movieList, Comparators.sortByDuration());
+        movieView.getItems().setAll(movieList);
     }
 }
