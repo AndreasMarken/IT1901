@@ -61,6 +61,10 @@ public class Movie implements IMovie {
         return this.rating;
     }
 
+    public int getRatingNumber() {
+        return rating.getRating();
+    }
+
     @Override
     public void setOnTakeOfWatchlist(Boolean trueOrFalse) {
         this.watchlist = trueOrFalse;
