@@ -60,6 +60,9 @@ public class Movie implements IMovie {
     }
 
     public int getRatingNumber() {
+        if (rating == null){
+            return 0;
+        }
         return rating.getRating();
     }
 

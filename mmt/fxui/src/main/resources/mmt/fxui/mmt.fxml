@@ -51,6 +51,21 @@
                                  </StackPane.margin>
                               </Button>
                               <Button mnemonicParsing="false" onAction="#handleLoad" text="Load" />
+                              <Button mnemonicParsing="false" onAction="#setOnWatchlist" text="Add">
+                                 <StackPane.margin>
+                                    <Insets top="100.0" />
+                                 </StackPane.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#takeOFWatchlist" text="Remove">
+                                 <StackPane.margin>
+                                    <Insets top="140.0" />
+                                 </StackPane.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#setRating" text="Set R">
+                                 <StackPane.margin>
+                                    <Insets top="65.0" />
+                                 </StackPane.margin>
+                              </Button>
                            </children>
                         </StackPane>
                         <StackPane alignment="BOTTOM_CENTER" prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="1">
@@ -82,9 +97,8 @@
                      <children>
                         <MenuButton fx:id="menyButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="72.0" text="Menu">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="Home page" />
-                            <MenuItem mnemonicParsing="false" text="Top movies" />
-                              <MenuItem mnemonicParsing="false" text="Watchlist" />
+                            <MenuItem mnemonicParsing="false" onAction="#showHomePage" text="Home page" />
+                              <MenuItem mnemonicParsing="false" onAction="#showMoviesOnWatchlist" text="Watchlist" />
                           </items>
                         </MenuButton>
                      </children>

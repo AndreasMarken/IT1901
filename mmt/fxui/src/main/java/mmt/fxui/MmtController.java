@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.Collections;
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.application.Platform;
@@ -18,6 +19,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
@@ -27,16 +29,22 @@ import mmt.core.Comparators;
 import mmt.core.IMovie;
 import mmt.core.Movie;
 import mmt.core.MovieList;
+import mmt.core.Rating;
 import mmt.json.MovieModule;
 
 public class MmtController {
 
-    ObservableList<Movie> movieList= FXCollections.observableArrayList();
+    private ObservableList<Movie> movieList= FXCollections.observableArrayList();
+    private ObservableList<Movie> onWatchlist= FXCollections.observableArrayList();
     private MovieList movieList2 = new MovieList();
     private ObjectMapper mapper = new ObjectMapper();
+    private Boolean bool = false;
 
     @FXML
-    ListView<Movie> movieView = new ListView<>(movieList);
+    private ListView<Movie> movieView = new ListView<>(movieList);
+
+    @FXML
+    private MenuButton rating;
 
     @FXML
     public void handleAddMovie() {
@@ -144,19 +152,118 @@ public class MmtController {
     }
     @FXML
     public void handleSortRating(){
-        Collections.sort(movieList, Comparators.sortByHighestRating());
-        movieView.getItems().setAll(movieList);
+        if (bool){
+            Collections.sort(onWatchlist, Comparators.sortByHighestRating());
+           updateWatchlist();
+        }
+        else{
+            Collections.sort(movieList, Comparators.sortByHighestRating());
+            movieView.getItems().setAll(movieList);
+        } 
     }
 
     @FXML
     public void handleSortTitle(){
-        Collections.sort(movieList, Comparators.sortByTitle());
-        movieView.getItems().setAll(movieList);
+        if (bool){
+            Collections.sort(onWatchlist, Comparators.sortByTitle());
+            updateWatchlist();
+        }
+        else{
+            Collections.sort(movieList, Comparators.sortByTitle());
+            movieView.getItems().setAll(movieList);
+        } 
     }
 
     @FXML
     public void handleSortDuration(){
-        Collections.sort(movieList, Comparators.sortByDuration());
+        if (bool){
+            Collections.sort(onWatchlist, Comparators.sortByDuration());
+            updateWatchlist();
+        }
+        else{
+            Collections.sort(movieList, Comparators.sortByDuration());
+            updateHomePage();
+        } 
+    }
+
+    @FXML
+    public void setOnWatchlist(){
+        movieView.getSelectionModel().getSelectedItem().setOnTakeOfWatchlist(true);
+        onWatchlist.add(movieView.getSelectionModel().getSelectedItem());
+        if(bool){
+            updateWatchlist();
+        }
+        else {
+            updateHomePage();
+        }
+    }
+
+    @FXML
+    public void takeOFWatchlist(){
+        movieView.getSelectionModel().getSelectedItem().setOnTakeOfWatchlist(false);
+        onWatchlist.remove(movieView.getSelectionModel().getSelectedItem());
+        if(bool){
+            updateWatchlist();
+        }
+        else {
+            updateHomePage();
+        }
+    }
+
+    @FXML
+    public void setRating(){
+        Dialog<Movie> dialog = new Dialog<>();
+        dialog.setTitle("Rating");
+        dialog.setHeaderText("Please set a rating on the movie");
+
+        ButtonType addMovie = new ButtonType("Set rating", ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(addMovie, ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+        
+        TextField rating = new TextField();
+        rating.setPromptText("Rating");
+        grid.add(new Label("Rating:"), 0, 0);
+        grid.add(rating, 1, 0);
+
+        dialog.getDialogPane().setContent(grid);
+        Platform.runLater(() -> rating.requestFocus());
+        dialog.showAndWait();
+
+        Rating r = new Rating(Integer.parseInt(rating.getText()));
+        movieView.getSelectionModel().getSelectedItem().setRating(r);
+        if(bool){
+            updateWatchlist();
+        }
+        else {
+            updateHomePage();
+        }
+
+    }
+
+    @FXML
+    public void showMoviesOnWatchlist(){
+        updateWatchlist();
+        this.bool = true;  
+    }
+
+    @FXML
+    public void showHomePage(){
+        updateHomePage();
+        this.bool = false;
+    }
+
+
+    private void updateHomePage(){
         movieView.getItems().setAll(movieList);
     }
+
+    private void updateWatchlist(){
+        movieView.getItems().setAll(onWatchlist);
+    }
+
+
 }
