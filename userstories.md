@@ -44,12 +44,47 @@ Live works as a doctor at the St. Olavs hospital. Her days are usually quite bus
 
  :large_blue_circle: :large_blue_circle: :white_circle: :white_circle: :white_circle:  &nbsp;  **Business**
 
+
 ### Usability priorities
 
 
-&nbsp; &nbsp; <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/regular/hourglass.svg" width="50" height="50">
+&nbsp; &nbsp; &nbsp; <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/regular/hourglass.svg" width="50" height="50">
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/mobile-screen-button.svg" width="50" height="50">
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/map-location-dot.svg" width="50" height="50">
+
+
+**Time efficient** &nbsp; &nbsp; **Accessible** &nbsp; &nbsp; **Easy to navigate**
+
+
+### Data priorities
+
+
+&nbsp; &nbsp; &nbsp; <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/database.svg" width="50" height="50">
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/download.svg" width="50" height="50">
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/circle-info.svg" width="50" height="50">
 
 
 
-**Time efficient**
+
+**Good metadata** &nbsp; &nbsp; **Save and load data** &nbsp; &nbsp; **Human readable stored data (JSON)**
+
+### Motivations
+
+![50%](https://progress-bar.dev/70?title=Incentive)
+
+![50%](https://progress-bar.dev/40?title=Fear)
+
+![50%](https://progress-bar.dev/90?title=Achievement )
+
+![50%](https://progress-bar.dev/80?title=Power)
+
+![50%](https://progress-bar.dev/90?title=Social)
+
+![50%](https://progress-bar.dev/80?title=Goal)
+
+
+
+
+
+
 
