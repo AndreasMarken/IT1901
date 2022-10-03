@@ -1,5 +1,19 @@
 # Userstories
 
+- As a user, I want to add movies to a list which contains movies that I like, so that when i want to watch a movie I know which ones i like.
+
+- As a user, I want to remove movies from a list which contains movies that I like, in case i do not like them anymore
+
+- As a user, I want to sort my list of movies that I like based on genres, so that I can clearly see what movies I like from different types of genres
+
+- As a user, I want to sort my list of movies that I like based on duration, so that if a friend asks me for a good movie that lasts less than an hour
+
+- As a user, I want to have a list of movies that I find interesting available, so that I have suggestions when being asked for a recommendation
+
+- As a user, I want to write a short summary of each movie that i like, so that at a later time I would remind myself of what the movie was about when considering to watch it
+
+- As a user, i want to give each movie that a like a rating on a 1/10 scale (1.1, 1.2, ...,10), so that i know which movie is the best of the best
+
 Most of us have used software apps that were both enjoyable and easy to use. Most of us have probably experienced quite the opposite aswell. What is it that "makes or breaks" an app?
 
 To develop a great software app, we have to create a product that matches the users mental model for how it is supposed to work. 
