@@ -2,8 +2,6 @@ package mmt.core;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Movie implements IMovie {
 
@@ -59,6 +57,13 @@ public class Movie implements IMovie {
     @Override
     public IRating getRating() {
         return this.rating;
+    }
+
+    public int getRatingNumber() {
+        if (rating == null){
+            return 0;
+        }
+        return rating.getRating();
     }
 
     @Override
