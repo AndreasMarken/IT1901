@@ -1,12 +1,16 @@
 # Userstories
 
-- As a user, I want to add movies to a list which contains movies that I like, so that when i want to watch a movie I know which ones i like.
+- As a user, I want to add movies to a list which contains movies that I find interesting, so that when i want to watch a movie I know which ones i like.
+
+- As a user, I want to be able to add movies that I like to a watchlist that contains movies that I am due to watch, so that I know which movie I should watch when the weekend comes
 
 - As a user, I want to remove movies from a list which contains movies that I like, in case i do not like them anymore
 
-- As a user, I want to sort my list of movies that I like based on genres, so that I can clearly see what movies I like from different types of genres
-
 - As a user, I want to sort my list of movies that I like based on duration, so that if a friend asks me for a good movie that lasts less than an hour
+
+- As a user, I want to sort my list of movies that I like based on the title, so that when I have a lot of movies in my list, it is easy to find the one I am looking for
+
+- As a user, I want to sort my list of movies that I like based on rating, in case someone asks me what my all-time favorite movie is, it is easy for me to figure out which.
 
 - As a user, I want to have a list of movies that I find interesting available, so that I have suggestions when being asked for a recommendation
 
@@ -14,11 +18,49 @@
 
 - As a user, i want to give each movie that a like a rating on a 1/10 scale (1.1, 1.2, ...,10), so that i know which movie is the best of the best
 
-Most of us have used software apps that were both enjoyable and easy to use. Most of us have probably experienced quite the opposite aswell. What is it that "makes or breaks" an app?
+# Conceptual model
 
-To develop a great software app, we have to create a product that matches the users mental model for how it is supposed to work. 
+## Concepts
 
-To achive this, we have to make ends meet between the conceptual model of our product, and the users conceptual model.
+### Design metaphor
+- A Movie-object has a rectangular shape, just like a movie poster, with its attributes displayed on the front of this "poster" similar to a typical movie poster layout. 
+
+
+### Data-objects 
+- Movie-objects that can be initiated and deleted
+- A "database" list-object which contains all Movie-objects that the user initiates
+- A "watchlist" list-object which is a sublist of the "database" list-object, in which the user can add and remove Movie-objects
+
+### Data-object attributes and operations
+
+#### Movie-object attributes
+- Title
+- Release date
+- Duration
+- Rating (1, 1.1, 1.2, ..., 10)
+
+#### Movie-object operations
+- set and edit the title
+- set and edit the release date
+- set and edit the duration
+- set and edit the rating
+ 
+#### List-object attributes
+- A list consisting of Movie-objects, initially zero
+
+#### List-object operations
+- Sort the Movie-objects contained in the list based on rating, title and duration
+- Add Movie-objects
+- Remove Movie-objects
+
+### Relations
+- The "database" list-object contains all the Movie-objects initiated by the user
+- The "watchlist" list-object is a sublist of the "database" list-object
+- The Movie-object has a title, release date, duration and rating
+
+### Mapping
+- The list-objects corresponds to a library of movies
+- A Movie-object corresponds to an existing movie that the user has added some details to
 
 # Personas
 
