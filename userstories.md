@@ -138,6 +138,9 @@ Live works as a doctor at the St. Olavs hospital. Her days are usually quite bus
 
 ![50%](https://progress-bar.dev/80?title=Goal)
 
+# UI Mockup
+
+![Image was not shown](images-userstories/mmtUImockup.png)
 
 
 
