@@ -57,11 +57,11 @@ public class MyMovieTrackerController {
 
     protected MovieList loadMovieListFromFile() throws IOException {
         //this.movieList = mapper.readValue(new File("movie.json"), MovieList.class);
-        return mapper.readValue(new File("mmt/core/src/main/resources/mmt/json/movie.json"), MovieList.class); 
+        return mapper.readValue(new File("../core/src/main/resources/mmt/json/movie.json"), MovieList.class); 
     }
 
     private void saveMovieListToFile() throws IOException {
-        mapper.writeValue(new File("mmt/core/src/main/resources/mmt/json/movie.json"), movieList);
+        mapper.writeValue(new File("../core/src/main/resources/mmt/json/movie.json"), movieList);
     }
 
     @FXML
