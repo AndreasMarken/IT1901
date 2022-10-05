@@ -12,6 +12,11 @@ import javafx.scene.control.TextField;
 import mmt.core.IMovie;
 import mmt.core.Movie;
 
+/**
+ * Controller that is used to edit or add a new movie to the MyMovieTracker app.
+ * The controller is initalised when the app is opened, but the view is hidden
+ * until th user has chosen to edit or add a movie to the movielist.
+ */
 public class EditMovieController {
 
     @FXML
@@ -37,6 +42,12 @@ public class EditMovieController {
 
     private IMovie movie;
 
+    /**
+     * The method that is called when the user has completed the editing/adding
+     * of a movie. Saves the updated movie or adds the movie to the movielist, and
+     * updates the movielistview.
+     * If invalid information is given by the user, an errormessage is shown in the view.
+     */
     @FXML
     private void edit() {
         if (isValidTitleName(movieTitleField.getText())) {
@@ -80,6 +91,14 @@ public class EditMovieController {
         }
     }
 
+    /**
+     * Updates the existing movie, that the user has chosen, with the input-information
+     * in the app.
+     * @param title : The new title to be given
+     * @param duration : The new duration to be given
+     * @param releaseDate : The new releasedate to be given
+     * @param watchList : The new watchlist-status to be given 
+     */
     private void editExistingMovie(String title, Time duration, Date releaseDate, boolean watchList) {
         movie.setTitle(title);
         movie.setDuration(duration);
@@ -87,6 +106,10 @@ public class EditMovieController {
         movie.setOnTakeOfWatchlist(watchList);
     }
 
+    /**
+     * Cancels the editing/adding of a movie, and hides the view.
+     * Clears the inputfields and makes it ready to edit/add a new movie.
+     */
     @FXML
     private void cancelEditMovie() {
         this.movie = null;
@@ -94,6 +117,9 @@ public class EditMovieController {
         myMovieTrackerController.hideEditMovie(false);
     }
 
+    /**
+     * Clears the inputfields in the app. 
+     */
     private void clearInputFields() {
         movieTitleField.clear();
         hours.decrement(hours.getValue()%24);
@@ -102,10 +128,18 @@ public class EditMovieController {
         watchListCheckBox.setSelected(false);
     }
 
+    /**
+     * The myMovieTrackerController this app is linked, and communicates with.
+     * @param myMovieTrackerController the myMovieTrackerController to be set.
+     */
     public void setMyMovieTrackerController(MyMovieTrackerController myMovieTrackerController) {
         this.myMovieTrackerController = myMovieTrackerController;
     }
 
+    /**
+     * Initializeses the adding/editing of a movie.
+     * @param movie If null is given, a new movie is to be created. Else, a movie will be started to edit.
+     */
     protected void editMovie(IMovie movie) {
         errorMessage.setText("");
         this.movie = movie;
@@ -118,6 +152,9 @@ public class EditMovieController {
         }
     }
 
+    /**
+     * Fills the inputfields with the information of the movie that is to be edited.
+     */
     private void fillFields() {
         if (this.movie == null) {
             throw new IllegalStateException("You should not have the oppertunity to edit a movie when you havent selected a movie to edit.");
@@ -130,6 +167,11 @@ public class EditMovieController {
         watchListCheckBox.setSelected(movie.getWatchlist());
     }
 
+    /**
+     * Method to check if a moviename is valid or not.
+     * @param title The title to check wheter is valid and free.
+     * @return true if the new moviename is valid. fasle if it is not.
+     */
     private boolean isValidTitleName(String title) {
         IMovie movie = myMovieTrackerController.getMovieList().getMovie(title);
         if (movie == null || movie == this.movie) {
