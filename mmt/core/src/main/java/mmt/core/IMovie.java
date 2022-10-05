@@ -2,7 +2,6 @@ package mmt.core;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.List;
 
 public interface IMovie {
     
@@ -45,7 +44,19 @@ public interface IMovie {
      * Method that provides information if a Movie/Serie object is on the watchlist.
      * @return returns true if in watchlist, otherwise false.
      */
-    Boolean getWatchlist();   
+    Boolean getWatchlist();
+
+    /**
+     * Method that sets a new title for a movie.
+     * @param title : the title to be given ot the movie
+     */
+    void setTitle(String title);   
+
+    void setDuration(Time duration);
+
+    void setReleaseDate(Date releaseDate);
+
+    int getRatingNumber();
 }
 
 

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import mmt.core.Movie;
-import mmt.core.Rating;
 
 public class MovieSerializer extends JsonSerializer<Movie> {
 
@@ -28,17 +27,7 @@ public class MovieSerializer extends JsonSerializer<Movie> {
         jsonGen.writeStringField("title", movie.getTitle());
         jsonGen.writeStringField("releaseDate", movie.getReleaseDate().toString()); //toString: yyyy-mm-dd
         jsonGen.writeStringField("duration", movie.getDuration().toString()); //toString: hh:mm:ss
-        jsonGen.writeArrayFieldStart("rating");
-
-        //TODO
-        //Movie has no ratinglist yet!
-
-        // for (Rating rating : movie.getRating()) {
-        //     jsonGen.writeObject(rating);
-        // }
-        
-        jsonGen.writeObject(movie.getRating());
-        jsonGen.writeEndArray();
+        jsonGen.writeObjectField("rating", movie.getRating());
         jsonGen.writeBooleanField("watchlist", movie.getWatchlist());
         jsonGen.writeEndObject();
     }

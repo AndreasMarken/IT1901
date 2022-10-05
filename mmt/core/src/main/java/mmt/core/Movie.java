@@ -40,6 +40,13 @@ public class Movie implements IMovie {
     }
 
     @Override
+    public void setTitle(String title) {
+        if (checkIfNull(title)) {
+            this.title = title;
+        }
+    }
+
+    @Override
     public Time getDuration(){
         return this.duration;
     }
@@ -59,6 +66,7 @@ public class Movie implements IMovie {
         return this.rating;
     }
 
+    @Override
     public int getRatingNumber() {
         if (rating == null){
             return 0;
@@ -92,6 +100,20 @@ public class Movie implements IMovie {
         + "Rating: " + getRating() + "\n"
         + "Watchlist: " + getWatchlist() + "\n"
         ;
+    }
+
+    @Override
+    public void setDuration(Time duration) {
+        if (checkIfNull(duration)) {
+            this.duration = duration;
+        }
+    }
+
+    @Override
+    public void setReleaseDate(Date releaseDate) {
+        if (checkIfNull(releaseDate)) {
+            this.releaseDate = releaseDate;
+        }
     }
 
     

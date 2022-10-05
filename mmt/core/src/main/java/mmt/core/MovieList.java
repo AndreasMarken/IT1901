@@ -1,6 +1,7 @@
 package mmt.core;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,5 +33,8 @@ public class MovieList implements Iterable<IMovie> {
     public Iterator<IMovie> iterator() {
         return movieList.iterator();
     }
-    
+
+    public Collection<IMovie> getMovies() {
+        return this.movieList;
+    } 
 }
