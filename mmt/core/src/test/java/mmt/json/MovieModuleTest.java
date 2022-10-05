@@ -29,8 +29,8 @@ public class MovieModuleTest {
 
     //private final static String movieWithTwoRatings = "{\"title\":\"Bond\",\"releaseDate\":\"3903-01-02\",\"duration\":\"01:50:00\",\"rating\":[{\"rating\":9,\"comment\":\"Very good.\"},{\"rating\":2,\"comment\":\"\"}],\"watchlist\":false}";
     //private final static String movieWithOneRating = "{\"title\":\"Bond\",\"releaseDate\":\"3903-01-02\",\"duration\":\"01:50:00\",\"rating\":[{\"rating\":9,\"comment:\"Very good.\"}],\"watchlist\":false}";
-    private final static String movieWithOneRating = "{\"title\":\"Bond\",\"releaseDate\":\"3903-01-02\",\"duration\":\"01:50:00\",\"rating\":[{\"rating\":9,\"comment\":\"Very good.\"}],\"watchlist\":false}";
-    private final static String movieListWithThreeMovies = "{\"movies\":[{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":[null],\"watchlist\":false},{\"title\":\"Lange flate ballær\",\"releaseDate\":\"2022-09-05\",\"duration\":\"02:03:00\",\"rating\":[null],\"watchlist\":false},{\"title\":\"iodhosa\",\"releaseDate\":\"2022-09-02\",\"duration\":\"02:02:00\",\"rating\":[null],\"watchlist\":false}]}";
+    private final static String movieWithOneRating = "{\"title\":\"Bond\",\"releaseDate\":\"3903-01-02\",\"duration\":\"01:50:00\",\"rating\":{\"rating\":9,\"comment\":\"Very good.\"},\"watchlist\":false}";
+    private final static String movieListWithThreeMovies = "{\"movies\":[{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false},{\"title\":\"Lange flate ballær\",\"releaseDate\":\"2022-09-05\",\"duration\":\"02:03:00\",\"rating\":null,\"watchlist\":false},{\"title\":\"iodhosa\",\"releaseDate\":\"2022-09-02\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false}]}";
 
 
     @Test

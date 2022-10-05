@@ -28,7 +28,11 @@ public class MovieListDeserializer extends JsonDeserializer<MovieList> {
                 for (JsonNode movieNode : ((ArrayNode) moviesNode)) {
                     Movie movie = movieDeserializer.deserialize(movieNode);
                     if (movie != null) {
-                      movieList.addMovie(movie);
+                        try {
+                            movieList.addMovie(movie);
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("A movie was attempted added multiple times, skipping already added movie");
+                        } 
                     }
                   }
             }
