@@ -10,12 +10,12 @@
    <children>
       <AnchorPane layoutX="5.0" layoutY="6.0" minWidth="-Infinity" prefHeight="240.0" prefWidth="267.0" style="-fx-background-color: grey; -fx-border-color: #000000;">
          <children>
-            <Label id="ratingScore" fx:id="ratingScore" layoutX="14.0" layoutY="131.0" prefHeight="20.0" prefWidth="235.0" text="RatingScore" textFill="WHITE">
+            <Label fx:id="ratingScore" layoutX="14.0" layoutY="131.0" prefHeight="20.0" prefWidth="235.0" text="RatingScore" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label id="releaseDate" fx:id="releaseDate" layoutX="13.0" layoutY="78.0" prefHeight="20.0" prefWidth="235.0" text="ReleaseDate" textFill="WHITE">
+            <Label fx:id="releaseDate" layoutX="13.0" layoutY="78.0" prefHeight="20.0" prefWidth="235.0" text="ReleaseDate" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -25,19 +25,19 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label id="duration" fx:id="duration" layoutX="14.0" layoutY="47.0" prefHeight="20.0" prefWidth="235.0" text="Duration" textFill="WHITE">
+            <Label fx:id="duration" layoutX="14.0" layoutY="47.0" prefHeight="20.0" prefWidth="235.0" text="Duration" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label id="watchList" fx:id="watchList" layoutX="14.0" layoutY="104.0" prefHeight="20.0" prefWidth="223.0" text="WatchList" textFill="WHITE">
+            <Label fx:id="watchList" layoutX="14.0" layoutY="104.0" prefHeight="20.0" prefWidth="223.0" text="WatchList" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button id="editMovie" fx:id="editMovie" layoutX="205.0" layoutY="15.0" mnemonicParsing="false" onAction="#editMovie" prefHeight="26.0" prefWidth="53.0" style="-fx-background-color: green;" text="Edit" textFill="WHITE" />
-            <Button id="deleteMovie" fx:id="deleteMovie" layoutX="205.0" layoutY="207.0" mnemonicParsing="false" onAction="#deleteMovie" style="-fx-background-color: red;" text="Delete" textFill="WHITE" />
-            <Label id="ratingComment" fx:id="ratingComment" layoutX="13.0" layoutY="159.0" prefHeight="20.0" prefWidth="223.0" text="RatingComment" textFill="WHITE">
+            <Button fx:id="editMovie" layoutX="205.0" layoutY="15.0" mnemonicParsing="false" onAction="#editMovie" prefHeight="26.0" prefWidth="53.0" style="-fx-background-color: green;" text="Edit" textFill="WHITE" />
+            <Button fx:id="deleteMovie" layoutX="205.0" layoutY="207.0" mnemonicParsing="false" onAction="#deleteMovie" style="-fx-background-color: red;" text="Delete" textFill="WHITE" />
+            <Label fx:id="ratingComment" layoutX="13.0" layoutY="159.0" prefHeight="20.0" prefWidth="223.0" text="RatingComment" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>

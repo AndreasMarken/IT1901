@@ -94,15 +94,6 @@ public class MyMovieTrackerController {
         editMovieWindow.setVisible(hide);
     }
 
-    private Pane findMoviePaneFromMovieListView(IMovie iMovie) {
-        for (Node node : movieListView.getChildren()) {
-            if (((Label) node.lookup("#title")).getText().equals(iMovie.getTitle())) {
-                return (Pane) node;
-            }
-        }
-        return null;
-    }
-
     protected void displayMovieListView(boolean watchList) {
         try {
             movieListView.getChildren().clear();
@@ -120,13 +111,12 @@ public class MyMovieTrackerController {
                 Pane moviePane = findMoviePaneFromMovieListView(iMovie);
                 if (moviePane == null) {
                     FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("DisplayMovie.fxml"));
-                    moviePane = fxmlLoader.load();
+                    Pane moviePane = fxmlLoader.load();
                     DisplayMovieController displayMovieController = fxmlLoader.getController();
                     displayMovieController.setMyMovieTrackerController(this);
                     displayMovieController.setMovie(iMovie);
                     displayMovieController.setMovieInformation();
                     movieListView.getChildren().add(moviePane);
-                }
                 if (offsetY < 0.0) {
                     offsetY = moviePane.getPrefHeight();
                 }
@@ -166,7 +156,6 @@ public class MyMovieTrackerController {
         try {
             this.movieList.addMovie(movie);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
         }
     }
 
