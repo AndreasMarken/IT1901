@@ -18,9 +18,9 @@ public class MovieListDeserializer extends JsonDeserializer<MovieList> {
 
     @Override
     public MovieList deserialize(JsonParser parser, DeserializationContext ctxt) throws IOException, JacksonException {
+        MovieList movieList = new MovieList();
         TreeNode treeNode = parser.getCodec().readTree(parser);
         if (treeNode instanceof ObjectNode objectNode) {
-            MovieList movieList = new MovieList();
             JsonNode moviesNode = objectNode.get("movies");
             if (moviesNode instanceof ArrayNode) {
                 for (JsonNode movieNode : ((ArrayNode) moviesNode)) {
@@ -29,13 +29,13 @@ public class MovieListDeserializer extends JsonDeserializer<MovieList> {
                         try {
                             movieList.addMovie(movie);
                         } catch (IllegalArgumentException e) {
-                            System.out.println("A movie was attempted added multiple times, skipping already added movie");
+                            //If A movie was attempted added multiple times, skip the movie
                         } 
                     }
                 }
             }
-            return movieList;
         }
-        return null;
-    }    
+        return movieList;
+    }   
+    
 }

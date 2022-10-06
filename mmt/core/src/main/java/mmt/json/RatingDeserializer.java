@@ -45,7 +45,6 @@ public class RatingDeserializer extends JsonDeserializer<Rating> {
                 return rating;
             }
         }
-        
         return null;
     }
 }
