@@ -1,13 +1,11 @@
 package mmt.fxui;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -39,25 +37,25 @@ public class MyMovieTrackerController {
 
     @FXML
     private CheckBox watchList;
-    
+
     @FXML
     void initialize() throws IOException {
         editMovieController.setMyMovieTrackerController(this);
         hideEditMovie(false);
 
-        //Load the movies registered in the movie.json file.
+        // Load the movies registered in the movie.json file.
         mapper.registerModule(new MovieModule());
         MovieList temporaryMovieList = loadMovieListFromFile();
         for (IMovie iMovie : temporaryMovieList) {
             movieList.addMovie(iMovie);
         }
-        //Display the movies in the file
+        // Display the movies in the file
         updateMovieListView();
     }
 
     protected MovieList loadMovieListFromFile() throws IOException {
-        //this.movieList = mapper.readValue(new File("movie.json"), MovieList.class);
-        return mapper.readValue(new File("../core/src/main/resources/mmt/json/movie.json"), MovieList.class); 
+        // this.movieList = mapper.readValue(new File("movie.json"), MovieList.class);
+        return mapper.readValue(new File("../core/src/main/resources/mmt/json/movie.json"), MovieList.class);
     }
 
     private void saveMovieListToFile() throws IOException {
@@ -117,15 +115,15 @@ public class MyMovieTrackerController {
             if (watchList) {
                 movies = this.getMovies().stream().filter(m -> m.getWatchlist()).toList();
             }
-            
-            for (IMovie IMovie : movies) {
-                Pane moviePane = findMoviePaneFromMovieListView(IMovie);
+
+            for (IMovie iMovie : movies) {
+                Pane moviePane = findMoviePaneFromMovieListView(iMovie);
                 if (moviePane == null) {
                     FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("DisplayMovie.fxml"));
                     moviePane = fxmlLoader.load();
                     DisplayMovieController displayMovieController = fxmlLoader.getController();
                     displayMovieController.setMyMovieTrackerController(this);
-                    displayMovieController.setMovie(IMovie);
+                    displayMovieController.setMovie(iMovie);
                     displayMovieController.setMovieInformation();
                     movieListView.getChildren().add(moviePane);
                 }
@@ -133,16 +131,16 @@ public class MyMovieTrackerController {
                     offsetY = moviePane.getPrefHeight();
                 }
                 int numberOfMoviesCalc = (int) numberOfMovies / 2;
-                
+
                 moviePane.setLayoutY(offsetY * numberOfMoviesCalc);
-                moviePane.setLayoutX(offsetX * (numberOfMovies%2));
-                moviePane.setId("Movie"+String.valueOf(numberOfMovies));
+                moviePane.setLayoutX(offsetX * (numberOfMovies % 2));
+                moviePane.setId("Movie" + String.valueOf(numberOfMovies));
                 numberOfMovies++;
             }
             int numberOfMoviesCalc = (int) numberOfMovies / 2;
             movieListView.setLayoutY(numberOfMoviesCalc);
         } catch (IOException e) {
-            //If the movie was not able to be displayed, try skipping this movie.
+            // If the movie was not able to be displayed, try skipping this movie.
         }
         try {
             saveMovieListToFile();
