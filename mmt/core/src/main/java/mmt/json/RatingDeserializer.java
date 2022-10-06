@@ -1,7 +1,5 @@
 package mmt.json;
 
-import java.io.IOException;
-
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.TreeNode;
@@ -11,7 +9,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.IntNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
-
+import java.io.IOException;
 import mmt.core.Rating;
 
 public class RatingDeserializer extends JsonDeserializer<Rating> {

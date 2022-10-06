@@ -1,7 +1,5 @@
 package mmt.json;
 
-import java.io.IOException;
-
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.TreeNode;
@@ -10,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
+import java.io.IOException;
 import mmt.core.Movie;
 import mmt.core.MovieList;
 
@@ -34,7 +32,7 @@ public class MovieListDeserializer extends JsonDeserializer<MovieList> {
                             //If A movie was attempted added multiple times, skip the movie
                         } 
                     }
-                  }
+                }
             }
         }
         return movieList;

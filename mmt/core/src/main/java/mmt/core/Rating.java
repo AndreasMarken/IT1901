@@ -12,6 +12,7 @@ public class Rating implements IRating {
     /**
      * Generates a Rating object with only the rating given as a parameter.
      * Automaticly sets comment to be the empty string.
+     *
      * @param rating
      */
     public Rating(int rating) {
@@ -22,6 +23,7 @@ public class Rating implements IRating {
 
     /**
      * Generates a Rating object using rating and comment as parameters.
+     *
      * @param rating the rating to be given to the movie
      * @param comment the comment to be given to the movie
      */
@@ -32,7 +34,9 @@ public class Rating implements IRating {
 
     @Override
     public void setRating(int rating) throws IllegalArgumentException {
-        if (!isValidRating(rating)) throw new IllegalArgumentException("Your input rating is not valid.");
+        if (!isValidRating(rating)) {
+            throw new IllegalArgumentException("Your input rating is not valid.");
+        }
         this.rating = rating;
     }
 
@@ -43,7 +47,9 @@ public class Rating implements IRating {
 
     @Override
     public void setComment(String comment) throws IllegalArgumentException {
-        if (!isValidComment(comment)) throw new IllegalArgumentException("Your input comment cannot be empty.");
+        if (!isValidComment(comment)) {
+            throw new IllegalArgumentException("Your input comment cannot be empty.");
+        }
         this.comment = comment;
     }
 
@@ -54,6 +60,7 @@ public class Rating implements IRating {
 
     /**
      * Used to check whether a rating is valid or not. A rating is valid if it is between 1 and 10.
+     *
      * @param rating the movie rating that is to be validated.
      * @return true if the rating is valid, false if the rating is not valid.
      */
@@ -63,6 +70,7 @@ public class Rating implements IRating {
 
     /**
      * Used to check wheater a comment is valid or not. A comment is valid if the argument is not null.
+     *
      * @param comment the movie comment that is to be validated
      * @return true if the comment is valid, false if the comment is not valid.
      */

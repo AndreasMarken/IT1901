@@ -8,9 +8,6 @@ import java.util.List;
 public class MovieList implements Iterable<IMovie> {
     private List<IMovie> movieList = new ArrayList<>();
 
-    public MovieList() {
-    }
-
     public void addMovie(IMovie movie) {
         if (movie == null) {
             throw new IllegalArgumentException("You cannot add null to the movielist.");
