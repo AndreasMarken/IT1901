@@ -106,31 +106,29 @@ public class MyMovieTrackerController {
             if (watchList) {
                 movies = this.getMovies().stream().filter(m -> m.getWatchlist()).toList();
             }
-
-            for (IMovie iMovie : movies) {
-                Pane moviePane = findMoviePaneFromMovieListView(iMovie);
-                if (moviePane == null) {
+            
+            for (IMovie IMovie : movies) {
                     FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("DisplayMovie.fxml"));
                     Pane moviePane = fxmlLoader.load();
                     DisplayMovieController displayMovieController = fxmlLoader.getController();
                     displayMovieController.setMyMovieTrackerController(this);
-                    displayMovieController.setMovie(iMovie);
+                    displayMovieController.setMovie(IMovie);
                     displayMovieController.setMovieInformation();
                     movieListView.getChildren().add(moviePane);
                 if (offsetY < 0.0) {
                     offsetY = moviePane.getPrefHeight();
                 }
                 int numberOfMoviesCalc = (int) numberOfMovies / 2;
-
+                
                 moviePane.setLayoutY(offsetY * numberOfMoviesCalc);
                 moviePane.setLayoutX(offsetX * (numberOfMovies % 2));
-                moviePane.setId("Movie" + String.valueOf(numberOfMovies));
+                moviePane.setId("Movie"+String.valueOf(numberOfMovies));
                 numberOfMovies++;
             }
             int numberOfMoviesCalc = (int) numberOfMovies / 2;
             movieListView.setLayoutY(numberOfMoviesCalc);
         } catch (IOException e) {
-            // If the movie was not able to be displayed, try skipping this movie.
+            //If the movie was not able to be displayed, try skipping this movie.
         }
         try {
             saveMovieListToFile();
