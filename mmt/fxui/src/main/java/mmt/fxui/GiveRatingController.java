@@ -1,7 +1,6 @@
 package mmt.fxui;
 
 import java.util.List;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -37,7 +36,7 @@ public class GiveRatingController {
      */
     @FXML
     private void initialize() {
-        ratingList.getItems().addAll(List.of(1,2,3,4,5,6,7,8,9,10));
+        ratingList.getItems().addAll(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
         ratingList.setValue(1);
     }
 
@@ -47,7 +46,6 @@ public class GiveRatingController {
     @FXML
     private void cancelEditReview() {
         clearFields();
-
         myMovieTrackerController.giveRating.getChildren().clear();
     }
 
@@ -56,7 +54,6 @@ public class GiveRatingController {
      */
     private void clearFields() {
         ratingCommentField.clear();
-        
         ratingList.setValue(1);
     }
 
@@ -66,7 +63,7 @@ public class GiveRatingController {
      */
     @FXML
     private void save() {
-        int rating = ratingList.getSelectionModel().getSelectedIndex()+1;
+        int rating = ratingList.getSelectionModel().getSelectedIndex() + 1;
         String comment = ratingCommentField.getText();
 
         if (comment.equals("")) {

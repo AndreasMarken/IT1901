@@ -2,7 +2,6 @@ package mmt.json;
 
 import com.fasterxml.jackson.core.util.VersionUtil;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-
 import mmt.core.Movie;
 import mmt.core.MovieList;
 import mmt.core.Rating;

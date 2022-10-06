@@ -1,7 +1,6 @@
 package mmt.fxui;
 
 import java.io.IOException;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -64,7 +63,7 @@ public class DisplayMovieController {
             ratingScore.setText("You have not rated this movie yet.");
             ratingComment.setText("You have not rated this movie yet.");
         } else {
-            ratingScore.setText(movie.getRating().getRating()+"/10");
+            ratingScore.setText(movie.getRating().getRating() + "/10");
             ratingComment.setText(movie.getRating().getComment());
         }
     }
@@ -103,6 +102,5 @@ public class DisplayMovieController {
         ratingController.setInformation(movie);
 
         myMovieTrackerController.giveRating.getChildren().add(ratingPane);
-        
     }
 }

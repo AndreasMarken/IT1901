@@ -1,13 +1,11 @@
 package mmt.fxui;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
@@ -52,13 +50,13 @@ public class MyMovieTrackerController {
         editMovieController.setMyMovieTrackerController(this);
         hideEditMovie(false);
 
-        //Load the movies registered in the movie.json file.
+        // Load the movies registered in the movie.json file.
         mapper.registerModule(new MovieModule());
         MovieList temporaryMovieList = loadMovieListFromFile();
         for (IMovie iMovie : temporaryMovieList) {
             movieList.addMovie(iMovie);
         }
-        //Display the movies in the file
+        // Display the movies in the file
         updateMovieListView();
     }
 
@@ -68,8 +66,8 @@ public class MyMovieTrackerController {
      * @throws IOException If the movies cannot be loaded from the file.
      */
     protected MovieList loadMovieListFromFile() throws IOException {
-        //this.movieList = mapper.readValue(new File("movie.json"), MovieList.class);
-        return mapper.readValue(new File("../core/src/main/resources/mmt/json/movie.json"), MovieList.class); 
+        // this.movieList = mapper.readValue(new File("movie.json"), MovieList.class);
+        return mapper.readValue(new File("../core/src/main/resources/mmt/json/movie.json"), MovieList.class);
     }
 
     /**

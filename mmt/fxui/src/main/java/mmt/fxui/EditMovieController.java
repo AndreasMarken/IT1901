@@ -1,8 +1,7 @@
 package mmt.fxui;
 
-import java.sql.Time;
 import java.sql.Date;
-
+import java.sql.Time;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
@@ -38,7 +37,10 @@ public class EditMovieController {
     private CheckBox watchListCheckBox;
 
     @FXML
-    private Label newEditMovieTab, errorMessage;
+    private Label newEditMovieTab;
+
+    @FXML
+    private Label errorMessage;
 
     private IMovie movie;
 
@@ -68,7 +70,7 @@ public class EditMovieController {
             } catch (NullPointerException e) {
                 errorMessage.setText("You must choose a valid date.");
             }
-            Date releaseDate = new Date(date.getValue().getYear()-1900, date.getValue().getMonthValue()-1, date.getValue().getDayOfMonth());
+            Date releaseDate = new Date(date.getValue().getYear() - 1900, date.getValue().getMonthValue() - 1, date.getValue().getDayOfMonth());
             boolean watchList = watchListCheckBox.isSelected();
 
             try {
@@ -122,8 +124,8 @@ public class EditMovieController {
      */
     private void clearInputFields() {
         movieTitleField.clear();
-        hours.decrement(hours.getValue()%24);
-        minutes.decrement(minutes.getValue()%60);
+        hours.decrement(hours.getValue() % 24);
+        minutes.decrement(minutes.getValue() % 60);
         date.setValue(null);
         watchListCheckBox.setSelected(false);
     }
@@ -159,7 +161,6 @@ public class EditMovieController {
         if (this.movie == null) {
             throw new IllegalStateException("You should not have the oppertunity to edit a movie when you havent selected a movie to edit.");
         }
-
         movieTitleField.setText(movie.getTitle());  
         hours.increment(movie.getDuration().getHours());
         minutes.increment(movie.getDuration().getMinutes());
