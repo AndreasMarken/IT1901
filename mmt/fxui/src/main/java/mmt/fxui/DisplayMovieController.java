@@ -37,6 +37,7 @@ public class DisplayMovieController {
 
     /**
      * The myMovieTrackerController this app is linked, and communicates with.
+     *
      * @param myMovieTrackerController the myMovieTrackerController to be set.
      */
     protected void setMyMovieTrackerController(MyMovieTrackerController myMovieTrackerController) {
@@ -45,6 +46,7 @@ public class DisplayMovieController {
 
     /**
      * Sets the movie of this display.
+     *
      * @param movie The movie to be set in the display
      */
     public void setMovie(IMovie movie) {
@@ -91,6 +93,7 @@ public class DisplayMovieController {
      * Opens up a new window that starts the rating-view. Loads it with the information
      * that this controller has stored. Tells the myMovieTrackerController that a movie
      * is being rated.
+     *
      * @throws IOException if the Rating-view cannot be shown.
      */
     @FXML

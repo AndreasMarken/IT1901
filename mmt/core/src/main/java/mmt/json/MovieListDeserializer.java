@@ -12,10 +12,22 @@ import java.io.IOException;
 import mmt.core.Movie;
 import mmt.core.MovieList;
 
+/**
+ * Class to deserialize (text to object) MovieList objects.
+ */
 public class MovieListDeserializer extends JsonDeserializer<MovieList> {
 
     private MovieDeserializer movieDeserializer = new MovieDeserializer();
 
+    /** 
+     * Method to deserialize (text to object) MovieList objects.
+     *
+     * @param parser JsonParser
+     * @param ctxt DeserializationContext
+     * @return Deserialized MovieList object
+     * @throws IOException Method could throw IOException
+     * @throws JacksonException Method could throw JacksonException
+     */
     @Override
     public MovieList deserialize(JsonParser parser, DeserializationContext ctxt) throws IOException, JacksonException {
         MovieList movieList = new MovieList();
@@ -36,6 +48,5 @@ public class MovieListDeserializer extends JsonDeserializer<MovieList> {
             }
         }
         return movieList;
-    }   
-    
+    }    
 }

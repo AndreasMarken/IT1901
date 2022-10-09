@@ -43,6 +43,7 @@ public class MyMovieTrackerController {
     
     /**
      * Method that runs upon initializing the controller and app.
+     *
      * @throws IOException When movies from the file cannot be loaded.
      */
     @FXML
@@ -62,6 +63,7 @@ public class MyMovieTrackerController {
 
     /**
      * Loads movies form the given file.
+     *
      * @return MovieList: An object that contains a list of movies.
      * @throws IOException If the movies cannot be loaded from the file.
      */
@@ -72,6 +74,7 @@ public class MyMovieTrackerController {
 
     /**
      * Saves the movielist that is stored in the controller to the given file.
+     *
      * @throws IOException if the movies cannot be saved to file.a
      */
     private void saveMovieListToFile() throws IOException {
@@ -106,7 +109,7 @@ public class MyMovieTrackerController {
     }
 
     /**
-     * Method to be run when adding a new movie to the movielist is done by the user
+     * Method to be run when adding a new movie to the movielist is done by the user.
      */
     @FXML
     private void addNewMovie() {
@@ -115,6 +118,7 @@ public class MyMovieTrackerController {
 
     /**
      * Shows the add/edit movie view. Tells the editmoviecontroller which movie to be edited.
+     *
      * @param movie the movie to be edited. If input is null, a new movie is to be created.
      */
     protected void editMovie(IMovie movie) {
@@ -124,6 +128,7 @@ public class MyMovieTrackerController {
 
     /**
      * Hides/Shows the edit/add movie view.
+     *
      * @param hide true if the view shold be visible, false if it should be hidden.
      */
     protected void hideEditMovie(boolean hide) {
@@ -132,8 +137,8 @@ public class MyMovieTrackerController {
 
     /**
      * Displays the movies in the movielist to the user in the app.
-     * @param watchList : True if only movies on the watchlist to be shown.
-     * False if all movies to be shown.
+     *
+     * @param watchList : True if only movies on the watchlist is to be shown, false otherwise.
      */
     protected void displayMovieListView(boolean watchList) {
         try {
@@ -180,6 +185,7 @@ public class MyMovieTrackerController {
 
     /**
      * Method to get the list of movies in the movielist.
+     *
      * @return A collection of the movies.
      */
     protected Collection<IMovie> getMovies() {
@@ -188,6 +194,7 @@ public class MyMovieTrackerController {
 
     /**
      * Method to get the movielist that this controller is linked to.
+     *
      * @return The Movielist-object.
      */
     protected MovieList getMovieList() {
@@ -196,6 +203,7 @@ public class MyMovieTrackerController {
 
     /**
      * Deletes the given movie from the movielist and updates the movielistview to the user.
+     *
      * @param movie the movie to be deleted.
      */
     protected void deleteMovie(IMovie movie) {
@@ -205,6 +213,7 @@ public class MyMovieTrackerController {
 
     /**
      * Adds movie to the users movielist.
+     *
      * @param movie the movie to be added.
      */
     protected void addMovie(IMovie movie) {

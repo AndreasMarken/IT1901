@@ -96,6 +96,7 @@ public class EditMovieController {
     /**
      * Updates the existing movie, that the user has chosen, with the input-information
      * in the app.
+     *
      * @param title : The new title to be given
      * @param duration : The new duration to be given
      * @param releaseDate : The new releasedate to be given
@@ -132,6 +133,7 @@ public class EditMovieController {
 
     /**
      * The myMovieTrackerController this app is linked, and communicates with.
+     *
      * @param myMovieTrackerController the myMovieTrackerController to be set.
      */
     public void setMyMovieTrackerController(MyMovieTrackerController myMovieTrackerController) {
@@ -140,6 +142,7 @@ public class EditMovieController {
 
     /**
      * Initializeses the adding/editing of a movie.
+     *
      * @param movie If null is given, a new movie is to be created. Else, a movie will be started to edit.
      */
     protected void editMovie(IMovie movie) {
@@ -170,6 +173,7 @@ public class EditMovieController {
 
     /**
      * Method to check if a moviename is valid or not.
+     *
      * @param title The title to check wheter is valid and free.
      * @return true if the new moviename is valid. fasle if it is not.
      */

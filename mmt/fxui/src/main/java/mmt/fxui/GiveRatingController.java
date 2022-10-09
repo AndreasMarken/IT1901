@@ -77,6 +77,7 @@ public class GiveRatingController {
 
     /**
      * Sets the movietrackercontroller this object is linked with.
+     *
      * @param myMovieTrackerController the myMovieTrackerController to be linked with.
      */
     protected void setMyMovieTrackerController(MyMovieTrackerController myMovieTrackerController) {
@@ -85,6 +86,7 @@ public class GiveRatingController {
 
     /**
      * Fills in the fields in the review-view with the information to the given movie.
+     *
      * @param movie The movie to get the name from.
      */
     public void setInformation(IMovie movie) {

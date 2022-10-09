@@ -7,16 +7,24 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 import mmt.core.Rating;
 
+/**
+ * Class to serialize (object to text) Rating objects.
+ */
 public class RatingSerializer extends JsonSerializer<Rating> {
 
-    /*
-    * Format: 
-    * {
-    * "rating" :  ...
-    * "comment" : "..."
-    * }
-    */
-
+    /** 
+     * Method to serialize (object to text) Rating objects.
+     * Format:
+     * {
+     * "rating" :  ...
+     * "comment" : "..."
+     * }
+     *
+     * @param rating Rating object to serialize
+     * @param jsonGen JsonGenerator
+     * @param serializerProvider SerializerProvider
+     * @throws IOException Method could throw IOException
+     */
     @Override
     public void serialize(Rating rating, JsonGenerator jsonGen, SerializerProvider serializerProvider) throws IOException {
         jsonGen.writeStartObject();
