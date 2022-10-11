@@ -9,15 +9,17 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class MovieTest {
-    private Movie starTrek;
+    private IMovie starTrek;
     private Date releaseDate;
     private Time duration;
+    private IRating rating;
 
     @BeforeEach
     public void setUp(){
         releaseDate = new Date(1990, 05, 22);
         duration = new Time(02, 00, 00);
         starTrek = new Movie("Star Trek", duration, releaseDate);
+        rating = new Rating(8);
     }
 
 
@@ -38,30 +40,18 @@ public class MovieTest {
     }
 
     @Test
-    @DisplayName("Testing the validate method checkIfNull() and that it works for every type of inputvalue")
-    public void testCheckIfNull(){
-        Assertions.assertDoesNotThrow(()-> {
-            Movie movie = new Movie("James Bond", duration, releaseDate);
-         });
-        
-        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            Movie movie2 = new Movie("James Bond", null, releaseDate);
-        });
+    @DisplayName("Test watchlist function and if getRatingNumber returns 0 when it is null")
+    public void testFunctions(){
+        starTrek.setOnTakeOfWatchlist(true);
+        Assertions.assertEquals(starTrek.getWatchlist(), true);
+        starTrek.setOnTakeOfWatchlist(false);
+        Assertions.assertEquals(starTrek.getWatchlist(), false);   
+        Assertions.assertEquals(starTrek.getRatingNumber(), 0);
+        starTrek.setRating(rating);
+        Assertions.assertEquals(starTrek.getRatingNumber(), 8);
 
-        Assertions.assertEquals("Input value is null on one of the following fields: Title, duration, actors, release date", exception.getMessage());
-
-        Exception exception2 = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            Movie movie3 = new Movie(null, duration, releaseDate);
-        });
-
-        Assertions.assertEquals("Input value is null on one of the following fields: Title, duration, actors, release date", exception2.getMessage());
-
-
-        Exception exception4 = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            Movie movie2 = new Movie("James Bond", duration, null);
-        });
-
-        Assertions.assertEquals("Input value is null on one of the following fields: Title, duration, actors, release date", exception4.getMessage());
     }
-    
+
 }
+
+    

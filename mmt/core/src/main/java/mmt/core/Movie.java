@@ -13,26 +13,10 @@ public class Movie implements IMovie {
     private Boolean watchlist = false;
     
     public Movie(String title, Time duration, Date releaseDate) {
-        if (checkIfNull(duration)){
             this.duration = duration;
-        }
-        if (checkIfNull(title)){
             this.title = title;
-        }
-        if (checkIfNull(releaseDate)){
-            this.releaseDate = releaseDate;
-        }
+            this.releaseDate = releaseDate;   
     }
-
-    public Movie(String title, Time duration) {
-        if (checkIfNull(duration)){
-            this.duration = duration;
-        }
-        if (checkIfNull(title)){
-            this.title = title;
-        }
-    }
-
 
     @Override
     public String getTitle() {
@@ -41,9 +25,8 @@ public class Movie implements IMovie {
 
     @Override
     public void setTitle(String title) {
-        if (checkIfNull(title)) {
             this.title = title;
-        }
+
     }
 
     @Override
@@ -84,14 +67,6 @@ public class Movie implements IMovie {
         return this.watchlist;
     }
 
-    private Boolean checkIfNull(Object input){
-        if(input == null){
-            throw new IllegalArgumentException("Input value is null on one of the following fields: Title, duration, actors, release date");
-        }
-        return true;
-
-    }
-
     @Override
     public String toString() {
         return "Movie title: " + getTitle() + "\n"
@@ -104,18 +79,15 @@ public class Movie implements IMovie {
 
     @Override
     public void setDuration(Time duration) {
-        if (checkIfNull(duration)) {
             this.duration = duration;
-        }
     }
 
     @Override
     public void setReleaseDate(Date releaseDate) {
-        if (checkIfNull(releaseDate)) {
             this.releaseDate = releaseDate;
-        }
     }
 
     
         
 }
+
