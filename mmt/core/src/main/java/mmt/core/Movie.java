@@ -133,15 +133,5 @@ public class Movie implements IMovie {
             + "Rating: " + getRating() + "\n"
             + "Watchlist: " + getWatchlist() + "\n";
     }
-
-    @Override
-    public void setDuration(Time duration) {
-            this.duration = duration;
-    }
-
-    @Override
-    public void setReleaseDate(Date releaseDate) {
-            this.releaseDate = releaseDate;
-        }
 }     
 
