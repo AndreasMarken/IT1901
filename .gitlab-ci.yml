@@ -13,5 +13,5 @@ test:
   stage: test
   script:
     - cd mmt
-    - mvn test
+    - mvn test -f core/pom.xml
 
