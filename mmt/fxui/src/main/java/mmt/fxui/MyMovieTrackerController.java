@@ -1,18 +1,19 @@
 package mmt.fxui;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import mmt.core.Comparators;
@@ -26,20 +27,30 @@ public class MyMovieTrackerController {
     EditMovieController editMovieController = new EditMovieController();
 
     @FXML
-    private Pane movieListView;
+    protected Pane movieListView;
 
     private MovieList movieList = new MovieList();
     private ObjectMapper mapper = new ObjectMapper();
 
     @FXML
-    private VBox editMovieWindow;
+    protected VBox editMovieWindow;
 
     @FXML
     protected VBox giveRating;
 
     @FXML
     private CheckBox watchList;
-    
+
+    private boolean testingMode = false;
+
+    private Path getSaveFilePath(String fileName) {
+        return getSaveFolderPath().resolve(fileName);
+    }
+
+    private Path getSaveFolderPath() {
+        return Path.of(System.getProperty("user.home"), "it1901", "mmt", "saveFiles");
+    }
+
     @FXML
     void initialize() throws IOException {
         editMovieController.setMyMovieTrackerController(this);
@@ -56,12 +67,38 @@ public class MyMovieTrackerController {
     }
 
     protected MovieList loadMovieListFromFile() throws IOException {
+        //If the filepath does not exist, it will be generated.
+        Files.createDirectories(getSaveFolderPath());
+        try {
+            if (testingMode) {
+                Files.createFile(getSaveFilePath("movieTest.json"));
+            } else {
+                Files.createFile(getSaveFilePath("movie.json"));
+            }   
+        } catch (FileAlreadyExistsException e) {
+            //If the file already exist, FileAlreadyExistException will be thrown.
+            //Do nothing if the file already exists
+        }
+        
         //this.movieList = mapper.readValue(new File("movie.json"), MovieList.class);
-        return mapper.readValue(new File("mmt/core/src/main/resources/mmt/json/movie.json"), MovieList.class); 
+        try {
+            if (testingMode) {
+                return mapper.readValue(getSaveFilePath("movieTest.json").toFile(), MovieList.class);
+            }
+            return mapper.readValue(getSaveFilePath("movie.json").toFile(), MovieList.class);
+        } catch (MismatchedInputException e) {
+            return new MovieList();
+            //If there is no information stored in the file, return a new instance of a movielist.
+        }
+        
     }
 
     private void saveMovieListToFile() throws IOException {
-        mapper.writeValue(new File("mmt/core/src/main/resources/mmt/json/movie.json"), movieList);
+        if (testingMode) {  
+            mapper.writeValue(getSaveFilePath("movieTest.json").toFile(), movieList);
+        } else {
+            mapper.writeValue(getSaveFilePath("movie.json").toFile(), movieList);
+        }
     }
 
     @FXML
@@ -96,15 +133,6 @@ public class MyMovieTrackerController {
         editMovieWindow.setVisible(hide);
     }
 
-    private Pane findMoviePaneFromMovieListView(IMovie iMovie) {
-        for (Node node : movieListView.getChildren()) {
-            if (((Label) node.lookup("#title")).getText().equals(iMovie.getTitle())) {
-                return (Pane) node;
-            }
-        }
-        return null;
-    }
-
     protected void displayMovieListView(boolean watchList) {
         try {
             movieListView.getChildren().clear();
@@ -119,28 +147,26 @@ public class MyMovieTrackerController {
             }
             
             for (IMovie IMovie : movies) {
-                Pane moviePane = findMoviePaneFromMovieListView(IMovie);
-                if (moviePane == null) {
-                    FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("DisplayMovie.fxml"));
-                    moviePane = fxmlLoader.load();
-                    DisplayMovieController displayMovieController = fxmlLoader.getController();
-                    displayMovieController.setMyMovieTrackerController(this);
-                    displayMovieController.setMovie(IMovie);
-                    displayMovieController.setMovieInformation();
-                    movieListView.getChildren().add(moviePane);
-                }
+                FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("DisplayMovie.fxml"));
+                Pane moviePane = fxmlLoader.load();
+                DisplayMovieController displayMovieController = fxmlLoader.getController();
+                displayMovieController.setMyMovieTrackerController(this);
+                displayMovieController.setMovie(IMovie);
+                displayMovieController.setMovieInformation();
+                movieListView.getChildren().add(moviePane);
                 if (offsetY < 0.0) {
                     offsetY = moviePane.getPrefHeight();
                 }
                 int numberOfMoviesCalc = (int) numberOfMovies / 2;
                 
                 moviePane.setLayoutY(offsetY * numberOfMoviesCalc);
-                moviePane.setLayoutX(offsetX * (numberOfMovies%2));
+                moviePane.setLayoutX(offsetX * (numberOfMovies % 2));
                 moviePane.setId("Movie"+String.valueOf(numberOfMovies));
                 numberOfMovies++;
             }
             int numberOfMoviesCalc = (int) numberOfMovies / 2;
             movieListView.setLayoutY(numberOfMoviesCalc);
+
         } catch (IOException e) {
             //If the movie was not able to be displayed, try skipping this movie.
         }
@@ -175,5 +201,16 @@ public class MyMovieTrackerController {
     @FXML
     protected void updateMovieListView() {
         displayMovieListView(watchList.isSelected());
+    }
+
+    public EditMovieController getEditMovieController() {
+        return this.editMovieController;
+    }
+
+    protected void setTestingMode(boolean testingMode) throws IOException {
+        this.testingMode = testingMode;
+        this.movieList = new MovieList();
+        saveMovieListToFile();
+        updateMovieListView();
     }
 }

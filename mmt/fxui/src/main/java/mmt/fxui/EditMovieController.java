@@ -33,7 +33,11 @@ public class EditMovieController {
     private CheckBox watchListCheckBox;
 
     @FXML
-    private Label newEditMovieTab, errorMessage;
+    private Label newEditMovieTab;
+
+    @FXML
+    protected Label errorMessage;
+
 
     private IMovie movie;
 
@@ -46,7 +50,7 @@ public class EditMovieController {
                 return;
             }
             Time time = new Time(hours.getValue(), minutes.getValue(), 0);
-            if (time.getHours() == 00 && time.getMinutes() == 00) {
+            if (time.getHours() <= 00 && time.getMinutes() <= 00) {
                 errorMessage.setText("The movie must have a duration.");
                 return;
             }
@@ -54,8 +58,10 @@ public class EditMovieController {
                 date.getValue().getYear();
                 date.getValue().getMonth();
                 date.getValue().getDayOfMonth();
+                
             } catch (NullPointerException e) {
                 errorMessage.setText("You must choose a valid date.");
+                return;
             }
             Date releaseDate = new Date(date.getValue().getYear()-1900, date.getValue().getMonthValue()-1, date.getValue().getDayOfMonth());
             boolean watchList = watchListCheckBox.isSelected();

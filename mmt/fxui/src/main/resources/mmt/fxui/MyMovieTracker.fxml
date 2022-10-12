@@ -23,11 +23,11 @@
                         <Font size="21.0" />
                      </font>
                   </Text>
-                  <MenuButton layoutX="70.0" layoutY="173.0" mnemonicParsing="false" text="Sort">
+                  <MenuButton id="menuButton" layoutX="70.0" layoutY="173.0" mnemonicParsing="false" text="Sort">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleSortRating" text="Rating" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleSortTitle" text="Title" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleSortDuration" text="Duration" />
+                        <MenuItem id="sortRating" mnemonicParsing="false" onAction="#handleSortRating" text="Rating" />
+                        <MenuItem id="sortTitle" mnemonicParsing="false" onAction="#handleSortTitle" text="Title" />
+                        <MenuItem id="sortDuration" mnemonicParsing="false" onAction="#handleSortDuration" text="Duration" />
                     </items>
                   </MenuButton>
                   <CheckBox fx:id="watchList" layoutX="4.0" layoutY="199.0" mnemonicParsing="false" onMouseClicked="#updateMovieListView" prefHeight="69.0" prefWidth="190.0" text="Show only movies on your watchlist">
