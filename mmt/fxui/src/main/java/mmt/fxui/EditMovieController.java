@@ -2,6 +2,8 @@ package mmt.fxui;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
@@ -121,6 +123,10 @@ public class EditMovieController {
             newEditMovieTab.setText("New Movie:");
             clearInputFields();
         }
+    }
+
+    protected void setDatePickerValue(LocalDate object) {
+        date.setValue(object);
     }
 
     private void fillFields() {

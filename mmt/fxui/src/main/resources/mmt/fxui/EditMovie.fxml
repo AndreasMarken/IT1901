@@ -34,7 +34,7 @@
             <SpinnerValueFactory.IntegerSpinnerValueFactory max="59" min="0" />
          </valueFactory>
       </Spinner>
-      <DatePicker fx:id="date" layoutX="111.0" layoutY="109.0" />
+      <DatePicker id="date" fx:id="date" layoutX="111.0" layoutY="109.0" />
       <Label fx:id="errorMessage" layoutX="17.0" layoutY="352.0" prefHeight="29.0" prefWidth="172.0" text="ErrorMessage" textFill="RED" />
    </children>
 </AnchorPane>

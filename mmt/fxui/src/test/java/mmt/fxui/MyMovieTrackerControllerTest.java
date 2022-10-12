@@ -1,6 +1,7 @@
 package mmt.fxui;
 
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.junit.jupiter.api.Assertions;
@@ -14,6 +15,7 @@ import org.testfx.util.WaitForAsyncUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
@@ -37,10 +39,12 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
 
         clickOn("#date");
         WaitForAsyncUtils.waitForFxEvents();
-        write(releaseDate);
-        press(KeyCode.ENTER);
-        release(KeyCode.ENTER);
-        WaitForAsyncUtils.waitForFxEvents();
+
+        try {
+            ((DatePicker)lookup("#date").queryAll().stream().findFirst().get()).setValue(LocalDate.of(Integer.parseInt(releaseDate.substring(6)), Integer.parseInt(releaseDate.substring(3, 5)), Integer.parseInt(releaseDate.substring(0,2))));
+        } catch (NullPointerException e) {
+            //Skip date if null is used as input
+        }
 
         clickOn("#hours");
         WaitForAsyncUtils.waitForFxEvents();
@@ -211,12 +215,12 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
 
         int numberOfMoviesBeforeAddingNew = myMovieTrackerController.getMovies().size();
 
-        writeMovie(movieTitle, "test", durationHours, durationMinutes, isOnWatchlist);
+        writeMovie(movieTitle, null, durationHours, durationMinutes, isOnWatchlist);
         clickOn("#submitButton");
         WaitForAsyncUtils.waitForFxEvents();
 
         Assertions.assertEquals(numberOfMoviesBeforeAddingNew, myMovieTrackerController.getMovies().size(),
-         "You should not be able to add a movie with an invalid title name");
+         "You should not be able to add a movie with an invalid releasedate");
 
         Assertions.assertEquals("You must choose a valid date.", myMovieTrackerController.getEditMovieController().errorMessage.getText(),
                                 "The errormessage shown to the user was incorrect");
