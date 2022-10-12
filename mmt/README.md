@@ -37,9 +37,15 @@ mvn clean install
 This will clean the maven project, and build it from scratch.
 
 ### Running the project
-To run the javafx part of the project, perform:
+To run the javafx part of the project you have two opportunities, either perform:
 
 ```
+mvn javafx:run -f fxui/pom.xml
+```
+
+Or perform this:
+```
+cd fxui
 mvn javafx:run
 ```
 
@@ -52,9 +58,9 @@ To perform all of the test, you can use:
 mvn test
 ```
 
-This will run all of the test, and give you a feedback on how many that succeded.
+This will run all of the test, and give you a feedback on how many that succeded. If you only want to perform tests in one module, you can use `cd core` or `cd fxui` and then perform `mvn test`.
 
-After you have run the test, there will open a new folder in the target folder. The folders name is site/jacoco. In this folder, there will be an index.html. This can be opened in a web browser, to look at the test coverage.
+After you have run the test, there will open a new folder in each of the modules target folder. The folders name is site/jacoco. In this folder, there will be an index.html. This can be opened in a web browser, to look at the test coverage.
 
 ### Building the project in GitPod
 To build the project in gitpod, simply press the button at the top of this file. From here, a code enviroment will open. To run the project, use the same commands stated above.

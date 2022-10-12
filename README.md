@@ -74,7 +74,7 @@ We have created our own MR template for what our MRs should contain.
 
 1. Click on gitpod tag at the top of the page.
 2. Navigate to the correct folder: `cd /workspace/gr2238/mmt` when in the workspace. This should automaticly be done when you open gitpod from the project.
-3. run command `mvn javafx:run`. TODO: Ny kommando mvn javafx:run -f fxui/pom.xml
+3. You can now either run: `mvn javafx:run -f fxui/pom.xml` or you can firstly `cd fxui` and then use the command `mvn javafx:run`. 
 4. click "remote explorer" in the toolbar to the left.
 5. click "GITPOD WORKSPACE" -> "Ports".
 6. click on the port in "Ports" 
