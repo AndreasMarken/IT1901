@@ -3,8 +3,11 @@ package mmt.core;
 import java.sql.Date;
 import java.sql.Time;
 
+/** 
+ * Class to represent Movie objects.
+ * Implements the interface IMovie.
+ */
 public class Movie implements IMovie {
-
 
     private String title;
     private Date releaseDate;
@@ -12,6 +15,13 @@ public class Movie implements IMovie {
     private IRating rating;
     private Boolean watchlist = false;
     
+    /** 
+     * One of two constructors for Movie.
+     *
+     * @param title Title of the Movie
+     * @param duration Duration of teh Movie
+     * @param releaseDate Release date of the Movie
+     */
     public Movie(String title, Time duration, Date releaseDate) {
         if (checkIfNull(duration)) {
             this.duration = duration;
@@ -24,6 +34,12 @@ public class Movie implements IMovie {
         }
     }
 
+    /** 
+     * One of two constructors for Movie.
+     *
+     * @param title Title of the Movie
+     * @param duration Duration of teh Movie
+     */
     public Movie(String title, Time duration) {
         if (checkIfNull(duration)) {
             this.duration = duration;
@@ -32,7 +48,7 @@ public class Movie implements IMovie {
             this.title = title;
         }
     }
-
+  
     @Override
     public String getTitle() {
         return this.title;
@@ -43,11 +59,18 @@ public class Movie implements IMovie {
             this.title = title;
 
     }
-
+    
     @Override
     public Time getDuration() {
         return this.duration;
     }
+
+    @Override
+    public void setDuration(Time duration) {
+        if (checkIfNull(duration)) {
+            this.duration = duration;
+        }
+    } 
 
     @Override
     public Date getReleaseDate() {
@@ -55,15 +78,22 @@ public class Movie implements IMovie {
     }
 
     @Override
-    public void setRating(IRating rating) {
-        this.rating = rating;
+    public void setReleaseDate(Date releaseDate) {
+        if (checkIfNull(releaseDate)) {
+            this.releaseDate = releaseDate;
+        }
     }
 
     @Override
     public IRating getRating() {
         return this.rating;
     }
-
+    
+    @Override
+    public void setRating(IRating rating) {
+        this.rating = rating;
+    }
+    
     @Override
     public int getRatingNumber() {
         if (rating == null) {
@@ -76,12 +106,18 @@ public class Movie implements IMovie {
     public void setOnTakeOfWatchlist(Boolean trueOrFalse) {
         this.watchlist = trueOrFalse;
     }
-
+    
     @Override
     public Boolean getWatchlist() {
         return this.watchlist;
     }
-
+    
+    /** 
+     * Method to check if a object is "null".
+     *
+     * @param input The object to be checked
+     * @return true if object is null, otherwise false
+     */
     private Boolean checkIfNull(Object input) {
         if (input == null) {
             throw new IllegalArgumentException("Input value is null on one of the following fields: Title, duration, actors, release date");

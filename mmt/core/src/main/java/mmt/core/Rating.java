@@ -13,7 +13,7 @@ public class Rating implements IRating {
      * Generates a Rating object with only the rating given as a parameter.
      * Automaticly sets comment to be the empty string.
      *
-     * @param rating
+     * @param rating Rating to set
      */
     public Rating(int rating) {
         super();

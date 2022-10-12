@@ -6,9 +6,13 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 import mmt.core.Movie;
 
+/**
+ * Class to serialize (object to text) Movie objects.
+ */
 public class MovieSerializer extends JsonSerializer<Movie> {
-
-    /*
+    
+    /**
+     * Method to serialize (object to text) Movie objects.
      * Format:
      * {
      * "title": "title"
@@ -17,8 +21,12 @@ public class MovieSerializer extends JsonSerializer<Movie> {
      * "rating": [...]
      * "watchlist": true/false
      * }
+     *
+     * @param movie Movie object to serialize
+     * @param jsonGen JsonGenerator
+     * @param serializerProvider SerializerProvider
+     * @throws IOException Method could throw IOException
      */
-
     @Override
     public void serialize(Movie movie, JsonGenerator jsonGen, SerializerProvider serializerProvider) throws IOException {
         jsonGen.writeStartObject();
@@ -29,5 +37,4 @@ public class MovieSerializer extends JsonSerializer<Movie> {
         jsonGen.writeBooleanField("watchlist", movie.getWatchlist());
         jsonGen.writeEndObject();
     }
-    
 }

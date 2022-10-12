@@ -1,9 +1,8 @@
 package mmt.core;
 
 /**
- * Rating interface
+ * Rating interface.
  */
-
 public interface IRating {
 
     /**
@@ -35,10 +34,4 @@ public interface IRating {
      * @return returns the specific comment from this Rating object.
      */
     public String getComment();
-
-    /**
-     *
-     * @return Returns a string representation of this object.
-     */
-    public String toString();
 }
