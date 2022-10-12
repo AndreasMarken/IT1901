@@ -12,22 +12,42 @@ import com.fasterxml.jackson.databind.node.TextNode;
 import java.io.IOException;
 import mmt.core.Rating;
 
+/**
+ * Class to deserialize (text to object) Rating objects.
+ */
 public class RatingDeserializer extends JsonDeserializer<Rating> {
-
-    /*
+    
+    /** 
+     * Method to deserialize (text to object) Rating objects.
      * Format: 
      * {
      * "rating" :  ...
      * "comment" : "..."
      * }
+     *
+     * @param parser JsonParser
+     * @param ctxt DeserializationContext
+     * @return Deserialized Rating object
+     * @throws IOException Method could throw IOException
+     * @throws JacksonException Method could throw JacksonException
      */
-
     @Override
-    public Rating deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JacksonException {
-        TreeNode treeNode = p.getCodec().readTree(p);
+    public Rating deserialize(JsonParser parser, DeserializationContext ctxt) throws IOException, JacksonException {
+        TreeNode treeNode = parser.getCodec().readTree(parser);
         return deserialize((JsonNode) treeNode);
     }
     
+    /** 
+     * Method to deserialize (text to object) Rating objects.
+     * Format: 
+     * {
+     * "rating" :  ...
+     * "comment" : "..."
+     * }
+     *
+     * @param jsonNode JsonNode
+     * @return Deserialized Rating object
+     */
     public Rating deserialize(JsonNode jsonNode) {
         if (jsonNode instanceof ObjectNode) {
             ObjectNode objectNode = (ObjectNode) jsonNode;

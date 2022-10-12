@@ -15,10 +15,15 @@ import java.sql.Time;
 import mmt.core.Movie;
 import mmt.core.Rating;
 
+/**
+ * Class to deserialize (text to object) Movie objects.
+ */
 public class MovieDeserializer extends JsonDeserializer<Movie> {
 
     private RatingDeserializer ratingDeserializer = new RatingDeserializer();
-    /*
+
+    /**
+     * Method to deserialize (text to object) Movie objects.
      * Format:
      * {
      * "title": "title"
@@ -27,14 +32,33 @@ public class MovieDeserializer extends JsonDeserializer<Movie> {
      * "rating": [...]
      * "watchlist": true/false
      * }
+     *
+     * @param parser JsonParser
+     * @param ctxt DeserializationContext
+     * @return Deserialized Movie object
+     * @throws IOException Method could throw IOException
+     * @throws JacksonException Method could throw JacksonException
      */
-
     @Override
-    public Movie deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JacksonException {
-        TreeNode treeNode = p.getCodec().readTree(p);
+    public Movie deserialize(JsonParser parser, DeserializationContext ctxt) throws IOException, JacksonException {
+        TreeNode treeNode = parser.getCodec().readTree(parser);
         return deserialize((JsonNode) treeNode);
     }
 
+    /**
+     * Method to deserialize (text to object) Movie objects.
+     * Format:
+     * {
+     * "title": "title"
+     * "releaseDate": "yyyy-mm-dd"
+     * "duration": "hh:mm:ss"
+     * "rating": [...]
+     * "watchlist": true/false
+     * }
+     *
+     * @param jsonNode JsonNode
+     * @return Deserialized Movie object
+     */
     public Movie deserialize(JsonNode jsonNode) {
         if (jsonNode instanceof ObjectNode objectNode) {
             JsonNode titleNode = objectNode.get("title");
