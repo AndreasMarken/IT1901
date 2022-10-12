@@ -39,7 +39,7 @@
             </Pane>
             <Pane prefHeight="285.0" prefWidth="198.0">
                <children>
-                    <Button id="addNewMovie" fx:id="addNewMovie" layoutX="4.0" layoutY="235.0" mnemonicParsing="false" onAction="#addNewMovie" prefHeight="27.0" prefWidth="190.0" text="New Movie">
+                    <Button fx:id="addNewMovie" layoutX="4.0" layoutY="235.0" mnemonicParsing="false" onAction="#addNewMovie" prefHeight="27.0" prefWidth="190.0" text="New Movie">
                        <font>
                           <Font size="14.0" />
                        </font>
@@ -62,15 +62,15 @@
                 <children>
                     <ScrollPane prefHeight="491.0" prefWidth="572.0">
                        <content>
-                          <Pane id="movieListView" fx:id="movieListView" prefWidth="550.0" />
+                          <Pane fx:id="movieListView" prefWidth="550.0" />
                        </content>
                     </ScrollPane>
-                    <VBox id="editMovieWindow" fx:id="editMovieWindow" layoutX="131.0" layoutY="49.0" prefHeight="200.0" prefWidth="100.0">
+                    <VBox fx:id="editMovieWindow" layoutX="131.0" layoutY="49.0" prefHeight="200.0" prefWidth="100.0">
                        <children>
-                          <fx:include id="editMovie" fx:id="editMovie" source="EditMovie.fxml" />
+                          <fx:include fx:id="editMovie" source="EditMovie.fxml" />
                        </children>
                      </VBox>
-                     <VBox id="giveRating" fx:id="giveRating" layoutX="131.0" layoutY="49.0" prefHeight="200.0" prefWidth="100.0">
+                     <VBox fx:id="giveRating" layoutX="131.0" layoutY="49.0" prefHeight="200.0" prefWidth="100.0">
                      </VBox>
                  </children>
             </AnchorPane>

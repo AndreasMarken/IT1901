@@ -13,9 +13,24 @@ public class Movie implements IMovie {
     private Boolean watchlist = false;
     
     public Movie(String title, Time duration, Date releaseDate) {
+        if (checkIfNull(duration)) {
             this.duration = duration;
+        }
+        if (checkIfNull(title)) {
             this.title = title;
-            this.releaseDate = releaseDate;   
+        }
+        if (checkIfNull(releaseDate)) {
+            this.releaseDate = releaseDate;
+        }
+    }
+
+    public Movie(String title, Time duration) {
+        if (checkIfNull(duration)) {
+            this.duration = duration;
+        }
+        if (checkIfNull(title)) {
+            this.title = title;
+        }
     }
 
     @Override
@@ -30,7 +45,7 @@ public class Movie implements IMovie {
     }
 
     @Override
-    public Time getDuration(){
+    public Time getDuration() {
         return this.duration;
     }
 
@@ -51,7 +66,7 @@ public class Movie implements IMovie {
 
     @Override
     public int getRatingNumber() {
-        if (rating == null){
+        if (rating == null) {
             return 0;
         }
         return rating.getRating();
@@ -63,18 +78,24 @@ public class Movie implements IMovie {
     }
 
     @Override
-    public Boolean getWatchlist(){
+    public Boolean getWatchlist() {
         return this.watchlist;
+    }
+
+    private Boolean checkIfNull(Object input) {
+        if (input == null) {
+            throw new IllegalArgumentException("Input value is null on one of the following fields: Title, duration, actors, release date");
+        }
+        return true;
     }
 
     @Override
     public String toString() {
         return "Movie title: " + getTitle() + "\n"
-        + "Duration: " + getDuration().getHours() + " hours " + getDuration().getMinutes() + " minutes" + "\n"
-        + "Release date: " + getReleaseDate() + "\n"
-        + "Rating: " + getRating() + "\n"
-        + "Watchlist: " + getWatchlist() + "\n"
-        ;
+            + "Duration: " + getDuration().getHours() + " hours " + getDuration().getMinutes() + " minutes" + "\n"
+            + "Release date: " + getReleaseDate() + "\n"
+            + "Rating: " + getRating() + "\n"
+            + "Watchlist: " + getWatchlist() + "\n";
     }
 
     @Override
@@ -85,9 +106,6 @@ public class Movie implements IMovie {
     @Override
     public void setReleaseDate(Date releaseDate) {
             this.releaseDate = releaseDate;
-    }
-
-    
-        
-}
+        }
+}     
 

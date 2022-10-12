@@ -1,5 +1,7 @@
 package mmt.fxui;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
@@ -8,7 +10,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 
 import javafx.fxml.FXML;
@@ -56,13 +57,13 @@ public class MyMovieTrackerController {
         editMovieController.setMyMovieTrackerController(this);
         hideEditMovie(false);
 
-        //Load the movies registered in the movie.json file.
+        // Load the movies registered in the movie.json file.
         mapper.registerModule(new MovieModule());
         MovieList temporaryMovieList = loadMovieListFromFile();
         for (IMovie iMovie : temporaryMovieList) {
             movieList.addMovie(iMovie);
         }
-        //Display the movies in the file
+        // Display the movies in the file
         updateMovieListView();
     }
 
@@ -194,7 +195,6 @@ public class MyMovieTrackerController {
         try {
             this.movieList.addMovie(movie);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
         }
     }
 
