@@ -38,15 +38,13 @@
 - Release date
 - Duration
 - Rating (1, 1.1, 1.2, ..., 10)
+- Watchlist (boolean: in or not in the watchlist)
 
 #### Movie-object operations
-- set and edit the title
-- set and edit the release date
-- set and edit the duration
-- set and edit the rating
- 
+- Set and edit all attributes
+
 #### List-object attributes
-- A list consisting of Movie-objects, initially zero
+- A list consisting of Movie-objects, size initially zero
 
 #### List-object operations
 - Sort the Movie-objects contained in the list based on rating, title and duration
@@ -64,12 +62,100 @@
 
 # Personas
 
-## Live Langåsen
-![Image was not shown](images-userstories/Live.jpeg)
+Our personas are based on the user stories and the article "Norsk mediebarometer 2021" concucted by SSB, Statistics Norway [^1]. From the article, it appears that young men watch the most video and film media on average every day. That is why Magnus is one of our personas. If we manage to make an app that satisfies Magnus, our app should satisfy a large group of users in Norway, which is our goal. Figure 1 displays the proportion of the population that watches video media on an average day, by gender, age and education, in 2021. As one can see, there are also a lot of women that watch movies in the age group 25-44. That is why we included Live, so that the impacts of her and Magnus on the app can complement each other, and make a great product.
+[^1]: https://www.ssb.no/kultur-og-fritid/tids-og-mediebruk/artikler/norsk-mediebarometer-2021/_/attachment/inline/21eec81a-a3d3-4cac-abd5-f08465e840a0:c55b76d6b22c727056ab0b4c3cb8798e4142820d/SA169_web.pdf
+
+![Image was not shown](images-userstories/SSB-table.jpeg)
+*Figure 1: proportion of the population that watches video media on an average day, by gender, age and education, in Norway in 2021.*
+
+
+## Magnus Lysnes
+![Image was not shown](images-userstories/Magnus.jpeg)
+
+*Photo retrived from Utdanning.no*[^2]
+
+[^2]: https://utdanning.no/tema/yrkesintervju/vei-_og_anleggsarbeider 
 
 ### Description
 
-Live works as a doctor at the St. Olavs hospital. Her days are usually quite busy. When she is not working, she loves spending quality time with her husband and two young children. They often watch a movie together. If it is a good movie, Live would like to recommend it for her friends, her colleagues and her patients. In Lives opinion, movies are always a great subject to talk about to get the conversation going. When talking about movies with others, she also often recive recommendations. Sadly, due to busy days of work, she often forgets the movie she was recommended. 
+Magnus is a construction worker in a mid-sized company. He is 27 years old and holds no academic degree. He watches lots of movies and has good software-app competence. Because of his good competence, he has certain expectations of software apps. They have to be efficient and fast, and easy to navigate.
+ 
+### Familiarity with software applications
+
+:large_blue_circle: :large_blue_circle: :large_blue_circle: :large_blue_circle: :large_blue_circle:
+
+(5/5 - great knowledge)
+
+### Goals
+- When a good movie comes up, be able to save it in an efficient way
+- Not too many "clicks" in the app to see what movies are saved
+- Be able to favourite movies in some way
+- Be able to sort based on duration, due to his lack of time on busy days
+
+### Frustrations
+- Forgets the movie he was supposed to watch
+- When it takes too long time to navigate in software apps
+
+ ### Interests
+
+ :large_blue_circle: :large_blue_circle: :large_blue_circle: :large_blue_circle: :white_circle:  &nbsp;  **Tech**
+
+ :large_blue_circle: :large_blue_circle: :white_circle: :white_circle: :white_circle:  &nbsp;  **Science**
+
+ :large_blue_circle: :white_circle: :white_circle: :white_circle: :white_circle:  &nbsp;  **Politics**
+
+ :large_blue_circle: :large_blue_circle: :large_blue_circle: :white_circle: :white_circle:  &nbsp;  **Business**
+
+
+### Usability priorities
+
+
+&nbsp; &nbsp; &nbsp; <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/regular/hourglass.svg" width="50" height="50">
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/gears.svg" width="50" height="50">
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/map-location-dot.svg" width="50" height="50">
+
+
+**Time efficient** &nbsp; &nbsp; **Functionality** &nbsp; &nbsp; **Easy to navigate**
+
+
+### Data priorities
+
+
+&nbsp; &nbsp; &nbsp; <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/database.svg" width="50" height="50">
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/download.svg" width="50" height="50">
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/circle-info.svg" width="50" height="50">
+
+
+
+
+**Good metadata** &nbsp; &nbsp; **Save and load data** &nbsp; &nbsp; **Human readable stored data (JSON)**
+
+### Motivations
+
+![20%](https://progress-bar.dev/70?title=Incentive)
+
+![30%](https://progress-bar.dev/40?title=Fear)
+
+![70%](https://progress-bar.dev/90?title=Achievement )
+
+![80%](https://progress-bar.dev/80?title=Power)
+
+![60%](https://progress-bar.dev/90?title=Social)
+
+![50%](https://progress-bar.dev/80?title=Goal)
+
+&nbsp;
+
+
+## Live Langåsen
+![Image was not shown](images-userstories/Live.jpeg)
+
+*Photo is private*
+
+
+### Description
+
+Live is 40 years old and works as a doctor at the St. Olavs hospital. Her days are usually quite busy. When she is not working, she loves spending quality time with her husband and two young children. They often watch a movie together. If it is a good movie, Live would like to recommend it for her friends, her colleagues and her patients. In Lives opinion, movies are always a great subject to talk about to get the conversation going. When talking about movies with others, she also often recive recommendations. Sadly, due to busy days of work, she often forgets the movie she was recommended. 
 
 ### Familiarity with software applications
 
@@ -138,9 +224,13 @@ Live works as a doctor at the St. Olavs hospital. Her days are usually quite bus
 
 ![50%](https://progress-bar.dev/80?title=Goal)
 
+
 # UI Mockup
 
 ![Image was not shown](images-userstories/mmtUImockup.png)
+
+# Sources
+Last quality control: 13. okt 2022
 
 
 
