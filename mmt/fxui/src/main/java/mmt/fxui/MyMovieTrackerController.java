@@ -1,6 +1,7 @@
 package mmt.fxui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
@@ -9,9 +10,6 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import com.fasterxml.jackson.databind.exc.MismatchedInputException;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
@@ -195,13 +193,13 @@ public class MyMovieTrackerController {
                 movies = this.getMovies().stream().filter(m -> m.getWatchlist()).toList();
             }
             
-            for (IMovie IMovie : movies) {
+            for (IMovie movie : movies) {
                 FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("DisplayMovie.fxml"));
-                Pane moviePane = fxmlLoader.load();
                 DisplayMovieController displayMovieController = fxmlLoader.getController();
                 displayMovieController.setMyMovieTrackerController(this);
-                displayMovieController.setMovie(IMovie);
+                displayMovieController.setMovie(movie);
                 displayMovieController.setMovieInformation();
+                Pane moviePane = fxmlLoader.load();
                 movieListView.getChildren().add(moviePane);
                 if (offsetY < 0.0) {
                     offsetY = moviePane.getPrefHeight();
@@ -210,7 +208,7 @@ public class MyMovieTrackerController {
                 
                 moviePane.setLayoutY(offsetY * numberOfMoviesCalc);
                 moviePane.setLayoutX(offsetX * (numberOfMovies % 2));
-                moviePane.setId("Movie"+String.valueOf(numberOfMovies));
+                moviePane.setId("Movie" + String.valueOf(numberOfMovies));
                 numberOfMovies++;
             }
             int numberOfMoviesCalc = (int) numberOfMovies / 2;
@@ -263,6 +261,7 @@ public class MyMovieTrackerController {
         try {
             this.movieList.addMovie(movie);
         } catch (IllegalArgumentException e) {
+            System.out.println("Movie was not added.");
         }
     }
 

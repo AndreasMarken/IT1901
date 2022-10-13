@@ -3,7 +3,6 @@ package mmt.fxui;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
