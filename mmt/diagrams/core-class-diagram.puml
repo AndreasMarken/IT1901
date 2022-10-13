@@ -1,0 +1,62 @@
+@startuml "core-class-diagran"
+
+
+interface IMovie {
+    String getTitle()
+    Date getReleaseDate()
+    Time getDuration()
+    IRating getRating()
+    Boolean isInWatchlist()
+    int getRatingNumber()
+    void setRating(IRating rating)
+    setIsInWatchlist(Boolean trueOrFalse)
+    void setTitle(String title)
+    void setDuration(Time duration)
+    void setReleaseDate(Date releaseDate)
+}
+
+class Movie {
+    - String title
+    - Date releaseDate
+    - Time duration
+    - IRating rating
+    - Boolean watchlist
+    + Movie(String title, Time duration, Date releaseDate)
+    + Movie(String title, Time duration)
+    - Boolean checkIfNull(Object input)
+}
+
+interface IRating {
+    int getRating()
+    String getComment()
+    String toString()
+    void setRating(int rating)
+    void setComment()
+}
+
+class Rating {
+    - int rating
+    - String comment
+    + Rating(int rating)
+    + Rating(int rating, String comment)
+    - boolean isValidRating(int rating)
+    - boolean isValidComment(String comment)
+}
+
+class MovieList {
+    - List<IMovie> movieList
+    + IMovie getMovie(String title)
+    + Collection<IMovie> getMovies()
+    + void addMovie(IMovie movie)
+    + void removeMovie(IMovie movie)
+    + Iterator<IMovie> iterator()
+
+}
+
+IMovie "movies: *  ." <|--- MovieList
+IRating "rating: 1  ." <|--- Movie
+IMovie <|.. Movie
+IRating <|.. Rating
+
+
+@enduml
