@@ -15,7 +15,7 @@ We could have divided it further on so that we had three modules, but we chose n
 
  As said in the [README](/README.md) file we strive to achive 80% code coverage on all modules from jacoco reports. And on this release we have achieved our goal. 
 
- Write anything about checkstyles and Spotbugs???
+ We have also added spotbugs and checkstyle to our project. These are tools to check that our code upholds a certain coding standard. Spotbugs detects bugs in our code, while checkstyle checks our code up against a given set of rules for whitespace, variabl names, etc.
 
  ## Documentation
 As the project gets bigger and more features are added it is important to keep updating the documentation so that it is alway up to date. Readme files, both [README on root level](/README.md) and [README in mmt folder](mmt/README.md) are updated. The README in the mmt folder contains a new PlantUML diagram of the projects architecture.
