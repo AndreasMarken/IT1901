@@ -66,7 +66,7 @@ After you have run the test, there will open a new folder in each of the modules
 To build the project in gitpod, simply press the button at the top of this file. From here, a code enviroment will open. To run the project, use the same commands stated above.
 
 ## Finished product
-When the project is finished, the plan is that a user can add search up movies in the database, give them ratings and add them to their watchlist. You will also be able to sort movies, based on ratings and categories. Currently, uploading movies is the only part of the project that is working. 
+When the project is finished, the plan is that a user can add search up movies in the database, give them ratings and add them to their watchlist. You will also be able to sort movies, based on ratings and categories. More functionalities will be added if we see it necessary.
 
 ### Main page
 This is the main page of My Movie Tracker. The user is now able to add a new movie to the database, edit the movie, review the movie and delete the movie from the database. It is also possible to sort the movies by title, rating and duration by clicking on the "Sort" button. The button located below sort will show all movies added to the users watchlist when clicked.

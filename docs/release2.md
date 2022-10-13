@@ -4,9 +4,10 @@
  
  ## Modularization and architecture
 
-In release one there was only one module in our project. It consisted of a [JSON](../mmt/core/src/main/java/mmt/json) folder a [core](../mmt/core) folder and a [fxui](../mmt/fxui) folder. For this release we divided it into two modules. One containg the fxui folder and one containing the json and core folders. 
+In release one there was only one module in our project. It consisted of a [JSON](../mmt/core/src/main/java/mmt/json) folder a [core](../mmt/core) folder and a [fxui](../mmt/fxui) folder. For this release we divided it into two modules. One containg the fxui folder and one containing the json and core folders. These folder do have some different dependencies and different functionalities. Therefore, we found it important to devide the folder into two modules.
 
-We could have divided it further on so that we had three modules, but we chose not to because...
+Normal practice is to divide different functional components in different modules. We could have divided it further on so that we had three modules, JSON, fxui and core. The JSON folder and the core folder share a lot of the same dependencies. So it was decided after a small discussion that the JSON and the core folder not should be split. 
+ 
   
 
  ## Quality code
@@ -20,9 +21,7 @@ We could have divided it further on so that we had three modules, but we chose n
  ## Documentation
 As the project gets bigger and more features are added it is important to keep updating the documentation so that it is alway up to date. Readme files, both [README on root level](/README.md) and [README in mmt folder](mmt/README.md) are updated. The README in the mmt folder contains a new PlantUML diagram of the projects architecture.
 
-write something about this???:
-(dokumentere valg knyttet til arbeidsvaner, arbeidsflyt og kodekvalitet (f.eks. tilnærming til testing, verktøy for sjekking av kodekvalitet og innstillinger for dem))
-
+Both a class diagram, diagram of the architecture and a sequence diagram is added in the [diagrams](mmt/diagrams) folder.
 
  ## Working flow
 In release 2 we have been a lot better at using issues and branches when necesarry. We divide all our TODO´s into issues, and then assignes the issue to one of the members. We have also started to assign commits and merges to the issue they are attached. 
@@ -43,7 +42,7 @@ In release 2 we have been a lot better at using issues and branches when necesar
 - [MyMovieTrackerControllerTest](../mmt/fxui/src/test/java/mmt/fxui/MyMovieTrackerControllerTest.java)
 
 
-### Jason:
+### JSON:
 
 - [MovieListSerializer](../mmt/core/src/main/java/mmt/json/MovieListSerializer.java)
 
