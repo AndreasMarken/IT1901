@@ -56,8 +56,7 @@ public class Movie implements IMovie {
 
     @Override
     public void setTitle(String title) {
-            this.title = title;
-
+        this.title = title;
     }
     
     @Override
