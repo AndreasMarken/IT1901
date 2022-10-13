@@ -1,0 +1,41 @@
+@startuml "package-diagram"
+
+package "mmt" {
+  component "core" { 
+    folder "mmt.core" {  
+    }
+    folder "mmt.json" {  
+    }
+  }
+
+  component "fxui" { 
+    folder "mmt.fxui" {  
+    }
+  }
+
+  component "resources"{
+    component "fxml"{ 
+  }
+  }
+
+  component "jackson"{
+    
+  }
+
+   component "core" { 
+    folder "mmt.core" {  
+    }
+    folder "mmt.json" {  
+    }
+  }
+  
+}
+
+
+mmt.fxui ..> mmt.json
+mmt.fxui ..> mmt.core
+mmt.fxui ..> fxml
+mmt.json ..> jackson
+
+
+@enduml

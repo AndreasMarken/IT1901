@@ -1,0 +1,42 @@
+
+@startuml "sequence-diagram"
+actor User as user
+
+group User adds a Movie
+user -> MyMovieTrackerController : click "New Movie" 
+
+MyMovieTrackerController -> MyMovieTrackerController : editMovie(null)
+MyMovieTrackerController -> MyMovieTrackerController: hideEditMovie(true);
+
+note right
+  A blank edit-movie view pops up,
+  the user fills in information about the movie
+end note
+
+MyMovieTrackerController -> EditMovieController: editMovie(null)
+EditMovieController-> EditMovieController: clearInputFields()
+user-> EditMovieController: fill fields and click "Save" on edit-movie view
+EditMovieController-> EditMovieController: edit()
+EditMovieController-> MyMovieTrackerController: addMovie(movie);
+MyMovieTrackerController -> MovieList: addMovie(movie)
+
+
+activate MovieList
+MovieList -> MovieList: add(movie)
+deactivate MovieList
+EditMovieController-> EditMovieController: clearInputFields();
+
+EditMovieController-> MyMovieTrackerController: updateMovieListView();
+
+EditMovieController -> MyMovieTrackerController: hideEditMovie(false);
+
+MyMovieTrackerController -> user: movie is added to the view
+
+
+
+
+
+
+end
+
+@enduml
