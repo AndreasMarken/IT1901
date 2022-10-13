@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="401.0" prefWidth="330.0" style="-fx-border-color: #000000; -fx-background-color: #f0f0f0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mmt.fxui.GiveRatingController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" prefHeight="29.0" prefWidth="193.0" text="Write a review:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="140.0" text="Comment to the movie:" />
+      <TextArea id="commentField" fx:id="ratingCommentField" layoutX="7.0" layoutY="167.0" prefHeight="126.0" prefWidth="309.0" wrapText="true" />
+      <Label layoutX="14.0" layoutY="108.0" text="Give the movie a rating from 1-10:" />
+      <ComboBox id="ratingList" fx:id="ratingList" layoutX="206.0" layoutY="103.0" prefHeight="27.0" prefWidth="76.0" />
+      <Button id="cancelbutton" fx:id="cancelButton" layoutX="216.0" layoutY="361.0" mnemonicParsing="false" onAction="#cancelEditReview" text="Cancel" />
+      <Button id="submitReview" fx:id="saceReviewEdit" layoutX="274.0" layoutY="361.0" mnemonicParsing="false" onAction="#save" text="Save" />
+      <Label fx:id="movieName" layoutX="22.0" layoutY="55.0" prefHeight="38.0" prefWidth="272.0" text="MovieName">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

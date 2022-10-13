@@ -7,10 +7,11 @@ My Movie Tracker is an application whose main purpose is to help you track the m
 
 The codeproject is located in the mmt folder, which can be accessed using `cd mmt` in a terminal from the root folder. The application is built using standard Maven directory layout. To run the project, you can either run it directly from the class or use the maven commands listed in the [README in mmt folder](mmt/README.md).
 
-The application currently only consist of one module, which is the mmt folder. In here we have three folders:
+The application has now two modules, both located in the mmt folder.
 - core, which is the backend of the project.
 - fxui, which consist of the user-interface.
-- json, where saving movie objects are handled.
+
+The application also has a json folder where saving objects are handled. It was considered to make this folder the third module, but since it has a close connection to the core, it was decided not to make it a third module. 
 
 
 ## Workflow
@@ -73,7 +74,7 @@ We have created our own MR template for what our MRs should contain.
 
 1. Click on gitpod tag at the top of the page.
 2. Navigate to the correct folder: `cd /workspace/gr2238/mmt` when in the workspace. This should automaticly be done when you open gitpod from the project.
-3. run command `mvn javafx:run`.
+3. You can now either run: `mvn javafx:run -f fxui/pom.xml` or you can firstly `cd fxui` and then use the command `mvn javafx:run`. 
 4. click "remote explorer" in the toolbar to the left.
 5. click "GITPOD WORKSPACE" -> "Ports".
 6. click on the port in "Ports" 
