@@ -92,4 +92,10 @@ public class RatingTest {
 
         Assertions.assertEquals("Good movie", rating2.getComment(), "The comment of the rating should not be changed.");
     }
+
+    @Test
+    @DisplayName("Test toString()")
+    public void testToString(){
+        Assertions.assertEquals("Rating [comment="+rating1.getComment()+", rating="+rating1.getRating()+"]", rating1.toString());
+    }
 }

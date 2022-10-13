@@ -42,7 +42,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button layoutX="7.0" layoutY="207.0" mnemonicParsing="false" onAction="#rateMovie" style="-fx-background-color: orange;" text="Review" textFill="WHITE" />
+            <Button id="rateMovie" layoutX="7.0" layoutY="207.0" mnemonicParsing="false" onAction="#rateMovie" style="-fx-background-color: orange;" text="Rate" textFill="WHITE" />
          </children>
       </AnchorPane>
    </children>
