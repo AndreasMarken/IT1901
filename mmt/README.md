@@ -3,8 +3,20 @@
 
 My movie tracker is a project for the course IT1901. 
 
-The application currently has one main function: 
+Functions currently implemented in the application: 
 - Add movies to the database.
+- Edit current movies in the database.
+- Make a review of the movie.
+    - Comment the movie.
+    - Rate the movie from 1-10.
+- Delete a movie from the database.
+- Sort movies by:
+    - Title.
+    - Rating
+    - Duration 
+- Take of/take on watchlist
+
+
 
 ## Building and running the project
 The project is built using maven, and therefore maven must be used, to run the project.
@@ -25,9 +37,15 @@ mvn clean install
 This will clean the maven project, and build it from scratch.
 
 ### Running the project
-To run the javafx part of the project, perform:
+To run the javafx part of the project you have two opportunities, either perform:
 
 ```
+mvn javafx:run -f fxui/pom.xml
+```
+
+Or perform this:
+```
+cd fxui
 mvn javafx:run
 ```
 
@@ -40,19 +58,35 @@ To perform all of the test, you can use:
 mvn test
 ```
 
-This will run all of the test, and give you a feedback on how many that succeded.
+This will run all of the test, and give you a feedback on how many that succeded. If you only want to perform tests in one module, you can use `cd core` or `cd fxui` and then perform `mvn test`.
 
-After you have run the test, there will open a new folder in the target folder. The folders name is site/jacoco. In this folder, there will be an index.html. This can be opened in a web browser, to look at the test coverage.
+After you have run the test, there will open a new folder in each of the modules target folder. The folders name is site/jacoco. In this folder, there will be an index.html. This can be opened in a web browser, to look at the test coverage.
 
 ### Building the project in GitPod
 To build the project in gitpod, simply press the button at the top of this file. From here, a code enviroment will open. To run the project, use the same commands stated above.
 
 ## Finished product
-When the project is finished, the plan is that a user can add search up movies in the database, give them ratings and add them to their watchlist. You will also be able to sort movies, based on ratings and categories. Currently, uploading movies is the only part of the project that is working. 
+When the project is finished, the plan is that a user can add search up movies in the database, give them ratings and add them to their watchlist. You will also be able to sort movies, based on ratings and categories. More functionalities will be added if we see it necessary.
 
 ### Main page
+This is the main page of My Movie Tracker. The user is now able to add a new movie to the database, edit the movie, review the movie and delete the movie from the database. It is also possible to sort the movies by title, rating and duration by clicking on the "Sort" button. The button located below sort will show all movies added to the users watchlist when clicked.
 ![Image was not shown](images/MainPage.png)
-As you can see on the picture above, the user can add a movie to the database by clicking the "+" sign. From there, the user will be guided to a new screen, see the picture below, where you the user will be able to give the movie a name, as well as duration and release date.
 
+
+### New Movie
+When the "New Movie" button is clicked, the new movie page will appear on the screen. As the picture shows, the user will have the opporunity to set title, release date, duration and if wanted, put the movie on the watchlist.
 ![Image was not shown](images/AddMovie.png)
-When the "Add movie" button is pressed, the new movie will be added to the main page. Where the user can choose to add more movies to the database, or save them to a file.
+
+
+### Edit
+
+The "Edit" button will show a new page where the user can edit a movie. As shown in the picture, the current fields of the movie will show in the input spaces. The user will easely be able to edit the movie by changing the current value of an input space to something else.
+![Image was not shown](images/EditMovie.png)
+
+
+### Review
+The "Review" button will also show a new page. This page enables the user to review a movie. The user can leave a comment on the movie and rate the movie from 1-10. 
+![Image was not shown](images/Review.png)
+
+
+
