@@ -195,11 +195,11 @@ public class MyMovieTrackerController {
             
             for (IMovie movie : movies) {
                 FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("DisplayMovie.fxml"));
+                Pane moviePane = fxmlLoader.load();
                 DisplayMovieController displayMovieController = fxmlLoader.getController();
                 displayMovieController.setMyMovieTrackerController(this);
                 displayMovieController.setMovie(movie);
                 displayMovieController.setMovieInformation();
-                Pane moviePane = fxmlLoader.load();
                 movieListView.getChildren().add(moviePane);
                 if (offsetY < 0.0) {
                     offsetY = moviePane.getPrefHeight();
