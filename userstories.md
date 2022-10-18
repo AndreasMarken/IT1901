@@ -16,7 +16,15 @@
 
 - As a user, I want to write a short summary of each movie that i like, so that at a later time I would remind myself of what the movie was about when considering to watch it
 
-- As a user, i want to give each movie that a like a rating on a 1/10 scale (1.1, 1.2, ...,10), so that i know which movie is the best of the best
+- As a user, I want to give each movie that a like a rating on a 1/10 scale (1.1, 1.2, ...,10), so that i know which movie is the best of the best
+
+- As a user, I want to add a cast to a Movie, so that I can see which actors play in which movies
+
+- As a user, I want to be able to search among my movies, so that I can see if my list contains a specific movie
+
+- As a user, I want to search for movies that contain a specific actor, so that it is easy to find a movie to watch that a specific actor plays in
+
+- As a user, I want to see statistics like the mean rating of the movies, mean duration, and the actor that plays in most movies, so that I can get an overview of the characteristics of my list of movies 
 
 # Conceptual model
 
@@ -225,12 +233,12 @@ Live is 40 years old and works as a doctor at the St. Olavs hospital. Her days a
 ![50%](https://progress-bar.dev/80?title=Goal)
 
 
-# UI Mockup
+# UI Mockup milestone 2
 
 ![Image was not shown](images-userstories/mmtUImockup.png)
 
 # Sources
-Last quality control: 13. okt 2022
+Last quality control: 18. okt 2022
 
 
 
