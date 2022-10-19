@@ -3,12 +3,21 @@ package mmt.fxui;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
+import mmt.core.Actor;
+import mmt.core.IActor;
 import mmt.core.IMovie;
 import mmt.core.Movie;
 
@@ -23,7 +32,7 @@ public class EditMovieController {
     private MyMovieTrackerController myMovieTrackerController;
 
     @FXML 
-    private TextField movieTitleField;
+    private TextField movieTitleField, actorNameField;
 
     @FXML
     private Spinner<Integer> hours;
@@ -43,8 +52,12 @@ public class EditMovieController {
     @FXML
     protected Label errorMessage;
 
+    @FXML
+    private ListView<String> actorListView;
 
     private IMovie movie;
+
+    private Collection<IActor> actors = new ArrayList<>();
 
     /**
      * The method that is called when the user has completed the editing/adding
@@ -82,6 +95,9 @@ public class EditMovieController {
                     IMovie movie = new Movie(title, time, releaseDate);
                     movie.setOnTakeOfWatchlist(watchList);
                     myMovieTrackerController.addMovie(movie);
+                    for (IActor actor : actors) {
+                        actor.starredInMovie(movie);
+                    }
                 } else {
                     editExistingMovie(title, time, releaseDate, watchList);
                     this.movie = null;
@@ -133,6 +149,7 @@ public class EditMovieController {
         minutes.decrement(minutes.getValue() % 60);
         date.setValue(null);
         watchListCheckBox.setSelected(false);
+        actorListView.getItems().clear();
     }
 
     /**
@@ -177,6 +194,9 @@ public class EditMovieController {
         minutes.increment(movie.getDuration().getMinutes());
         date.setValue(movie.getReleaseDate().toLocalDate());
         watchListCheckBox.setSelected(movie.getWatchlist());
+        if (movie.getCast() != null) {
+            updateActorsListView();
+        }
     }
 
     /**
@@ -191,5 +211,50 @@ public class EditMovieController {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Method used to add actors to a movie.
+     * Gets the text from the input field, and adds it to the movie.
+     */
+    @FXML
+    private void addActorToMovie() {
+        try {
+            actorListView.getItems().add(actorNameField.getText());
+            Actor actor = new Actor(actorNameField.getText());
+            if (movie != null) {
+                if (!actor.getStarredMovies().contains(movie)) {
+                    if (!movie.getCast().contains(actor)) {
+                        movie.addActor(actor);
+                        actor.starredInMovie(movie);
+                    }
+                }
+            } else {
+                actors.add(actor);
+            }
+        } catch (IllegalArgumentException e) {
+            errorMessage.setText("You must write a name for the actor you want to add.");
+        }
+        updateActorsListView();
+    }
+
+    /**
+    * Every time an actor is added to the Movie, the actor list view gets updated
+    */
+    private void updateActorsListView(){
+        ObservableList<String> observableActorList = FXCollections.observableArrayList();
+        if (movie != null) {
+            Collection<IActor> actors = movie.getCast();
+
+            for (IActor actor : actors){
+                if(!observableActorList.contains(actor.getName())){
+                observableActorList.add(actor.getName());
+            }
+        }
+
+        
+
+        actorListView.setItems(observableActorList);
+        }
     }
 }
