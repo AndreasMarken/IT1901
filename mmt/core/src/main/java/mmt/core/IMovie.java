@@ -2,6 +2,7 @@ package mmt.core;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Collection;
 
 /**
  * Movie Interface.
@@ -84,6 +85,31 @@ public interface IMovie {
      * @return returns true if in watchlist, otherwise false.
      */
     Boolean getWatchlist();  
+
+    /** 
+     * Method that retrieves all the actors starring in the movie.
+     *
+     * @return a collection of IActor objects, or null if the movie has no actors
+     */
+    Collection<IActor> getCast();
+
+    /** 
+     * Method that adds an actor to the cast of the movie
+     *
+     * @param actor the actor to be addded to the cast
+     * @throws IllegalStateException if the actor to be added already exists in the cast
+     */
+    void addActor(IActor actor);
+
+    /** 
+     * Method that removes an actor from the cast of the movie
+     *
+     * @param actor the actor that should be removed from the cast
+     * @throws IllegalArgumentException if the actor to be removed does not exist in the cast
+     */
+    void removeActor(IActor actor);
+
+
 }
 
 
