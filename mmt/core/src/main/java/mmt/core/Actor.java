@@ -31,7 +31,6 @@ public class Actor implements IActor{
             throw new IllegalStateException("An actor cannot starr in a movie more than once.");
         }
         this.starredMovies.add(movie);
-        movie.addActor(this);
     }
 
     @Override
@@ -40,6 +39,5 @@ public class Actor implements IActor{
             throw new IllegalArgumentException("You cannot remove a movie from the actors starring list if the actor doesnt have the movie in its starringlist.");
         }
         this.starredMovies.remove(movie);
-        movie.removeActor(this);
     }
 }

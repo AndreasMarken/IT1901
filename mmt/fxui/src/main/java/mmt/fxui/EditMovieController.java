@@ -223,11 +223,14 @@ public class EditMovieController {
             actorListView.getItems().add(actorNameField.getText());
             Actor actor = new Actor(actorNameField.getText());
             if (movie != null) {
-                if (!actor.getStarredMovies().contains(movie)) {
-                    if (!movie.getCast().contains(actor)) {
-                        movie.addActor(actor);
-                        actor.starredInMovie(movie);
-                    }
+                try {
+                    movie.addActor(actor);
+                } catch (IllegalStateException e) {
+                    //Actor already added to movie
+                    errorMessage.setText("The actor is already added to the movie");
+                }
+                if (!movie.getCast().contains(actor)) {
+                    
                 }
             } else {
                 actors.add(actor);

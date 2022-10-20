@@ -138,7 +138,6 @@ public class Movie implements IMovie {
 
 	@Override
 	public Collection<IActor> getCast() {
-		// TODO Auto-generated method stub
         if(cast != null){
 		    return new ArrayList<IActor>(cast);
         }
@@ -147,23 +146,23 @@ public class Movie implements IMovie {
 
 	@Override
 	public void addActor(IActor actor) {
-		// TODO Auto-generated method stub
         if(cast == null){
             cast = new ArrayList<IActor>();
         }
         if(cast.contains(actor)){
             throw new IllegalStateException("The actor is already added to the movie!");
         }
-        cast.add(actor);	
+        cast.add(actor);
+        actor.starredInMovie(this);	
 	}
 
 	@Override
 	public void removeActor(IActor actor) {
-		// TODO Auto-generated method stub
         if(!cast.contains(actor)){
             throw new IllegalArgumentException("The actor you are trying to remove is not in the cast of this movie");
         }
         cast.remove(actor);
+        actor.removeMovieFromStarredList(this);
         if(cast.isEmpty()){
             cast = null;
         }		
