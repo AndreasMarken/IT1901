@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
+
+import mmt.core.IActor;
 import mmt.core.Movie;
 
 /**
@@ -20,6 +22,7 @@ public class MovieSerializer extends JsonSerializer<Movie> {
      * "duration": "hh:mm:ss"
      * "rating": [...]
      * "watchlist": true/false
+     * "cast": [...]
      * }
      *
      * @param movie Movie object to serialize
@@ -35,6 +38,16 @@ public class MovieSerializer extends JsonSerializer<Movie> {
         jsonGen.writeStringField("duration", movie.getDuration().toString()); //toString: hh:mm:ss
         jsonGen.writeObjectField("rating", movie.getRating());
         jsonGen.writeBooleanField("watchlist", movie.getWatchlist());
+        jsonGen.writeArrayFieldStart("cast");
+        try {
+            for (IActor actor : movie.getCast()) {
+                jsonGen.writeObject(actor);
+            }
+        } catch (NullPointerException e) {
+            //No actors
+            jsonGen.writeNull();
+        }
+        jsonGen.writeEndArray();
         jsonGen.writeEndObject();
     }
 }
