@@ -96,7 +96,7 @@ public class EditMovieController {
                     movie.setOnTakeOfWatchlist(watchList);
                     myMovieTrackerController.addMovie(movie);
                     for (IActor actor : actors) {
-                        actor.starredInMovie(movie);
+                        movie.addActor(actor);
                     }
                 } else {
                     editExistingMovie(title, time, releaseDate, watchList);
@@ -220,8 +220,17 @@ public class EditMovieController {
     @FXML
     private void addActorToMovie() {
         try {
-            actorListView.getItems().add(actorNameField.getText());
+            try {
+                if (movie.getCast().stream().anyMatch(a-> a.getName().equals(actorNameField.getText()))) {
+                    errorMessage.setText("The actor is already added to the movie");
+                    return;
+                }
+            } catch (NullPointerException e) {
+                //No actors? No problem, add this one
+            }
+            
             Actor actor = new Actor(actorNameField.getText());
+            
             if (movie != null) {
                 try {
                     movie.addActor(actor);
@@ -233,8 +242,13 @@ public class EditMovieController {
                     
                 }
             } else {
+                if (actors.stream().anyMatch(a-> a.getName().equals(actorNameField.getText()))) {
+                    errorMessage.setText("The actor is already added to the movie");
+                    return;
+                }
                 actors.add(actor);
             }
+            actorListView.getItems().add(actorNameField.getText());
         } catch (IllegalArgumentException e) {
             errorMessage.setText("You must write a name for the actor you want to add.");
         }
@@ -246,18 +260,25 @@ public class EditMovieController {
     */
     private void updateActorsListView(){
         ObservableList<String> observableActorList = FXCollections.observableArrayList();
-        if (movie != null) {
-            Collection<IActor> actors = movie.getCast();
-
-            for (IActor actor : actors){
-                if(!observableActorList.contains(actor.getName())){
-                observableActorList.add(actor.getName());
+        try {
+            if (movie != null) {
+                Collection<IActor> actors = movie.getCast();
+    
+                for (IActor actor : actors){
+                    if(!observableActorList.contains(actor.getName())){
+                    observableActorList.add(actor.getName());
+                    }
+                }
+            } else {
+                for (IActor actor : this.actors){
+                    if(!observableActorList.contains(actor.getName())){
+                    observableActorList.add(actor.getName());
+                    }
+                }
             }
+        } catch (NullPointerException e) {
+            //No actors in this movie
         }
-
-        
-
         actorListView.setItems(observableActorList);
-        }
     }
 }
