@@ -32,11 +32,11 @@
     </dependency>
 
      <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
-     <dependency>
+     <!-- <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
-      <version>16</version>
-    </dependency>
+      <version>18</version>
+    </dependency> -->
 
     <!-- javafx -->
     <dependency>
@@ -63,12 +63,12 @@
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-params</artifactId>
     </dependency>
-    <dependency>
+    <!-- <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-params</artifactId>
       <version>5.8.1</version>
       <scope>test</scope>
-    </dependency>
+    </dependency> -->
 
     <!-- Test with TextFX -->
 		<dependency>
