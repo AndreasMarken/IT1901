@@ -9,7 +9,7 @@ public class Actor implements IActor{
     private Collection<IMovie> starredMovies = new ArrayList<>();
 
     public Actor(String name) {
-        if (name == (null) || name.isBlank()) {
+        if (name == (null) || name.isBlank() || !name.matches("[a-zA-Z]+")) {
             throw new IllegalArgumentException("The input must be valid");
         }
         this.name = name;
