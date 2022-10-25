@@ -1,20 +1,27 @@
 package mmt.core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Actor implements IActor{
     private String name;
     private Collection<IMovie> starredMovies = new ArrayList<>();
+    private final Collection<Character> invalidChars = Arrays.asList(
+    '0','1','2','3','4','5','6','7','8','9',
+    '\\','/',':','*','"','<','>','|','~','!','@','#','$','%',
+    '^','&','(',')','{','}','_',';');
 
     public Actor(String name) {
-        if (name == (null) || name.isBlank() || !name.matches("[a-zA-Z]+")) {
+        if (name == (null) || name.isBlank() || !Collections.disjoint(invalidChars, name.chars().mapToObj(e -> (char)e).collect(Collectors.toList()))) {
             throw new IllegalArgumentException("The input must be valid");
         }
         this.name = name;
     }
-
+  
     @Override
     public String getName() {
         return this.name;

@@ -1,6 +1,7 @@
 package mmt.core;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.jupiter.api.Assertions;
@@ -43,11 +44,19 @@ public class ActorTest {
 
     @ParameterizedTest
     @ValueSource(chars = {'0','1','2','3','4','5','6','7','8','9',
-    '.','\'','/',':','*','"','<','>','|',',','~','!','@','#','$','%',
-    '^','&','(',')','{','}','_',';',' '})
+    '\\','/',':','*','"','<','>','|','~','!','@','#','$','%',
+    '^','&','(',')','{','}','_',';'})
     public void testConstructorInvalidNames(char name) {
         Assertions.assertThrows(IllegalArgumentException.class, () -> 
             actor = new Actor(name+""),"A valid actor name should not contain: " + name
         );
+    }
+    
+    @ParameterizedTest
+    @ValueSource(strings = {"Lorenzo de' Medici", "Lupita Nyong'o",
+    "Niccolò dell'Arca","Philippe-François Fabre d'Eglantine",
+    "Paul-Henri Thiry", "Martin Luther King, Jr", "Vebjørn" })
+    public void testConstructorValidNames(String name) {
+        Assertions.assertDoesNotThrow(() -> actor = new Actor(name), name + " is a valid name!");
     }
 }
