@@ -2,6 +2,8 @@ package mmt.fxui;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import org.junit.jupiter.api.Assertions;
@@ -19,6 +21,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import mmt.core.IActor;
 import mmt.core.IMovie;
 
 public class MyMovieTrackerControllerTest extends ApplicationTest{
@@ -31,7 +34,7 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
     private int durationMinutes = 32;
     private boolean isOnWatchlist = true;
 
-    private void writeMovie(String movieTitle, String releaseDate, int durationHours, int durationMinutes, boolean isOnWatchlist) {
+    private void writeMovie(String movieTitle, String releaseDate, int durationHours, int durationMinutes, boolean isOnWatchlist, String... cast) {
         clickOn("#movieTitleField");
         WaitForAsyncUtils.waitForFxEvents();
         write(movieTitle);
@@ -60,24 +63,35 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
             clickOn("#watchListCheckBox");
             WaitForAsyncUtils.waitForFxEvents();
         }
+
+        if(cast != null){
+            for (String actor : cast) {
+                clickOn("#actorNameField");
+                WaitForAsyncUtils.waitForFxEvents();
+                write(actor);
+                WaitForAsyncUtils.waitForFxEvents();
+                clickOn("#addActorToMovieButton");
+                WaitForAsyncUtils.waitForFxEvents();
+            }
+        }
     }
 
     private void addThreeMovies() {
         clickOn("#addNewMovie");
         WaitForAsyncUtils.waitForFxEvents();
-        writeMovie(movieTitle, releaseDate, durationHours, durationMinutes, isOnWatchlist);
+        writeMovie(movieTitle, releaseDate, durationHours, durationMinutes, isOnWatchlist, "Ryan Gosling");
         clickOn("#submitButton");
         WaitForAsyncUtils.waitForFxEvents();
 
         clickOn("#addNewMovie");
         WaitForAsyncUtils.waitForFxEvents();
-        writeMovie("Test Movie 2", releaseDate, durationHours, durationMinutes-2, false);
+        writeMovie("Test Movie 2", releaseDate, durationHours, durationMinutes-2, false, "Dwayne Johnson", "Mark Clerk");
         clickOn("#submitButton");
         WaitForAsyncUtils.waitForFxEvents();
 
         clickOn("#addNewMovie");
         WaitForAsyncUtils.waitForFxEvents();
-        writeMovie("Test Movie 3", releaseDate, durationHours, durationMinutes-3, true);
+        writeMovie("Test Movie 3", releaseDate, durationHours, durationMinutes-3, true, "John", "Jonas", "Joseph");
         clickOn("#submitButton");
         WaitForAsyncUtils.waitForFxEvents();
     }
@@ -246,6 +260,53 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
     }
 
     @Test
+    @DisplayName("Test that you can create a movie with cast")
+    public void testAddCast() {
+
+        //Arrange
+        final String[] expectedCast = {"Vin Diesel", "Paul Walker", "Michelle Rodriguez", "Jordana Brewster", 
+        "Rick Yune", "Matt Schulze", "Ted Levine", "Johnny Strong"};
+
+        //Act
+        clickOn("#addNewMovie");
+        WaitForAsyncUtils.waitForFxEvents();
+        writeMovie("Fast and Furious", "01.08.2001", 2, 3, false, expectedCast);
+        clickOn("#submitButton");
+        WaitForAsyncUtils.waitForFxEvents();
+
+        //Assert
+        final Collection<IActor> actualCastObjects = myMovieTrackerController.getMovieList().getMovie("Fast and Furious").getCast();
+        final String[] actualCast = actualCastObjects.stream().map(actor -> actor.getName()).toArray(String[]::new);
+        Assertions.assertArrayEquals(expectedCast, actualCast);
+    }
+
+    @Test
+    @DisplayName("Test that cast is serialized and deserialized")
+    public void testCastIsSerializedAndDeserialized() {
+
+        //Arrange
+        final String[] expectedCast = {"First actor", "Second Actor", "Third Actor"};
+
+        //Act
+        clickOn("#addNewMovie");
+        WaitForAsyncUtils.waitForFxEvents();
+        writeMovie("Test Serializing Of Cast", "01.08.2001", 2, 3, false, expectedCast);
+        clickOn("#submitButton");
+        WaitForAsyncUtils.waitForFxEvents();
+        clickOn(lookup("#Movie0").queryAll().stream().findFirst().get().lookup("#editMovie"));
+
+
+        //Assert
+        final Collection<String> castFromListView = new ArrayList<String>(myMovieTrackerController.editMovieController.actorListView.getItems());
+        final Collection<IActor> actualCastObjects = myMovieTrackerController.getMovieList().getMovie("Test Serializing Of Cast").getCast();
+        final String[] actualCast = actualCastObjects.stream().map(actor -> actor.getName()).toArray(String[]::new);
+        final String[] actualCastFromListView = castFromListView.toArray(String[]::new);
+        
+        Assertions.assertArrayEquals(expectedCast, actualCast);
+        Assertions.assertArrayEquals(expectedCast, actualCastFromListView);
+    }
+
+    @Test
     @DisplayName("Test that you can edit an existing movie")
     public void testEditMovie() {
         clickOn("#addNewMovie");
@@ -377,6 +438,4 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
         Assertions.assertEquals(ratingScore, actualScore);
         Assertions.assertEquals(comment, actualComent);
     }
-
-    
 }

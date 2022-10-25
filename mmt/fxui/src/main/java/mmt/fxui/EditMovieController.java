@@ -52,8 +52,8 @@ public class EditMovieController {
     @FXML
     protected Label errorMessage;
 
-    @FXML
-    private ListView<String> actorListView;
+    @FXML 
+    protected ListView<String> actorListView;
 
     private IMovie movie;
 
@@ -150,6 +150,7 @@ public class EditMovieController {
         date.setValue(null);
         watchListCheckBox.setSelected(false);
         actorListView.getItems().clear();
+        actors.clear();
     }
 
     /**
@@ -280,5 +281,6 @@ public class EditMovieController {
             //No actors in this movie
         }
         actorListView.setItems(observableActorList);
+        actorNameField.clear();
     }
 }
