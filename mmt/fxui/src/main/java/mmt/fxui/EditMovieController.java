@@ -10,12 +10,17 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import mmt.core.Actor;
 import mmt.core.IActor;
 import mmt.core.IMovie;
@@ -256,6 +261,37 @@ public class EditMovieController {
         updateActorsListView();
     }
 
+    private class ActorListViewCell extends ListCell<String> {
+        HBox hbox = new HBox();
+        Label label = new Label("");
+        Pane pane = new Pane();
+        Button button = new Button("X");
+
+
+        public ActorListViewCell() {
+            super();
+            button.setStyle("-fx-background-color: white; -fx-border-color: red; -fx-border-radius: 5;");
+            hbox.getChildren().addAll(label, pane, button);
+            HBox.setHgrow(pane, Priority.ALWAYS);
+            button.setOnAction(event -> {String actorToBeRemoved = getItem();
+                                        getListView().getItems().remove(actorToBeRemoved);
+                                        IActor actorObjToBeRemoved = movie.getCast().stream().filter(actor -> actor.getName().equals(actorToBeRemoved)).findAny().orElse(null);
+                                        movie.removeActor(actorObjToBeRemoved);                                                                            
+            });
+        }
+                                        
+        @Override
+        protected void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+            setText(null);
+            setGraphic(null);
+
+            if (item != null && !empty) {
+                label.setText(item);
+                setGraphic(hbox);
+            }
+        }
+    }
     /**
     * Every time an actor is added to the Movie, the actor list view gets updated
     */
@@ -281,6 +317,7 @@ public class EditMovieController {
             //No actors in this movie
         }
         actorListView.setItems(observableActorList);
+        actorListView.setCellFactory(x -> new ActorListViewCell());
         actorNameField.clear();
     }
 }
