@@ -12,9 +12,13 @@ import java.util.Collections;
 import java.util.List;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import mmt.core.Comparators;
 import mmt.core.IMovie;
 import mmt.core.MovieList;
@@ -32,6 +36,9 @@ public class MyMovieTrackerController {
 
     @FXML
     protected Pane movieListView;
+
+    @FXML
+    private Button statisticButton;
 
     private MovieList movieList = new MovieList();
     private ObjectMapper mapper = new ObjectMapper();
@@ -283,4 +290,17 @@ public class MyMovieTrackerController {
         saveMovieListToFile();
         updateMovieListView();
     }
+
+    @FXML
+    public void showStatistics() throws IOException {
+        Stage stage = (Stage) statisticButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Statistic.fxml"));
+        Parent root = fxmlLoader.load();
+        StatisticController statisticController = fxmlLoader.getController();
+        statisticController.setMovieList(this.movieList);
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 }

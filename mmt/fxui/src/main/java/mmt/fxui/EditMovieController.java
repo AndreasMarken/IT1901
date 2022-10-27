@@ -161,10 +161,6 @@ public class EditMovieController {
         }
     }
 
-    protected void setDatePickerValue(LocalDate object) {
-        date.setValue(object);
-    }
-
     /**
      * Fills the inputfields with the information of the movie that is to be edited.
      */
