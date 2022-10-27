@@ -45,6 +45,9 @@ public class MyMovieTrackerController {
     @FXML
     private CheckBox watchList;
 
+    @FXML
+    private String apiUri;
+
     private boolean testingMode = false;
 
     private Path getSaveFilePath(String fileName) {
@@ -64,6 +67,10 @@ public class MyMovieTrackerController {
     void initialize() throws IOException {
         editMovieController.setMyMovieTrackerController(this);
         hideEditMovie(false);
+
+        if (apiUri != null){
+
+        }
 
         // Load the movies registered in the movie.json file.
         mapper.registerModule(new MovieModule());

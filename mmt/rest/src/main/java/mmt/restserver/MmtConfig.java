@@ -1,24 +1,27 @@
 package mmt.restserver;
 
-public class MmtConfig {
+import org.glassfish.hk2.utilities.binding.AbstractBinder;
+import org.glassfish.jersey.server.ResourceConfig;
 
-    private MovieList movieList extends ResourceConfig;
+import com.fasterxml.jackson.core.util.JacksonFeature;
 
+import mmt.json.MyMovieConfig;
+import mmt.restapi.MmtService;
 
-    public TodoConfig(TodoModel todoModel) {
-        setTodoModel(todoModel);
-        todoPersistence = new TodoPersistence();
-        todoPersistence.setSaveFile("server-todolist.json");
-        register(TodoModelService.class);
-        register(TodoModuleObjectMapperProvider.class);
+public class MmtConfig extends ResourceConfig{
+    private MyMovieConfig myMovieConfig;
+
+    public MmtConfig() {
+        myMovieConfig = new MyMovieConfig();
+        myMovieConfig.setFilePath("server-movielist.json");
+        register(MmtService.class);
+        register(MmtModuleObjectMapperProvider.class);
         register(JacksonFeature.class);
         register(new AbstractBinder() {
-          @Override
-          protected void configure() {
-            bind(TodoConfig.this.todoModel);
-            bind(TodoConfig.this.todoPersistence);
-          }
+            @Override
+            protected void configure(){
+                bind(MmtConfig.this.myMovieConfig);
+            }
         });
-      }
-    
+    }
 }

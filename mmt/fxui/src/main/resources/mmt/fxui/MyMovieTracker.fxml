@@ -13,6 +13,9 @@
 <?import javafx.scene.text.Text?>
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="771.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mmt.fxui.MyMovieTrackerController">
+   <!-- <fx:define>
+        <String fx:id="apiUri" fx:value="http://localhost:8999/mmt/"/>
+    </fx:define> -->
    <children>
       <VBox prefHeight="561.0" prefWidth="198.0" style="-fx-background-color: Gray;">
          <children>
