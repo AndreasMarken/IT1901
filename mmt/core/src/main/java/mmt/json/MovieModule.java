@@ -1,6 +1,6 @@
 package mmt.json;
 
-import com.fasterxml.jackson.core.util.VersionUtil;
+//import com.fasterxml.jackson.core.util.VersionUtil;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import mmt.core.Movie;
 import mmt.core.MovieList;
@@ -11,13 +11,14 @@ import mmt.core.Rating;
  */
 public class MovieModule extends SimpleModule {
     private static final String NAME = "MovieModule";
-    private static final VersionUtil VERSION_UTIL = new VersionUtil() {};
+    //private static final VersionUtil VERSION_UTIL = new VersionUtil() {};
 
     /**
      * Constructor to add all the serializers and deserializers for the project.
      */
     public MovieModule() {
-        super(NAME, VERSION_UTIL.version());
+        //super(NAME, VERSION_UTIL.version());
+        super(NAME);
         addSerializer(Rating.class,  new RatingSerializer());
         addSerializer(Movie.class, new MovieSerializer());
         addDeserializer(Rating.class, new RatingDeserializer());
