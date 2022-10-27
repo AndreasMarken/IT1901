@@ -75,8 +75,8 @@ public class MovieDeserializer extends JsonDeserializer<Movie> {
                 String releaseDate = releaseDateNode.asText();
                 String duration = durationNode.asText();
                 boolean watchlist = watchListNode.asBoolean();
-                Date date = new Date(Integer.parseInt((String) releaseDate.substring(0, 4)) - 1900, Integer.parseInt((String) releaseDate.substring(5, 7)) - 1, Integer.parseInt((String) releaseDate.substring(8, 10)));
-                Time time = new Time(Integer.parseInt((String) duration.substring(0, 2)), Integer.parseInt((String) duration.substring(3, 5)), Integer.parseInt((String) duration.substring(6, 8)));
+                Date date = Date.valueOf(Integer.parseInt((String) releaseDate.substring(0, 4)) + "-" + Integer.parseInt((String) releaseDate.substring(5, 7)) + "-" + Integer.parseInt((String) releaseDate.substring(8, 10)));
+                Time time = Time.valueOf(Integer.parseInt((String) duration.substring(0, 2)) + ":" + Integer.parseInt((String) duration.substring(3, 5)) + ":" + "" + Integer.parseInt((String) duration.substring(6, 8)));
                 Movie movie = new Movie(title, time, date);
                 movie.setOnTakeOfWatchlist(watchlist);
 
