@@ -84,8 +84,8 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
 
     @Override
     public void start(final Stage stage) throws Exception {
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource("MyMovieTracker.fxml"));
-        final Parent root = loader.load();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MyMovieTracker.fxml"));
+        Parent root = loader.load();
         myMovieTrackerController = loader.getController();
         myMovieTrackerController.setTestingMode(true);
         stage.setScene(new Scene(root));
@@ -359,7 +359,7 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
         clickOn(lookup("#Movie0").queryAll().stream().findFirst().get().lookup("#rateMovie"));
 
         clickOn("#ratingList");
-        for (int i = 0; i < ratingScore; i++) {
+        for (int i = 1; i < ratingScore; i++) {
             press(KeyCode.DOWN);
             release(KeyCode.DOWN);
         }
@@ -378,5 +378,40 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
         Assertions.assertEquals(comment, actualComent);
     }
 
-    
+    @Test
+    @DisplayName("Test that you can give a movie a rating without a comment")
+    public void testGiveRatingWithoutComment() {
+        clickOn("#addNewMovie");
+        WaitForAsyncUtils.waitForFxEvents();
+        writeMovie(movieTitle, releaseDate, durationHours, durationMinutes, isOnWatchlist);
+        clickOn("#submitButton");
+        WaitForAsyncUtils.waitForFxEvents();
+
+        int ratingScore = 7;
+
+        clickOn(lookup("#Movie0").queryAll().stream().findFirst().get().lookup("#rateMovie"));
+
+        clickOn("#ratingList");
+        for (int i = 1; i < ratingScore; i++) {
+            press(KeyCode.DOWN);
+            release(KeyCode.DOWN);
+        }
+        press(KeyCode.ENTER);
+        release(KeyCode.ENTER);
+
+        clickOn("#submitReview");
+        
+        int actualScore = Integer.parseInt(((Label)(lookup("#Movie0").queryAll().stream().findFirst().get()).lookup("#ratingScore")).getText().substring(0, 1));
+        String actualComent = ((Label)(lookup("#Movie0").queryAll().stream().findFirst().get()).lookup("#ratingComment")).getText();
+
+        Assertions.assertEquals(ratingScore, actualScore);
+        Assertions.assertEquals("", actualComent);
+    }
+
+    @Test
+    @DisplayName("Test that you can open the statistic view from the mmt view")
+    public void testChangeView() {
+        clickOn("#statisticButton");
+        WaitForAsyncUtils.waitForFxEvents();
+    }
 }
