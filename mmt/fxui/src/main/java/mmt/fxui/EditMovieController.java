@@ -261,12 +261,14 @@ public class EditMovieController {
         updateActorsListView();
     }
 
+    /**
+     * Modify cells in the cast-listview to match the specifications for our app
+     */
     private class ActorListViewCell extends ListCell<String> {
         HBox hbox = new HBox();
         Label label = new Label("");
         Pane pane = new Pane();
         Button button = new Button("X");
-
 
         public ActorListViewCell() {
             super();
