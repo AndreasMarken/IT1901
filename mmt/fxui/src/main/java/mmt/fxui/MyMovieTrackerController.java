@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,6 +20,7 @@ import mmt.core.Comparators;
 import mmt.core.IMovie;
 import mmt.core.MovieList;
 import mmt.json.MovieModule;
+import mmt.json.MyMovieConfig;
 
 /**
  * The main controller used for the My Movie Tracker Application.
@@ -35,19 +37,19 @@ public class MyMovieTrackerController {
 
     private MovieList movieList = new MovieList();
     private ObjectMapper mapper = new ObjectMapper();
-
+    private MyMovieConfig config = new MyMovieConfig();
+    
     @FXML
     protected VBox editMovieWindow;
-
+    
     @FXML
     protected VBox giveRating;
-
+    
     @FXML
     private CheckBox watchList;
-
-    @FXML
-    private String apiUri;
-
+    
+    
+    private RemoteMmtAccess access = new RemoteMmtAccess("http://localhost:8080/mmt/", config);
     private boolean testingMode = false;
 
     private Path getSaveFilePath(String fileName) {
@@ -68,18 +70,28 @@ public class MyMovieTrackerController {
         editMovieController.setMyMovieTrackerController(this);
         hideEditMovie(false);
 
-        if (apiUri != null){
-
+        if (access.getUri() != null){
+            try {
+                MovieList list = access.getMovieListStoredInServer();
+                for (IMovie iMovie : list) {
+                    movieList.addMovie(iMovie);
+                }
+                updateMovieListView();
+            } catch (Exception e) {
+                System.out.println("could not load from server");
+            }
+        }
+        else{
+            // Load the movies registered in the movie.json file.
+            mapper.registerModule(new MovieModule());
+            MovieList temporaryMovieList = loadMovieListFromFile();
+            for (IMovie iMovie : temporaryMovieList) {
+                movieList.addMovie(iMovie);
+            }
+            // Display the movies in the file
+            updateMovieListView();
         }
 
-        // Load the movies registered in the movie.json file.
-        mapper.registerModule(new MovieModule());
-        MovieList temporaryMovieList = loadMovieListFromFile();
-        for (IMovie iMovie : temporaryMovieList) {
-            movieList.addMovie(iMovie);
-        }
-        // Display the movies in the file
-        updateMovieListView();
     }
 
     /**
