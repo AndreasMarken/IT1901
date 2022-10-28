@@ -2,12 +2,15 @@ package mmt.core;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class MovieTest {
     private IMovie starTrek, dune, jamesBond, harryPotter;
@@ -107,6 +110,76 @@ public class MovieTest {
         Assertions.assertEquals(starTrek.toString(), dune.toString());
     }
 
+    @Test
+    @DisplayName("Test adding an actor")
+    public void testAddActor() {
+        //Arrange
+        IMovie movie = new Movie("Fast and Furious", new Time(02, 00, 00));
+        IActor vinDiesel = new Actor("Vin Diesel");
+
+        //Act
+        movie.addActor(vinDiesel);
+
+        //Assert
+        Assertions.assertEquals(1, movie.getCast().size(), "Movie should contain one, and only one actor");
+        Assertions.assertTrue(movie.getCast().contains(vinDiesel));      
+    }
+
+    @Test
+    @DisplayName("Test that an actor can be removed from the cast of movie")
+    public void testRemoveActor() {
+        //Arrange
+        IMovie movie = new Movie("Fast and Furious", new Time(02, 00, 00));
+        IActor vinDiesel = new Actor("Vin Diesel");
+
+        //Act
+        movie.addActor(vinDiesel);
+        movie.removeActor(vinDiesel);
+
+        //Assert
+        Assertions.assertNull(movie.getCast(), "Movie should contain no actors after lastone removed");
+    }
+
+    @Test
+    public void testAddMultipleActor() {
+        //Arrange
+        IMovie movie = new Movie("Fast and Furious", new Time(02, 00, 00));
+        String[] actors = {"actoOne", "actoTwo", "actoThree", "actoFour"};
+
+        //Act
+        for (String actor : actors) {
+            movie.addActor(new Actor(actor));
+        }
+        String[] castFromMovie = movie.getCast().stream().map(actor -> actor.getName()).toArray(String[]::new);
+
+        //Assert
+        Assertions.assertEquals(4, movie.getCast().size(), "Movie should contain four, and only four actors");
+        Assertions.assertEquals(actors[0], castFromMovie[0]);
+        Assertions.assertEquals(actors[1], castFromMovie[1]);
+        Assertions.assertEquals(actors[2], castFromMovie[2]);
+        Assertions.assertEquals(actors[3], castFromMovie[3]);
+    }
+
+    @Test
+    public void testGetCastFromMovieList() {
+        //Arrange
+        IMovie movie = new Movie("Fast and Furious", new Time(02, 00, 00));
+        String[] actors = {"actoOne", "actoTwo", "actoThree", "actoFour"};
+
+        //Act
+        movieList.addMovie(movie);
+        for (String actor : actors) {
+            movie.addActor(new Actor(actor));
+        }
+        String[] castFromMovie = movieList.getCast(movie).stream().map(actor -> actor.getName()).toArray(String[]::new);
+
+        //Assert
+        Assertions.assertEquals(4, movie.getCast().size(), "Movie should contain four, and only four actors");
+        Assertions.assertEquals(actors[0], castFromMovie[0]);
+        Assertions.assertEquals(actors[1], castFromMovie[1]);
+        Assertions.assertEquals(actors[2], castFromMovie[2]);
+        Assertions.assertEquals(actors[3], castFromMovie[3]);
+    }
 }
 
     
