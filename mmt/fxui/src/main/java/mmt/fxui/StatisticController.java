@@ -14,6 +14,10 @@ import javafx.stage.Stage;
 import mmt.core.IMovie;
 import mmt.core.MovieList;
 
+/**
+ * The controller that is used to display the statistics of a given movielist to the 
+ * Statistics view to the user. Used in the MMT app.
+ */
 public class StatisticController {
     private MovieList movieList = new MovieList();
 
@@ -23,6 +27,10 @@ public class StatisticController {
     @FXML
     private Button backButton;
 
+    /**
+     * Method that sets the movielist statistic information to the statistics view.
+     * Used when the setMovieList method is used, and is not able to be called when not used in that method.
+     */
     private void setStatisticInformation() {
         if (getAverageRating() == -1) {
             this.avRating.setText("No ratings given");
@@ -45,6 +53,10 @@ public class StatisticController {
         }
     }
 
+    /**
+     * Changes this current view to the MyMovieTrackerView. Used when the back button is clicked.
+     * @throws IOException if it was unnable to open and display the MyMovieTrackerView.
+     */
     @FXML
     public void handleBack() throws IOException {
         Stage stage = (Stage) backButton.getScene().getWindow();
@@ -55,6 +67,11 @@ public class StatisticController {
         stage.show();
     }
 
+    /**
+     * Method used to set the movielist from the mmt controller. Sets the movielist that
+     * is to display the statistics to the user.
+     * @param movieList the movielist to be set
+     */
     protected void setMovieList(MovieList movieList) {
         if (movieList == null) {
            throw new NullPointerException("You cannot set null as the movielist");
@@ -63,6 +80,11 @@ public class StatisticController {
         this.setStatisticInformation();
     }
 
+    /**
+     * Method used to get the average rating on all the movies in the movielist. This only checks for moveis that have a rating.
+     * Method that is used when setting the information in the statstics view.
+     * @return the average rating given to the movies.
+     */
     private float getAverageRating() {
         int rating = 0;
         Collection<IMovie> moviesWithRating =  this.movieList.getMovies().stream().filter(m -> m.getRating() != null).toList();
@@ -75,14 +97,30 @@ public class StatisticController {
         return rating / moviesWithRating.size();
     }
     
+    /**
+     * Method used to get the number of movies in the movielist.
+     * Method that is used when setting the information in the statstics view.
+     * @return the number of movies that is in the movielist.
+     */
     private int getNumerOfMovies() {
         return this.movieList.getMovies().size();
     }
 
+    /**
+     * Method used to get the number of movies on the users watchlist in the movielist.
+     * Method that is used when setting the information in the statstics view.
+     * @return the number of movies that is on the watchlist.
+     */
     private int getNumberOfMoviesOnWatchList() {
         return this.movieList.getMovies().stream().filter(m -> m.getWatchlist()).toList().size();
     }
 
+    /**
+     * Method used to get the average movielength of a list of movies given as an input.
+     * Method that is used when setting the information in the statstics view.
+     * @param movies the list of movies to get the average duration of.
+     * @return null if the length of the list is 0. The average lenght of the movielist given as a Time object.
+     */
     private Time getAverageMovieLength(Collection<IMovie> movies) {
         int numberOfMovies = movies.size();
         if (numberOfMovies == 0) {
@@ -90,10 +128,13 @@ public class StatisticController {
         }
         int minutes = 0;
         for (IMovie movie : movies) {
-            minutes += 60 * movie.getDuration().getHours();
-            minutes += movie.getDuration().getMinutes();
+            //minutes += 60 * movie.getDuration().getHours();
+            minutes += 60 * Integer.parseInt(movie.getDuration().toString().substring(0, 2));
+            //minutes += movie.getDuration().getMinutes();
+            minutes += Integer.parseInt(movie.getDuration().toString().substring(3, 5));
         }
         minutes = minutes / numberOfMovies;
-        return new Time(minutes / 60, minutes % 60, 0);
+        //return new Time(minutes / 60, minutes % 60, 0);
+        return Time.valueOf(minutes / 60 + ":" + minutes % 60 + ":00");
     }
 }

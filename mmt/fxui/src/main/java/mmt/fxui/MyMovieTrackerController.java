@@ -54,10 +54,21 @@ public class MyMovieTrackerController {
 
     private boolean testingMode = false;
 
+    /**
+     * Method to get the save file path used. This is set to be the users home folder:
+     * User.home/it1901/mmt/saveFiles/filename
+     * @param fileName the filename to get the path to.
+     * @return the path to the filename given as parameter.
+     */
     private Path getSaveFilePath(String fileName) {
         return getSaveFolderPath().resolve(fileName);
     }
 
+    /**
+     * Method to get the save folder path used. This is set to be the users home folder:
+     * User.home/it1901/mmt/saveFiles/
+     * @return the path to the savefolder.
+     */
     private Path getSaveFolderPath() {
         return Path.of(System.getProperty("user.home"), "it1901", "mmt", "saveFiles");
     }
@@ -280,10 +291,22 @@ public class MyMovieTrackerController {
         displayMovieListView(watchList.isSelected());
     }
 
+    /**
+     * Method used to get the editmoviecontroller. Mostly used for testing, where this controller is needed.
+     * 
+     * @return EditMovieController: the editmoviecontroller that this controller is connected to.
+     */
     public EditMovieController getEditMovieController() {
         return this.editMovieController;
     }
 
+    /**
+     * Method used to set the testingmode. When performing the test, you do not want to destroy
+     * the users database. Therefore you can set the controller to testing mode, which changes the file 
+     * that this controller writes to.
+     * @param testingMode True if testingmode is to be set, false if not.
+     * @throws IOException If it was unable to save the movielist to file.
+     */
     protected void setTestingMode(boolean testingMode) throws IOException {
         this.testingMode = testingMode;
         this.movieList = new MovieList();
@@ -291,6 +314,10 @@ public class MyMovieTrackerController {
         updateMovieListView();
     }
 
+    /**
+     * Changes this current view to the statisticsview. Used when the statisticsview button is clicked.
+     * @throws IOException if it was unnable to open and display the statistic view.
+     */
     @FXML
     public void showStatistics() throws IOException {
         Stage stage = (Stage) statisticButton.getScene().getWindow();
