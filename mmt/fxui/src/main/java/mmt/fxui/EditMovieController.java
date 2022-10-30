@@ -280,6 +280,7 @@ public class EditMovieController {
                                         IActor actorObjToBeRemoved = movie.getCast().stream().filter(actor -> actor.getName().equals(actorToBeRemoved)).findAny().orElse(null);
                                         movie.removeActor(actorObjToBeRemoved);                                                                            
             });
+            button.setId("removeActorFromMovie");
         }
                                         
         @Override

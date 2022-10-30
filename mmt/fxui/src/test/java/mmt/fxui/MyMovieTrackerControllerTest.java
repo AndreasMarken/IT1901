@@ -281,6 +281,43 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
     }
 
     @Test
+    @DisplayName("Test that you can remove an actor from the cast")
+    public void testRemoveCast() {
+        //Arrange
+        final String[] inputCast = {"Vin Diesel"};
+
+        //Act
+        clickOn("#addNewMovie");
+        WaitForAsyncUtils.waitForFxEvents();
+        writeMovie("Fast and Furious", "01.08.2001", 2, 3, false, inputCast);
+        clickOn("#submitButton");
+        WaitForAsyncUtils.waitForFxEvents();
+        clickOn(lookup("#Movie0").queryAll().stream().findFirst().get().lookup("#editMovie"));
+        WaitForAsyncUtils.waitForFxEvents();
+        clickOn("#removeActorFromMovie");
+        WaitForAsyncUtils.waitForFxEvents();
+
+        //Assert
+        final Collection<IActor> actualCastObjects = myMovieTrackerController.getMovieList().getMovie("Fast and Furious").getCast();
+        Assertions.assertNull(actualCastObjects);
+    }
+
+    @Test
+    @DisplayName("Test that you can remove an actor from the cast")
+    public void testAddDuplicateCast() {
+        //Arrange
+        final String[] inputCast = {"Vin Diesel", "Vin Diesel"};
+
+        //Act
+        clickOn("#addNewMovie");
+        WaitForAsyncUtils.waitForFxEvents();
+        writeMovie("Fast and Furious", "01.08.2001", 2, 3, false, inputCast);
+
+        //Assert
+        Assertions.assertEquals("The actor is already added to the movie", myMovieTrackerController.getEditMovieController().errorMessage.getText());
+    }
+
+    @Test
     @DisplayName("Test that cast is serialized and deserialized")
     public void testCastIsSerializedAndDeserialized() {
 
