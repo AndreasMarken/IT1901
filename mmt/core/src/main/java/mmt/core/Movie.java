@@ -2,6 +2,8 @@ package mmt.core;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /** 
  * Class to represent Movie objects.
@@ -14,6 +16,7 @@ public class Movie implements IMovie {
     private Time duration;
     private IRating rating;
     private Boolean watchlist = false;
+    private Collection<IActor> cast;
     
     /** 
      * One of two constructors for Movie.
@@ -117,5 +120,37 @@ public class Movie implements IMovie {
             + "Rating: " + getRating() + "\n"
             + "Watchlist: " + getWatchlist() + "\n";
     }
+
+	@Override
+	public Collection<IActor> getCast() {
+        if(cast != null){
+		    return new ArrayList<IActor>(cast);
+        }
+        return cast;
+	}
+
+	@Override
+	public void addActor(IActor actor) {
+        if(cast == null){
+            cast = new ArrayList<IActor>();
+        }
+        if(cast.contains(actor)){
+            throw new IllegalStateException("The actor is already added to the movie!");
+        }
+        cast.add(actor);
+        actor.starredInMovie(this);	
+	}
+
+	@Override
+	public void removeActor(IActor actor) {
+        if(!cast.contains(actor)){
+            throw new IllegalArgumentException("The actor you are trying to remove is not in the cast of this movie");
+        }
+        cast.remove(actor);
+        actor.removeMovieFromStarredList(this);
+        if(cast.isEmpty()){
+            cast = null;
+        }		
+	}
 }     
 

@@ -2,6 +2,8 @@ package mmt.json;
 
 //import com.fasterxml.jackson.core.util.VersionUtil;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+
+import mmt.core.Actor;
 import mmt.core.Movie;
 import mmt.core.MovieList;
 import mmt.core.Rating;
@@ -25,5 +27,7 @@ public class MovieModule extends SimpleModule {
         addDeserializer(Movie.class, new MovieDeserializer());
         addSerializer(MovieList.class, new MovieListSerializer());
         addDeserializer(MovieList.class, new MovieListDeserializer());
+        addSerializer(Actor.class, new ActorSerializer());
+        addDeserializer(Actor.class, new ActorDeserializer());    
     }
 }

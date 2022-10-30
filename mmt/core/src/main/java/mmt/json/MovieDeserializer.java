@@ -6,12 +6,15 @@ import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.BooleanNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
+
+import mmt.core.Actor;
 import mmt.core.Movie;
 import mmt.core.Rating;
 
@@ -21,6 +24,7 @@ import mmt.core.Rating;
 public class MovieDeserializer extends JsonDeserializer<Movie> {
 
     private RatingDeserializer ratingDeserializer = new RatingDeserializer();
+    private ActorDeserializer actorDeserializer = new ActorDeserializer();
 
     /**
      * Method to deserialize (text to object) Movie objects.
@@ -54,6 +58,7 @@ public class MovieDeserializer extends JsonDeserializer<Movie> {
      * "duration": "hh:mm:ss"
      * "rating": [...]
      * "watchlist": true/false
+     * "cast": [...]
      * }
      *
      * @param jsonNode JsonNode
@@ -66,6 +71,7 @@ public class MovieDeserializer extends JsonDeserializer<Movie> {
             JsonNode durationNode = objectNode.get("duration");
             JsonNode ratingNode = objectNode.get("rating");
             JsonNode watchListNode = objectNode.get("watchlist");
+            JsonNode castNode = objectNode.get("cast");
             
             if (titleNode instanceof TextNode 
                 && releaseDateNode instanceof TextNode
@@ -92,6 +98,23 @@ public class MovieDeserializer extends JsonDeserializer<Movie> {
                 if (ratingNode instanceof ObjectNode) {
                     Rating rating = ratingDeserializer.deserialize((ObjectNode) ratingNode);
                     movie.setRating(rating);
+                }
+                if (castNode instanceof ArrayNode) {
+                    for (JsonNode actorNode : ((ArrayNode) castNode)) {
+                        try {
+                            Actor actor = actorDeserializer.deserialize(actorNode);
+                            if (actor != null) {
+                                try {
+                                    movie.addActor(actor);
+                                } catch (IllegalArgumentException e) {
+                                    //If A movie was attempted added multiple times, skip the movie
+                                } 
+                        }
+                        } catch (NullPointerException e) {
+                            //No actors
+                        }
+                        
+                    }
                 }
                 return movie;
             }
