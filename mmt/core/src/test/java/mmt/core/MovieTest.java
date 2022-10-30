@@ -23,16 +23,16 @@ public class MovieTest {
 
     @BeforeEach
     public void setUp(){
-        starTrekD = new Date(1990, 05, 22);
-        starTrekT = new Time(02, 00, 00);
+        starTrekD = Date.valueOf("1990-06-22");
+        starTrekT = Time.valueOf("02:00:00");
         starTrek = new Movie("Star Trek", starTrekT, starTrekD);
         rating = new Rating(8);
-        duneT = new Time(2, 30, 0);
-        harryPotterT = new Time(1, 30, 40);
-        jamesBondT = new Time(3, 20, 20);
-        duneD = new Date(2001, 05, 02);
-        harryPotterD = new Date(2010, 04, 22);
-        jamesBondD = new Date(2016, 10, 02);
+        duneT = Time.valueOf("02:30:00");
+        harryPotterT = Time.valueOf("01:30:40");
+        jamesBondT = Time.valueOf("03:20:20");
+        duneD = Date.valueOf("2001-06-02");
+        harryPotterD = Date.valueOf("2010-05-02");
+        jamesBondD = Date.valueOf("2016-11-02");
         dune = new Movie("Dune", duneT, duneD);
         harryPotter = new Movie("Harry Potter", harryPotterT, harryPotterD);
         jamesBond = new Movie("James Bond", jamesBondT, jamesBondD);
@@ -99,7 +99,7 @@ public class MovieTest {
     @DisplayName("Test setters and toString methods")
     public void testSettersToString(){
         Assertions.assertEquals("Movie title: " + starTrek.getTitle() + "\n"
-        + "Duration: " + starTrek.getDuration().getHours() + " hours " + starTrek.getDuration().getMinutes() + " minutes" + "\n"
+        + "Duration: 02 hours 00 minutes" + "\n"
         + "Release date: " + starTrek.getReleaseDate() + "\n"
         + "Rating: " + starTrek.getRating() + "\n"
         + "Watchlist: " + starTrek.getWatchlist() + "\n", starTrek.toString());

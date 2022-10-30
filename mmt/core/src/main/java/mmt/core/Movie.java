@@ -36,21 +36,6 @@ public class Movie implements IMovie {
             this.releaseDate = releaseDate;
         }
     }
-
-    /** 
-     * One of two constructors for Movie.
-     *
-     * @param title Title of the Movie
-     * @param duration Duration of teh Movie
-     */
-    public Movie(String title, Time duration) {
-        if (checkIfNull(duration)) {
-            this.duration = duration;
-        }
-        if (checkIfNull(title)) {
-            this.title = title;
-        }
-    }
   
     @Override
     public String getTitle() {
@@ -130,7 +115,7 @@ public class Movie implements IMovie {
     @Override
     public String toString() {
         return "Movie title: " + getTitle() + "\n"
-            + "Duration: " + getDuration().getHours() + " hours " + getDuration().getMinutes() + " minutes" + "\n"
+            + "Duration: " + getDuration().toString().substring(0, 2) + " hours " + getDuration().toString().substring(3,5) + " minutes" + "\n"
             + "Release date: " + getReleaseDate() + "\n"
             + "Rating: " + getRating() + "\n"
             + "Watchlist: " + getWatchlist() + "\n";

@@ -78,8 +78,10 @@ public class EditMovieController {
                 errorMessage.setText("The title name is not valid.");
                 return;
             }
-            Time time = new Time(hours.getValue(), minutes.getValue(), 0);
-            if (time.getHours() <= 00 && time.getMinutes() <= 00) {
+            //Time time = new Time(hours.getValue(), minutes.getValue(), 0);
+            Time time = Time.valueOf(hours.getValue() + ":" + minutes.getValue() + ":00");
+            //if (time.getHours() <= 00 && time.getMinutes() <= 00) {
+            if (hours.getValue() <= 00 && minutes.getValue() <= 00) {
                 errorMessage.setText("The movie must have a duration.");
                 return;
             }
@@ -92,7 +94,8 @@ public class EditMovieController {
                 errorMessage.setText("You must choose a valid date.");
                 return;
             }
-            Date releaseDate = new Date(date.getValue().getYear() - 1900, date.getValue().getMonthValue() - 1, date.getValue().getDayOfMonth());
+            //Date releaseDate = new Date(date.getValue().getYear() - 1900, date.getValue().getMonthValue() - 1, date.getValue().getDayOfMonth());
+            Date releaseDate = Date.valueOf(date.getValue().getYear() + "-" + date.getValue().getMonthValue() + "-" + date.getValue().getDayOfMonth());
             boolean watchList = watchListCheckBox.isSelected();
 
             try {
@@ -196,8 +199,10 @@ public class EditMovieController {
             throw new IllegalStateException("You should not have the oppertunity to edit a movie when you havent selected a movie to edit.");
         }
         movieTitleField.setText(movie.getTitle());  
-        hours.increment(movie.getDuration().getHours());
-        minutes.increment(movie.getDuration().getMinutes());
+        //hours.increment(movie.getDuration().getHours());
+        hours.increment(Integer.parseInt(movie.getDuration().toString().substring(0, 2)));
+        //minutes.increment(movie.getDuration().getMinutes());
+        minutes.increment(Integer.parseInt(movie.getDuration().toString().substring(3, 5)));
         date.setValue(movie.getReleaseDate().toLocalDate());
         watchListCheckBox.setSelected(movie.getWatchlist());
         if (movie.getCast() != null) {

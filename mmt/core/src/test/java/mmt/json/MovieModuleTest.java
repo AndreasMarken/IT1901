@@ -38,9 +38,9 @@ public class MovieModuleTest {
 
     private static Stream<Arguments> testMovieListDeserializer() {
         return Stream.of(
-            Arguments.arguments("James Bond ", new Time(2,2,0), new Date(2022-1900, 8, 9)),
-            Arguments.arguments("Lange flate ballær", new Time(2, 3, 0), new Date(2022-1900, 8, 5)),
-            Arguments.arguments("iodhosa", new Time(2, 2, 0), new Date(2022-1900, 8, 2))
+            Arguments.arguments("James Bond ", Time.valueOf("02:02:00"), Date.valueOf("2022-09-09")),
+            Arguments.arguments("Lange flate ballær", Time.valueOf("02:03:00"), Date.valueOf("2022-09-05")),
+            Arguments.arguments("iodhosa", Time.valueOf("02:02:00"), Date.valueOf("2022-09-02"))
         );
     }
 
@@ -88,8 +88,8 @@ public class MovieModuleTest {
     @Test
     @DisplayName("Test that the Movie and Rating serializers works as intended.")
     public void testMovieSerializer() {
-        Date date = new Date(2002, 12, 2);
-        Time time = new Time(1, 50, 0);
+        Date date = Date.valueOf("2002-01-02");
+        Time time = Time.valueOf("01:50:00");
         Movie movie = new Movie("Bond", time, date);
         movie.setRating(new Rating(9, "Very good."));
         try {
@@ -102,8 +102,8 @@ public class MovieModuleTest {
     @Test
     @DisplayName("Test that the deserializers gets the correct object back from a serialiation")
     public void testMovieDeserializer() {
-        Date date = new Date(2002, 12, 2);
-        Time time = new Time(1, 50, 0);
+        Date date = Date.valueOf("2002-01-02");
+        Time time = Time.valueOf("01:50:00");
         Movie movie = new Movie("Bond", time, date);
         movie.setRating(new Rating(9, "Very good."));
 
@@ -126,9 +126,9 @@ public class MovieModuleTest {
     @DisplayName("Test the movielist serializer")
     public void testMovieListSerializer() {
         MovieList movieList = new MovieList();
-        movieList.addMovie(new Movie("James Bond ", new Time(2,2,0), new Date(2022-1900, 8, 9)));
-        movieList.addMovie(new Movie("Lange flate ballær", new Time(2, 3, 0), new Date(2022-1900, 8, 5)));
-        movieList.addMovie(new Movie("iodhosa", new Time(2, 2, 0), new Date(2022-1900, 8, 2)));
+        movieList.addMovie(new Movie("James Bond ", Time.valueOf("02:02:00"), Date.valueOf("2022-09-09")));
+        movieList.addMovie(new Movie("Lange flate ballær", Time.valueOf("02:03:00"), Date.valueOf("2022-09-05")));
+        movieList.addMovie(new Movie("iodhosa", Time.valueOf("02:02:00"), Date.valueOf("2022-09-02")));
 
         try {
             Assertions.assertEquals(movieListWithThreeMovies, mapper.writeValueAsString(movieList));

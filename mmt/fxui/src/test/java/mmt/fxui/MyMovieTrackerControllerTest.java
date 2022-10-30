@@ -1,6 +1,7 @@
 package mmt.fxui;
 
 import java.sql.Time;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -168,9 +169,13 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
 
         Assertions.assertEquals(movieTitle, addedMovie.getTitle(),
                        "Wrong movietitle set");
-        Assertions.assertEquals(new Time(durationHours, durationMinutes, 0), addedMovie.getDuration(),
+        //Assertions.assertEquals(new Time(durationHours, durationMinutes, 0), addedMovie.getDuration(),
+        //               "Wrong duration set");
+        Assertions.assertEquals(Time.valueOf(Integer.toString(durationHours)+ ":" + Integer.toString(durationMinutes) + ":00"), addedMovie.getDuration(),
                        "Wrong duration set");
-        Assertions.assertEquals(new Date(2022 - 1900, 9, 6), addedMovie.getReleaseDate(),
+        //Assertions.assertEquals(new Date(2022 - 1900, 9, 6), addedMovie.getReleaseDate(),
+        //               "Wrong releasedate set");
+        Assertions.assertEquals(Date.valueOf("2022-10-06"), addedMovie.getReleaseDate(),
                        "Wrong releasedate set");
         Assertions.assertEquals(isOnWatchlist, addedMovie.getWatchlist(),
                        "Wrong movietitle set");
