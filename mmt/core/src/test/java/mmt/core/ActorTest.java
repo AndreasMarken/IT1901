@@ -7,15 +7,12 @@ import org.junit.jupiter.api.Assertions;
 
 
 public class ActorTest {
-    private IActor actor;
-
-
     @Test
     public void testConstructorNull() {
 
         //Act and Assert
         Assertions.assertThrows(IllegalArgumentException.class, () ->
-            actor = new Actor(null)
+            new Actor(null)
         );
     }
 
@@ -26,7 +23,7 @@ public class ActorTest {
 
         //Act and Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> 
-            actor = new Actor(emptyString)
+            new Actor(emptyString)
         );
     }
 
@@ -37,7 +34,7 @@ public class ActorTest {
 
         //Act and Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> 
-            actor = new Actor(name)
+            new Actor(name)
         );
     }
 
@@ -47,7 +44,7 @@ public class ActorTest {
     '^','&','(',')','{','}','_',';'})
     public void testConstructorInvalidNames(char name) {
         Assertions.assertThrows(IllegalArgumentException.class, () -> 
-            actor = new Actor(name+""),"A valid actor name should not contain: " + name
+            new Actor(name+""),"A valid actor name should not contain: " + name
         );
     }
     
@@ -56,6 +53,6 @@ public class ActorTest {
     "Niccolò dell'Arca","Philippe-François Fabre d'Eglantine",
     "Paul-Henri Thiry", "Martin Luther King, Jr", "Vebjørn" })
     public void testConstructorValidNames(String name) {
-        Assertions.assertDoesNotThrow(() -> actor = new Actor(name), name + " is a valid name!");
+        Assertions.assertDoesNotThrow(() -> new Actor(name), name + " is a valid name!");
     }
 }

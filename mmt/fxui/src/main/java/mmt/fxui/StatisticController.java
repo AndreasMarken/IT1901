@@ -3,6 +3,8 @@ package mmt.fxui;
 import java.io.IOException;
 import java.sql.Time;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import mmt.core.IActor;
 import mmt.core.IMovie;
 import mmt.core.MovieList;
 
@@ -43,7 +46,7 @@ public class StatisticController {
         } else {
             this.avLength.setText(getAverageMovieLength(this.movieList.getMovies()).toString());
         }
-        this.higActor.setText(null);
+        this.higActor.setText(getMostCommonActor());
         this.numOfMovies.setText(Integer.toString(getNumerOfMovies()));
         this.numOfWatchMovies.setText(Integer.toString(getNumberOfMoviesOnWatchList()));
         if (getAverageMovieLength(this.movieList.getMovies().stream().filter(m -> m.getWatchlist()).toList()) == null) {
@@ -136,5 +139,27 @@ public class StatisticController {
         minutes = minutes / numberOfMovies;
         //return new Time(minutes / 60, minutes % 60, 0);
         return Time.valueOf(minutes / 60 + ":" + minutes % 60 + ":00");
+    }
+
+    /**
+     * Method used to search through the database to get the actor that plays in the most movies.
+     * @return The actor that plays in the most movies, if there are no actors in the database, return "No actors".
+     */
+    private String getMostCommonActor() {
+        Map<String, Integer> actorsmap = new HashMap<>();
+
+        for (IMovie movie : movieList) {
+            try {
+                for (IActor actor : movie.getCast()) {
+                    actorsmap.put(actor.getName(), actorsmap.getOrDefault(actor.getName(), 0) + 1);
+                }
+            } catch (NullPointerException e) {
+                //No actors? No problem, skip this movie
+            }
+        }
+        if (actorsmap.size() == 0) {
+            return "No actors";
+        }
+        return actorsmap.entrySet().stream().max((entry1, entry2) -> entry1.getValue() >= entry2.getValue() ? 1 : -1).get().getKey();
     }
 }
