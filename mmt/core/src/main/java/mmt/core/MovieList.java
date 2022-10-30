@@ -70,4 +70,11 @@ public class MovieList implements Iterable<IMovie> {
     public Collection<IMovie> getMovies() {
         return this.movieList;
     } 
+
+    public Collection<IActor> getCast(IMovie movie){
+        if(!movieList.contains(movie)){
+            throw new IllegalArgumentException("The movie" + movie.getTitle() + " does not exist in the movielist");
+        }
+        return movie.getCast();
+    }
 }

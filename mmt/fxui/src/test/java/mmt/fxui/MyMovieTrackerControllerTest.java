@@ -1,8 +1,10 @@
 package mmt.fxui;
 
 import java.sql.Time;
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +21,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import mmt.core.IActor;
 import mmt.core.IMovie;
 
 public class MyMovieTrackerControllerTest extends ApplicationTest{
@@ -31,7 +34,7 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
     private int durationMinutes = 32;
     private boolean isOnWatchlist = true;
 
-    private void writeMovie(String movieTitle, String releaseDate, int durationHours, int durationMinutes, boolean isOnWatchlist) {
+    private void writeMovie(String movieTitle, String releaseDate, int durationHours, int durationMinutes, boolean isOnWatchlist, String... cast) {
         clickOn("#movieTitleField");
         WaitForAsyncUtils.waitForFxEvents();
         write(movieTitle);
@@ -60,24 +63,35 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
             clickOn("#watchListCheckBox");
             WaitForAsyncUtils.waitForFxEvents();
         }
+
+        if(cast != null){
+            for (String actor : cast) {
+                clickOn("#actorNameField");
+                WaitForAsyncUtils.waitForFxEvents();
+                write(actor);
+                WaitForAsyncUtils.waitForFxEvents();
+                clickOn("#addActorToMovieButton");
+                WaitForAsyncUtils.waitForFxEvents();
+            }
+        }
     }
 
     private void addThreeMovies() {
         clickOn("#addNewMovie");
         WaitForAsyncUtils.waitForFxEvents();
-        writeMovie(movieTitle, releaseDate, durationHours, durationMinutes, isOnWatchlist);
+        writeMovie(movieTitle, releaseDate, durationHours, durationMinutes, isOnWatchlist, "Ryan Gosling");
         clickOn("#submitButton");
         WaitForAsyncUtils.waitForFxEvents();
 
         clickOn("#addNewMovie");
         WaitForAsyncUtils.waitForFxEvents();
-        writeMovie("Test Movie 2", releaseDate, durationHours, durationMinutes-2, false);
+        writeMovie("Test Movie 2", releaseDate, durationHours, durationMinutes-2, false, "Dwayne Johnson", "Mark Clerk");
         clickOn("#submitButton");
         WaitForAsyncUtils.waitForFxEvents();
 
         clickOn("#addNewMovie");
         WaitForAsyncUtils.waitForFxEvents();
-        writeMovie("Test Movie 3", releaseDate, durationHours, durationMinutes-3, true);
+        writeMovie("Test Movie 3", releaseDate, durationHours, durationMinutes-3, true, "John", "Jonas", "Joseph");
         clickOn("#submitButton");
         WaitForAsyncUtils.waitForFxEvents();
     }
@@ -154,9 +168,13 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
 
         Assertions.assertEquals(movieTitle, addedMovie.getTitle(),
                        "Wrong movietitle set");
-        Assertions.assertEquals(new Time(durationHours, durationMinutes, 0), addedMovie.getDuration(),
+        //Assertions.assertEquals(new Time(durationHours, durationMinutes, 0), addedMovie.getDuration(),
+        //               "Wrong duration set");
+        Assertions.assertEquals(Time.valueOf(Integer.toString(durationHours)+ ":" + Integer.toString(durationMinutes) + ":00"), addedMovie.getDuration(),
                        "Wrong duration set");
-        Assertions.assertEquals(new Date(2022 - 1900, 9, 6), addedMovie.getReleaseDate(),
+        //Assertions.assertEquals(new Date(2022 - 1900, 9, 6), addedMovie.getReleaseDate(),
+        //               "Wrong releasedate set");
+        Assertions.assertEquals(Date.valueOf("2022-10-06"), addedMovie.getReleaseDate(),
                        "Wrong releasedate set");
         Assertions.assertEquals(isOnWatchlist, addedMovie.getWatchlist(),
                        "Wrong movietitle set");
@@ -243,6 +261,90 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
 
         Assertions.assertEquals("The movie must have a duration.", myMovieTrackerController.getEditMovieController().errorMessage.getText(),
                                 "The errormessage shown to the user was incorrect");
+    }
+
+    @Test
+    @DisplayName("Test that you can create a movie with cast")
+    public void testAddCast() {
+
+        //Arrange
+        final String[] expectedCast = {"Vin Diesel", "Paul Walker", "Michelle Rodriguez", "Jordana Brewster", 
+        "Rick Yune", "Matt Schulze", "Ted Levine", "Johnny Strong"};
+
+        //Act
+        clickOn("#addNewMovie");
+        WaitForAsyncUtils.waitForFxEvents();
+        writeMovie("Fast and Furious", "01.08.2001", 2, 3, false, expectedCast);
+        clickOn("#submitButton");
+        WaitForAsyncUtils.waitForFxEvents();
+
+        //Assert
+        final Collection<IActor> actualCastObjects = myMovieTrackerController.getMovieList().getMovie("Fast and Furious").getCast();
+        final String[] actualCast = actualCastObjects.stream().map(actor -> actor.getName()).toArray(String[]::new);
+        Assertions.assertArrayEquals(expectedCast, actualCast);
+    }
+
+    @Test
+    @DisplayName("Test that you can remove an actor from the cast")
+    public void testRemoveCast() {
+        //Arrange
+        final String[] inputCast = {"Vin Diesel"};
+
+        //Act
+        clickOn("#addNewMovie");
+        WaitForAsyncUtils.waitForFxEvents();
+        writeMovie("Fast and Furious", "01.08.2001", 2, 3, false, inputCast);
+        clickOn("#submitButton");
+        WaitForAsyncUtils.waitForFxEvents();
+        clickOn(lookup("#Movie0").queryAll().stream().findFirst().get().lookup("#editMovie"));
+        WaitForAsyncUtils.waitForFxEvents();
+        clickOn("#removeActorFromMovie");
+        WaitForAsyncUtils.waitForFxEvents();
+
+        //Assert
+        final Collection<IActor> actualCastObjects = myMovieTrackerController.getMovieList().getMovie("Fast and Furious").getCast();
+        Assertions.assertNull(actualCastObjects);
+    }
+
+    @Test
+    @DisplayName("Test that you can remove an actor from the cast")
+    public void testAddDuplicateCast() {
+        //Arrange
+        final String[] inputCast = {"Vin Diesel", "Vin Diesel"};
+
+        //Act
+        clickOn("#addNewMovie");
+        WaitForAsyncUtils.waitForFxEvents();
+        writeMovie("Fast and Furious", "01.08.2001", 2, 3, false, inputCast);
+
+        //Assert
+        Assertions.assertEquals("The actor is already added to the movie", myMovieTrackerController.getEditMovieController().errorMessage.getText());
+    }
+
+    @Test
+    @DisplayName("Test that cast is serialized and deserialized")
+    public void testCastIsSerializedAndDeserialized() {
+
+        //Arrange
+        final String[] expectedCast = {"First actor", "Second Actor", "Third Actor"};
+
+        //Act
+        clickOn("#addNewMovie");
+        WaitForAsyncUtils.waitForFxEvents();
+        writeMovie("Test Serializing Of Cast", "01.08.2001", 2, 3, false, expectedCast);
+        clickOn("#submitButton");
+        WaitForAsyncUtils.waitForFxEvents();
+        clickOn(lookup("#Movie0").queryAll().stream().findFirst().get().lookup("#editMovie"));
+
+
+        //Assert
+        final Collection<String> castFromListView = new ArrayList<String>(myMovieTrackerController.editMovieController.actorListView.getItems());
+        final Collection<IActor> actualCastObjects = myMovieTrackerController.getMovieList().getMovie("Test Serializing Of Cast").getCast();
+        final String[] actualCast = actualCastObjects.stream().map(actor -> actor.getName()).toArray(String[]::new);
+        final String[] actualCastFromListView = castFromListView.toArray(String[]::new);
+        
+        Assertions.assertArrayEquals(expectedCast, actualCast);
+        Assertions.assertArrayEquals(expectedCast, actualCastFromListView);
     }
 
     @Test

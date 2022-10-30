@@ -20,12 +20,12 @@ public class ComparatorTest {
 
     @BeforeEach
     public void setUp() {
-        duneT = new Time(2, 30, 0);
-        harryPotterT = new Time(1, 30, 40);
-        jamesBondT = new Time(3, 20, 20);
-        duneD = new Date(2001, 05, 02);
-        harryPotterD = new Date(2010, 04, 22);
-        jamesBondD = new Date(2016, 10, 02);
+        duneT = Time.valueOf("02:30:00");
+        harryPotterT = Time.valueOf("01:30:40");
+        jamesBondT = Time.valueOf("03:20:20");
+        duneD = Date.valueOf("2001-06-02");
+        harryPotterD = Date.valueOf("2010-05-02");
+        jamesBondD = Date.valueOf("2016-11-02");
         dune = new Movie("Dune", duneT, duneD);
         harryPotter = new Movie("Harry Potter", harryPotterT, harryPotterD);
         jamesBond = new Movie("James Bond", jamesBondT, jamesBondD);
