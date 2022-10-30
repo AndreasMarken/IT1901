@@ -2,15 +2,12 @@ package mmt.core;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.Collection;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 public class MovieTest {
     private IMovie starTrek, dune, jamesBond, harryPotter;
@@ -114,7 +111,7 @@ public class MovieTest {
     @DisplayName("Test adding an actor")
     public void testAddActor() {
         //Arrange
-        IMovie movie = new Movie("Fast and Furious", new Time(02, 00, 00));
+        IMovie movie = new Movie("Fast and Furious", Time.valueOf("02:00:00"), Date.valueOf("2022-09-09"));
         IActor vinDiesel = new Actor("Vin Diesel");
 
         //Act
@@ -129,7 +126,7 @@ public class MovieTest {
     @DisplayName("Test that an actor can be removed from the cast of movie")
     public void testRemoveActor() {
         //Arrange
-        IMovie movie = new Movie("Fast and Furious", new Time(02, 00, 00));
+        IMovie movie = new Movie("Fast and Furious", Time.valueOf("02:00:00"), Date.valueOf("2022-09-09"));
         IActor vinDiesel = new Actor("Vin Diesel");
 
         //Act
@@ -143,7 +140,7 @@ public class MovieTest {
     @Test
     public void testAddMultipleActor() {
         //Arrange
-        IMovie movie = new Movie("Fast and Furious", new Time(02, 00, 00));
+        IMovie movie = new Movie("Fast and Furious", Time.valueOf("02:00:00"), Date.valueOf("2022-09-09"));
         String[] actors = {"actoOne", "actoTwo", "actoThree", "actoFour"};
 
         //Act
@@ -163,7 +160,7 @@ public class MovieTest {
     @Test
     public void testGetCastFromMovieList() {
         //Arrange
-        IMovie movie = new Movie("Fast and Furious", new Time(02, 00, 00));
+        IMovie movie = new Movie("Fast and Furious", Time.valueOf("02:00:00"), Date.valueOf("2022-09-09"));
         String[] actors = {"actoOne", "actoTwo", "actoThree", "actoFour"};
 
         //Act
