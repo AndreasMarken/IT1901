@@ -70,7 +70,7 @@ public class MyMovieTrackerController {
         editMovieController.setMyMovieTrackerController(this);
         hideEditMovie(false);
 
-        if (access.getUri() != null){
+    /*     if (access.getUri() != null){
             try {
                 MovieList list = access.getMovieListStoredInServer();
                 for (IMovie iMovie : list) {
@@ -81,7 +81,7 @@ public class MyMovieTrackerController {
                 System.out.println("could not load from server");
             }
         }
-        else{
+        else{ */
             // Load the movies registered in the movie.json file.
             mapper.registerModule(new MovieModule());
             MovieList temporaryMovieList = loadMovieListFromFile();
@@ -90,7 +90,7 @@ public class MyMovieTrackerController {
             }
             // Display the movies in the file
             updateMovieListView();
-        }
+        
 
     }
 
@@ -139,6 +139,10 @@ public class MyMovieTrackerController {
             mapper.writeValue(getSaveFilePath("movie.json").toFile(), movieList);
         }
     }
+    
+    // private void saveMovieListToServer() throws IOException{
+    //     access.storeMovieListInServer(movieList);
+    // }
 
     /**
      * Sorts the movielist based on rating from best to worst.
@@ -238,7 +242,8 @@ public class MyMovieTrackerController {
         }
         try {
             saveMovieListToFile();
-        } catch (IOException e) {
+/*             saveMovieListToServer();
+ */        } catch (IOException e) {
             System.out.println("The movies was not saved to file");
         }
     }

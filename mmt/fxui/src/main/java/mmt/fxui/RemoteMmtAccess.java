@@ -5,14 +5,14 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
-
+import java.sql.Time;
+import java.sql.Date;
 import java.net.http.HttpResponse;
-import java.net.http.HttpRequest.BodyPublisher;
 import java.net.http.HttpRequest.BodyPublishers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
+import mmt.core.Movie;
 import mmt.core.MovieList;
 import mmt.json.MyMovieConfig;
 
@@ -33,23 +33,23 @@ public class RemoteMmtAccess {
     public void storeMovieListInServer(MovieList movieList){
         try {
             String jsonString = oMapper.writeValueAsString(movieList);
-            HttpClient client = HttpClient.newHttpClient();
+/*             System.out.println(jsonString);
+ */         HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(getUri())
                     .header("Accept", "application/json")
                     .header("Content-Type", "application/json")
                     .PUT(BodyPublishers.ofString(jsonString))
                     .build();
-            HttpResponse<String> response = client
-                    .send(request, BodyHandlers.ofString());
-            if (oMapper.readValue(response.body(), Boolean.class)){
-                System.out.println("Sucsessfull stor to server");
+            final HttpResponse<String> response = client
+                    .send(request, HttpResponse.BodyHandlers.ofString());
+                    System.out.println(response.body() + "dette er bodyen.....");
+            if (!oMapper.readValue(response.body(), Boolean.class)){
+                System.out.println("Nå da.....");
             }
-            else System.out.println("Not stored in server");
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
-
         
     }
 
@@ -72,6 +72,18 @@ public class RemoteMmtAccess {
         }
     }
 
+
+ /*    public static void main(String[] args) {
+        MovieList list = new MovieList();
+        Date date = new Date(2001, 3, 5);
+        Time tid = new Time(2, 4, 5);
+        Movie movie = new Movie("hei", tid, date);
+        list.addMovie(movie);
+        MyMovieConfig c = new MyMovieConfig();
+        RemoteMmtAccess a = new RemoteMmtAccess("http://localhost:8080/mmt", c);
+        a.storeMovieListInServer(list);
+    }
+ */
 
 }
 

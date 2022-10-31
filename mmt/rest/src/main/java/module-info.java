@@ -1,5 +1,5 @@
 module mmt.rest {
-    requires mmt.core;
+    requires transitive mmt.core;
     requires jakarta.ws.rs;
 
     requires org.glassfish.hk2.api;
@@ -8,4 +8,8 @@ module mmt.rest {
     requires jersey.common;
     requires jersey.server;
     requires jersey.media.json.jackson;
+
+    exports mmt.restapi;
+
+    opens mmt.restapi to jersey.server;
 }
