@@ -94,6 +94,7 @@ public class StatisticControllerTest extends ApplicationTest{
     @Test
     @DisplayName("Test that every label displays the correct information")
     public void testSetInformation() {
+        WaitForAsyncUtils.waitForFxEvents();
         //Assertions.assertEquals(Float.parseFloat(statisticController.avRating.getText()), 8.0);
         Assertions.assertEquals(8.0, Float.parseFloat(statisticController.avRating.getText()));
         //Assertions.assertEquals(Integer.parseInt(statisticController.numOfMovies.getText()), 5);
