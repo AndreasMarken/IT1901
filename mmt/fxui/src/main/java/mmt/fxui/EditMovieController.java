@@ -2,7 +2,6 @@ package mmt.fxui;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -184,10 +183,6 @@ public class EditMovieController {
             newEditMovieTab.setText("New Movie:");
             clearInputFields();
         }
-    }
-
-    protected void setDatePickerValue(LocalDate object) {
-        date.setValue(object);
     }
 
     /**

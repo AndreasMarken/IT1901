@@ -11,10 +11,14 @@ import java.util.Collections;
 import java.util.List;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import mmt.core.Comparators;
 import mmt.core.IActor;
 import mmt.core.IMovie;
@@ -34,6 +38,9 @@ public class MyMovieTrackerController {
     @FXML
     protected Pane movieListView;
 
+    @FXML
+    private Button statisticButton;
+
     private MovieList movieList = new MovieList();
     private ObjectMapper mapper = new ObjectMapper();
 
@@ -51,10 +58,21 @@ public class MyMovieTrackerController {
 
     private boolean testingMode = false;
 
+    /**
+     * Method to get the save file path used. This is set to be the users home folder:
+     * User.home/it1901/mmt/saveFiles/filename
+     * @param fileName the filename to get the path to.
+     * @return the path to the filename given as parameter.
+     */
     private Path getSaveFilePath(String fileName) {
         return getSaveFolderPath().resolve(fileName);
     }
 
+    /**
+     * Method to get the save folder path used. This is set to be the users home folder:
+     * User.home/it1901/mmt/saveFiles/
+     * @return the path to the savefolder.
+     */
     private Path getSaveFolderPath() {
         return Path.of(System.getProperty("user.home"), "it1901", "mmt", "saveFiles");
     }
@@ -279,15 +297,43 @@ public class MyMovieTrackerController {
         displayMovieListView(watchList.isSelected(), this.movieList);
     }
 
+    /**
+     * Method used to get the editmoviecontroller. Mostly used for testing, where this controller is needed.
+     * 
+     * @return EditMovieController: the editmoviecontroller that this controller is connected to.
+     */
     public EditMovieController getEditMovieController() {
         return this.editMovieController;
     }
 
+    /**
+     * Method used to set the testingmode. When performing the test, you do not want to destroy
+     * the users database. Therefore you can set the controller to testing mode, which changes the file 
+     * that this controller writes to.
+     * @param testingMode True if testingmode is to be set, false if not.
+     * @throws IOException If it was unable to save the movielist to file.
+     */
     protected void setTestingMode(boolean testingMode) throws IOException {
         this.testingMode = testingMode;
         this.movieList = new MovieList();
         saveMovieListToFile();
         updateMovieListView();
+    }
+
+    /**
+     * Changes this current view to the statisticsview. Used when the statisticsview button is clicked.
+     * @throws IOException if it was unnable to open and display the statistic view.
+     */
+    @FXML
+    public void showStatistics() throws IOException {
+        Stage stage = (Stage) statisticButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Statistic.fxml"));
+        Parent root = fxmlLoader.load();
+        StatisticController statisticController = fxmlLoader.getController();
+        statisticController.setMovieList(this.movieList);
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML

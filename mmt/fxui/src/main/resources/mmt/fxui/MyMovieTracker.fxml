@@ -45,6 +45,7 @@
                           <Font size="14.0" />
                        </font>
                     </Button>
+                  <Button id="statisticButton" fx:id="statisticButton" layoutX="5.0" layoutY="194.0" mnemonicParsing="false" onAction="#showStatistics" prefHeight="26.0" prefWidth="190.0" text="Show Statistics" />
                   <Text layoutX="-2.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search for movies containg actor, or by movie name:" wrappingWidth="200">
                      <font>
                         <Font size="21.0" />
