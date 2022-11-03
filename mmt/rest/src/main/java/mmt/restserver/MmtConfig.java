@@ -3,7 +3,7 @@ package mmt.restserver;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 
-import com.fasterxml.jackson.core.util.JacksonFeature;
+import org.glassfish.jersey.jackson.JacksonFeature;
 
 import mmt.json.MyMovieConfig;
 import mmt.restapi.MmtService;
@@ -15,8 +15,8 @@ public class MmtConfig extends ResourceConfig{
         myMovieConfig = new MyMovieConfig();
         myMovieConfig.setFilePath("server-movielist.json");
         register(MmtService.class);
-        register(MmtModuleObjectMapperProvider.class);
         register(JacksonFeature.class);
+        register(MmtModuleObjectMapperProvider.class);
         register(new AbstractBinder() {
             @Override
             protected void configure(){

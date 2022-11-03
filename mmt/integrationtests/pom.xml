@@ -15,7 +15,7 @@
 
   <properties>
     <slf4jVersion>1.7.25</slf4jVersion>
-    <jerseyVersion>3.1.0-M8</jerseyVersion>
+    <jerseyVersion>3.0.1</jerseyVersion>
     <jetty.port>8080</jetty.port>
   </properties>
 
@@ -64,8 +64,8 @@
 
 
 
-
-  <build>
+    
+ <build>
       <plugins>
           <plugin>
               <artifactId>maven-compiler-plugin</artifactId>
@@ -98,13 +98,14 @@
           <plugin>
               <groupId>org.eclipse.jetty</groupId>
               <artifactId>jetty-maven-plugin</artifactId>
-              <version>9.4.24.v20191120</version>
+              <version>11.0.2</version>
               <configuration>
                   <httpConnector>
                       <port>${jetty.port}</port>
                   </httpConnector>
                   <stopKey>quit</stopKey>
                   <stopPort>${jetty.port.stop}</stopPort>
+                    <!-- <webAppSourceDirectory>${project.build.directory}/${project.build.finalName}</webAppSourceDirectory> -->
               </configuration>
               <executions>
                   <execution>
