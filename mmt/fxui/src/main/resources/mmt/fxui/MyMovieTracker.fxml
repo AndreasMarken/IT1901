@@ -54,7 +54,7 @@
          <children>
             <Pane maxWidth="-Infinity" prefHeight="80.0" prefWidth="572.0" style="-fx-background-color: gray;">
                <children>
-                  <Text layoutX="107.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My Movie Tracker" wrappingWidth="380">
+                  <Text fx:id="headline" layoutX="107.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My Movie Tracker" wrappingWidth="380">
                      <font>
                         <Font size="45.0" />
                      </font>

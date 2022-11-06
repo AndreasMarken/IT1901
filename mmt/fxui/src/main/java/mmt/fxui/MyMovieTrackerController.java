@@ -1,13 +1,6 @@
 package mmt.fxui;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.exc.MismatchedInputException;
-import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -16,11 +9,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import mmt.core.Comparators;
 import mmt.core.IMovie;
 import mmt.core.MovieList;
-import mmt.json.MovieModule;
-import mmt.json.MyMovieConfig;
+
 
 /**
  * The main controller used for the My Movie Tracker Application.
@@ -36,11 +29,12 @@ public class MyMovieTrackerController {
     protected Pane movieListView;
 
     private MovieList movieList = new MovieList();
-    private ObjectMapper mapper = new ObjectMapper();
-    private MyMovieConfig config = new MyMovieConfig();
     
     @FXML
     protected VBox editMovieWindow;
+
+    @FXML
+    private Text headline;
     
     @FXML
     protected VBox giveRating;
@@ -48,17 +42,9 @@ public class MyMovieTrackerController {
     @FXML
     private CheckBox watchList;
     
-    
-    private RemoteMmtAccess access = new RemoteMmtAccess("http://localhost:8080/mmt/", config);
-    private boolean testingMode = false;
+    private String apiUri = "http://localhost:8080/mmt/";
 
-    private Path getSaveFilePath(String fileName) {
-        return getSaveFolderPath().resolve(fileName);
-    }
-
-    private Path getSaveFolderPath() {
-        return Path.of(System.getProperty("user.home"), "it1901", "mmt", "saveFiles");
-    }
+    private IAccess access;
     
     /**
      * Method that runs upon initializing the controller and app.
@@ -69,80 +55,23 @@ public class MyMovieTrackerController {
     void initialize() throws IOException {
         editMovieController.setMyMovieTrackerController(this);
         hideEditMovie(false);
-
-         if (access.getUri() != null){
-            try {
-                MovieList list = access.getMovieListStoredInServer();
-                for (IMovie iMovie : list) {
-                    movieList.addMovie(iMovie);
-                }
-                updateMovieListView();
-            } catch (Exception e) {
-                System.out.println("could not load from server");
-            }
-        }
-        else{ 
-            // Load the movies registered in the movie.json file.
-            mapper.registerModule(new MovieModule());
-            MovieList temporaryMovieList = loadMovieListFromFile();
-            for (IMovie iMovie : temporaryMovieList) {
-                movieList.addMovie(iMovie);
-            }
-            // Display the movies in the file
-            updateMovieListView();
+        try{
+            this.access = new RemoteMmtAccess(apiUri);
+            movieList = access.loadMovieList();
+            System.out.println("access er foreløpig remote");
+            headline.setText("My Movie Tracker: R");
+        } catch (Exception e){
+            // TODO: Fix feedback in the fxml file to show that we could not connect to server
+            this.access = new LocalMmtAccess();
+            movieList = access.loadMovieList();
+            headline.setText("My Movie Tracker: L");
+            
         }
 
+       updateMovieListView();
     }
 
-    /**
-     * Loads movies form the given file.
-     *
-     * @return MovieList: An object that contains a list of movies.
-     * @throws IOException If the movies cannot be loaded from the file.
-     */
-    protected MovieList loadMovieListFromFile() throws IOException {
-        //If the filepath does not exist, it will be generated.
-        Files.createDirectories(getSaveFolderPath());
-        try {
-            if (testingMode) {
-                Files.createFile(getSaveFilePath("movieTest.json"));
-            } else {
-                Files.createFile(getSaveFilePath("movie.json"));
-            }   
-        } catch (FileAlreadyExistsException e) {
-            //If the file already exist, FileAlreadyExistException will be thrown.
-            //Do nothing if the file already exists
-        }
-        
-        //this.movieList = mapper.readValue(new File("movie.json"), MovieList.class);
-        try {
-            if (testingMode) {
-                return mapper.readValue(getSaveFilePath("movieTest.json").toFile(), MovieList.class);
-            }
-            return mapper.readValue(getSaveFilePath("movie.json").toFile(), MovieList.class);
-        } catch (MismatchedInputException e) {
-            return new MovieList();
-            //If there is no information stored in the file, return a new instance of a movielist.
-        }
-        
-    }
-
-    /**
-     * Saves the movielist that is stored in the controller to the given file.
-     *
-     * @throws IOException if the movies cannot be saved to file.a
-     */
-    private void saveMovieListToFile() throws IOException {
-        if (testingMode) {  
-            mapper.writeValue(getSaveFilePath("movieTest.json").toFile(), movieList);
-        } else {
-            mapper.writeValue(getSaveFilePath("movie.json").toFile(), movieList);
-        }
-    }
-    
-    // private void saveMovieListToServer() throws IOException{
-    //     access.storeMovieListInServer(movieList);
-    // }
+   
 
     /**
      * Sorts the movielist based on rating from best to worst.
@@ -241,11 +170,19 @@ public class MyMovieTrackerController {
             //If the movie was not able to be displayed, try skipping this movie.
         }
         try {
-            saveMovieListToFile();
-/*             saveMovieListToServer();
- */        } catch (IOException e) {
-            System.out.println("The movies was not saved to file");
+            System.out.println(movieList);
+            access.saveMovieList(movieList);
+        } catch (IOException e) {
+            System.out.println("The movies was not saved");
         }
+    }
+
+
+    protected void setTestingMode(boolean testingMode) throws IOException {
+        access.setTestMode(testingMode);
+        this.movieList = new MovieList();
+        access.saveMovieList(movieList);
+        updateMovieListView();
     }
 
     /**
@@ -300,11 +237,7 @@ public class MyMovieTrackerController {
     public EditMovieController getEditMovieController() {
         return this.editMovieController;
     }
-
-    protected void setTestingMode(boolean testingMode) throws IOException {
-        this.testingMode = testingMode;
-        this.movieList = new MovieList();
-        saveMovieListToFile();
-        updateMovieListView();
-    }
 }
+
+ 
+

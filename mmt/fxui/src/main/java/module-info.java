@@ -1,5 +1,5 @@
 module mmt.fxui {
-    requires transitive com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.databind;
     
     requires mmt.core;
     

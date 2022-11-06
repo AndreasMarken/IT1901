@@ -1,89 +1,79 @@
 package mmt.fxui;
 
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
-import java.net.http.HttpResponse.BodyHandlers;
-import java.sql.Time;
-import java.sql.Date;
 import java.net.http.HttpResponse;
 import java.net.http.HttpRequest.BodyPublishers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import mmt.core.Movie;
 import mmt.core.MovieList;
-import mmt.json.MyMovieConfig;
+import mmt.json.MovieModule;
 
-public class RemoteMmtAccess {
+public class RemoteMmtAccess implements IAccess {
 
     private String apiUri;
     private ObjectMapper oMapper;
 
-    public RemoteMmtAccess(String apiUri, MyMovieConfig config){
+    public RemoteMmtAccess(String apiUri){
         this.apiUri = apiUri;
-        this.oMapper = config.createOMapper();
+        this.oMapper = new ObjectMapper().registerModule(new MovieModule());
     }
 
     public URI getUri(){
         return URI.create(apiUri);
     }
     
-    public void storeMovieListInServer(MovieList movieList){
+    public void saveMovieList(MovieList movieList){
         try {
-            String jsonString = oMapper.writeValueAsString(movieList);
-/*             System.out.println(jsonString);
- */         HttpClient client = HttpClient.newHttpClient();
+            System.out.println(movieList.getMovies() + "dette er også movielist objekt i remote mmt access");
+            String jsonBody = oMapper.writeValueAsString(movieList);
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(getUri())
-                    .header("Accept", "application/json")
-                    .header("Content-Type", "application/json")
-                    .PUT(BodyPublishers.ofString(jsonString))
-                    .build();
-            final HttpResponse<String> response = client
-                    .send(request, HttpResponse.BodyHandlers.ofString());
-                    System.out.println(response.body() + "dette er bodyen.....");
-            if (!oMapper.readValue(response.body(), Boolean.class)){
-                System.out.println("Nå da.....");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-        
-    }
-
-    public MovieList getMovieListStoredInServer(){
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
                 .uri(getUri())
                 .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .PUT(BodyPublishers.ofString(jsonBody))
                 .build();
-        client.sendAsync(request, BodyHandlers.ofString())
-                .thenApply(HttpResponse::body)
-                .thenAccept(System.out::println)
-                .join();
-        try {
-            HttpResponse<String> response = client
-                    .send(request, BodyHandlers.ofString());             
-            return oMapper.readValue(response.body(), MovieList.class);
+            final HttpResponse<String> response = HttpClient.newBuilder().build()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.body().isEmpty()){
+                System.out.println("bodyen er tom i savemovielist remote mmt access");
+            }else {
+                oMapper.readValue(response.body(), Boolean.class);
+            }
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            System.out.println(e.getMessage() + "feilmelding savemovielist");
+            System.out.println("eller her");
+            throw new RuntimeException("Server is not running: " + e);
+
         }
     }
-
-
- /*    public static void main(String[] args) {
-        MovieList list = new MovieList();
-        Date date = new Date(2001, 3, 5);
-        Time tid = new Time(2, 4, 5);
-        Movie movie = new Movie("hei", tid, date);
-        list.addMovie(movie);
-        MyMovieConfig c = new MyMovieConfig();
-        RemoteMmtAccess a = new RemoteMmtAccess("http://localhost:8080/mmt", c);
-        a.storeMovieListInServer(list);
+    
+    public MovieList loadMovieList() throws IOException{
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(getUri())
+            .header("Accept", "application/json")
+            .GET()
+            .build();
+        try {
+            final HttpResponse<String> response = HttpClient.newBuilder().build()
+                    .send(request, HttpResponse.BodyHandlers.ofString());
+            return oMapper.readValue(response.body(), MovieList.class);
+        } catch (Exception e) {
+            System.out.println(e+ "ajkeføalj");
+            throw new RuntimeException("Server is not running: " + e);
+        }
     }
- */
+    
+
+	@Override
+	public void setTestMode(boolean testingMode) throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
 

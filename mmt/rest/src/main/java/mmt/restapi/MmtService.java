@@ -1,5 +1,7 @@
 package mmt.restapi;
 
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +26,6 @@ public class MmtService {
 
     @Context
     private MyMovieConfig myMovieConfig= new MyMovieConfig();
-
     /*
      * Dette er hva slags info som vises når man går på localhos/(m.m)/mmt
      * Så på en måte det nederste rotnivået av serveren vår
@@ -34,9 +35,18 @@ public class MmtService {
      */
     @GET
     public MovieList getMovieList(){
-        MovieList movieList = myMovieConfig.loadMovieList();
-        LOG.debug("List of movies to get:" + movieList);
-        return movieList;
+        try{
+            System.out.println("Hei fra service");
+         /*    if (myMovieConfig.loadMovieList().getMovies().isEmpty()){
+                MovieList movieList = 
+            } */
+            MovieList movieList = myMovieConfig.loadMovieList();
+            LOG.debug("List of movies to get:" + movieList);
+            return movieList;
+        } catch (Exception e){
+            LOG.debug("getMovieList(): failed, returning empty movieList");
+            return new MovieList();
+        }
     }
 
     @GET
@@ -56,6 +66,7 @@ public class MmtService {
     @Produces(MediaType.APPLICATION_JSON)
     public void putMovieList(MovieList movieList){
         LOG.debug("List of movie to put:" + movieList);
+        System.out.println(movieList + "dette er movielist som prøver å lagres");
         myMovieConfig.saveMovieList(movieList);
     }
 }
