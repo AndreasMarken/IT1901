@@ -54,7 +54,7 @@ class MovieList {
     + void addMovie(IMovie movie)
     + void removeMovie(IMovie movie)
     + Iterator<IMovie> iterator()
-
+    + Collection<IAcor> getCast(IMovie movie)
 }
 
 interface IActor {
@@ -73,7 +73,7 @@ class Actor {
 
 IMovie "movies: *  ." <|--- MovieList
 IRating "rating: 1  ." <|--- Movie
-IMovie "moviesStarredIn * " <|---|> "actorsInMovie *" IActor
+IMovie "moviesStarredIn * " --- "actorsInMovie *" IActor
 IMovie <|.. Movie
 IRating <|.. Rating
 IActor <|.. Actor
