@@ -31,13 +31,6 @@
       <artifactId>jackson-databind</artifactId>
     </dependency>
 
-     <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
-     <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-fxml</artifactId>
-      <version>16</version>
-    </dependency>
-
     <!-- javafx -->
     <dependency>
       <groupId>org.openjfx</groupId>
@@ -58,10 +51,6 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-params</artifactId>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -96,7 +85,6 @@
         <artifactId>http-request</artifactId>
         <version>5.3</version>
     </dependency>
-
   </dependencies>
 
 
@@ -131,7 +119,7 @@
         <!-- Default configuration for running -->
         <!-- Usage: mvn javafx:run -->
         <configuration>
-          <mainClass>mmt.fxui.MmtApp</mainClass>
+          <mainClass>mmt.fxui/mmt.fxui.MmtApp</mainClass>
         </configuration>
       </plugin>
 
