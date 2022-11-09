@@ -2,9 +2,7 @@ package mmt.restserver;
 
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
-
 import org.glassfish.jersey.jackson.JacksonFeature;
-
 import mmt.json.MyMovieConfig;
 import mmt.restapi.MmtService;
 

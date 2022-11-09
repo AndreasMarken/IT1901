@@ -1,8 +1,6 @@
 package mmt.fxui;
 
-import java.sql.Time;
 import java.time.LocalDate;
-import java.util.Date;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +29,7 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
     private int durationMinutes = 32;
     private boolean isOnWatchlist = true;
 
-    private void writeMovie(String movieTitle, String releaseDate, int durationHours, int durationMinutes, boolean isOnWatchlist) {
+    private void writeMovie(String movieTitle, String releaseDate, int durationHours, int durationMinutes, boolean isOnWatchlist, String... cast) {
         clickOn("#movieTitleField");
         WaitForAsyncUtils.waitForFxEvents();
         write(movieTitle);
@@ -60,32 +58,43 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
             clickOn("#watchListCheckBox");
             WaitForAsyncUtils.waitForFxEvents();
         }
+
+        if(cast != null){
+            for (String actor : cast) {
+                clickOn("#actorNameField");
+                WaitForAsyncUtils.waitForFxEvents();
+                write(actor);
+                WaitForAsyncUtils.waitForFxEvents();
+                clickOn("#addActorToMovieButton");
+                WaitForAsyncUtils.waitForFxEvents();
+            }
+        }
     }
 
     private void addThreeMovies() {
         clickOn("#addNewMovie");
         WaitForAsyncUtils.waitForFxEvents();
-        writeMovie(movieTitle, releaseDate, durationHours, durationMinutes, isOnWatchlist);
+        writeMovie(movieTitle, releaseDate, durationHours, durationMinutes, isOnWatchlist, "Ryan Gosling");
         clickOn("#submitButton");
         WaitForAsyncUtils.waitForFxEvents();
 
         clickOn("#addNewMovie");
         WaitForAsyncUtils.waitForFxEvents();
-        writeMovie("Test Movie 2", releaseDate, durationHours, durationMinutes-2, false);
+        writeMovie("Test Movie 2", releaseDate, durationHours, durationMinutes-2, false, "Dwayne Johnson", "Mark Clerk");
         clickOn("#submitButton");
         WaitForAsyncUtils.waitForFxEvents();
 
         clickOn("#addNewMovie");
         WaitForAsyncUtils.waitForFxEvents();
-        writeMovie("Test Movie 3", releaseDate, durationHours, durationMinutes-3, true);
+        writeMovie("Test Movie 3", releaseDate, durationHours, durationMinutes-3, true, "John", "Jonas", "Joseph");
         clickOn("#submitButton");
         WaitForAsyncUtils.waitForFxEvents();
     }
 
     @Override
     public void start(final Stage stage) throws Exception {
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource("MyMovieTracker.fxml"));
-        final Parent root = loader.load();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MyMovieTracker.fxml"));
+        Parent root = loader.load();
         myMovieTrackerController = loader.getController();
         myMovieTrackerController.setTestingMode(true);
         stage.setScene(new Scene(root));
@@ -133,36 +142,6 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
     }
 
     @Test
-    @DisplayName("Test that adding a valid movie is possible")
-    public void testAddValidMovie() {
-        clickOn("#addNewMovie");
-        WaitForAsyncUtils.waitForFxEvents();
-
-        int numberOfMoviesBeforeAddingNew = myMovieTrackerController.getMovies().size();
-
-        writeMovie(movieTitle, releaseDate, durationHours, durationMinutes, isOnWatchlist);
-        clickOn("#submitButton");
-        WaitForAsyncUtils.waitForFxEvents();
-
-        Assertions.assertFalse(myMovieTrackerController.editMovieWindow.isVisible(),
-         "The window for adding a new movie should not be visible");
-
-        Assertions.assertEquals(numberOfMoviesBeforeAddingNew+1, myMovieTrackerController.getMovies().size(),
-         "The amount of moviews should be incremented by one after adding a new movie.");
-
-        IMovie addedMovie = myMovieTrackerController.getMovieList().getMovie(movieTitle);
-
-        Assertions.assertEquals(movieTitle, addedMovie.getTitle(),
-                       "Wrong movietitle set");
-        Assertions.assertEquals(new Time(durationHours, durationMinutes, 0), addedMovie.getDuration(),
-                       "Wrong duration set");
-        Assertions.assertEquals(new Date(2022 - 1900, 9, 6), addedMovie.getReleaseDate(),
-                       "Wrong releasedate set");
-        Assertions.assertEquals(isOnWatchlist, addedMovie.getWatchlist(),
-                       "Wrong movietitle set");
-    }
-
-    @Test
     @DisplayName("Test that you cannot add a duplicate movie")
     public void testAddDuplicateMovie() {
         clickOn("#addNewMovie");
@@ -186,96 +165,6 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
 
         Assertions.assertEquals("The title name is already used", myMovieTrackerController.getEditMovieController().errorMessage.getText(),
                             "The errormessage shown to the user was incorrect.");
-    }
-
-    @Test
-    @DisplayName("Test that you cannot create a movie with an invalid title")
-    public void testInvalidTitle() {
-        clickOn("#addNewMovie");
-        WaitForAsyncUtils.waitForFxEvents();
-
-        int numberOfMoviesBeforeAddingNew = myMovieTrackerController.getMovies().size();
-
-        writeMovie("", releaseDate, durationHours, durationMinutes, isOnWatchlist);
-        clickOn("#submitButton");
-        WaitForAsyncUtils.waitForFxEvents();
-
-        Assertions.assertEquals(numberOfMoviesBeforeAddingNew, myMovieTrackerController.getMovies().size(),
-         "You should not be able to add a movie with an empty title name");
-
-        Assertions.assertEquals("The title name is not valid.", myMovieTrackerController.getEditMovieController().errorMessage.getText(),
-                                "The errormessage shown to the user was incorrect");
-    }
-
-    @Test
-    @DisplayName("Test that you cannot create a movie with an invalid releasedate")
-    public void testInvalidReleaseDate() {
-        clickOn("#addNewMovie");
-        WaitForAsyncUtils.waitForFxEvents();
-
-        int numberOfMoviesBeforeAddingNew = myMovieTrackerController.getMovies().size();
-
-        writeMovie(movieTitle, null, durationHours, durationMinutes, isOnWatchlist);
-        clickOn("#submitButton");
-        WaitForAsyncUtils.waitForFxEvents();
-
-        Assertions.assertEquals(numberOfMoviesBeforeAddingNew, myMovieTrackerController.getMovies().size(),
-         "You should not be able to add a movie with an invalid releasedate");
-
-        Assertions.assertEquals("You must choose a valid date.", myMovieTrackerController.getEditMovieController().errorMessage.getText(),
-                                "The errormessage shown to the user was incorrect");
-    }
-
-    @Test
-    @DisplayName("Test that you cannot create a movie with an invalid duration")
-    public void testInvalidDuration() {
-        clickOn("#addNewMovie");
-        WaitForAsyncUtils.waitForFxEvents();
-
-        int numberOfMoviesBeforeAddingNew = myMovieTrackerController.getMovies().size();
-
-        writeMovie(movieTitle, releaseDate, 0, 0, isOnWatchlist);
-        clickOn("#submitButton");
-        WaitForAsyncUtils.waitForFxEvents();
-
-        Assertions.assertEquals(numberOfMoviesBeforeAddingNew, myMovieTrackerController.getMovies().size(),
-         "You should not be able to add a movie with an invalid title name");
-
-        Assertions.assertEquals("The movie must have a duration.", myMovieTrackerController.getEditMovieController().errorMessage.getText(),
-                                "The errormessage shown to the user was incorrect");
-    }
-
-    @Test
-    @DisplayName("Test that you can edit an existing movie")
-    public void testEditMovie() {
-        clickOn("#addNewMovie");
-        WaitForAsyncUtils.waitForFxEvents();
-
-        writeMovie(movieTitle, releaseDate, durationHours, durationMinutes, isOnWatchlist);
-        clickOn("#submitButton");
-        WaitForAsyncUtils.waitForFxEvents();
-
-        int numberOfMovies = myMovieTrackerController.getMovies().size();
-
-        clickOn(lookup("#Movie0").queryAll().stream().findFirst().get().lookup("#editMovie"));
-
-        String newTitle = "Test Title 2";
-
-        clickOn("#movieTitleField").eraseText(movieTitle.length());
-        write(newTitle);
-        WaitForAsyncUtils.waitForFxEvents();
-
-        clickOn("#submitButton");
-        WaitForAsyncUtils.waitForFxEvents();
-
-        Assertions.assertEquals(numberOfMovies, myMovieTrackerController.getMovies().size(),
-        "The amount of movies should not change when you edit a movie.");
-
-        Assertions.assertNotNull(myMovieTrackerController.getMovieList().getMovie(newTitle));
-
-        Assertions.assertNull(myMovieTrackerController.getMovieList().getMovie(movieTitle));
-
-        Assertions.assertFalse(myMovieTrackerController.editMovieWindow.isVisible());
     }
 
     @Test
@@ -359,7 +248,7 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
         clickOn(lookup("#Movie0").queryAll().stream().findFirst().get().lookup("#rateMovie"));
 
         clickOn("#ratingList");
-        for (int i = 0; i < ratingScore; i++) {
+        for (int i = 1; i < ratingScore; i++) {
             press(KeyCode.DOWN);
             release(KeyCode.DOWN);
         }
@@ -378,5 +267,40 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
         Assertions.assertEquals(comment, actualComent);
     }
 
-    
+    @Test
+    @DisplayName("Test that you can give a movie a rating without a comment")
+    public void testGiveRatingWithoutComment() {
+        clickOn("#addNewMovie");
+        WaitForAsyncUtils.waitForFxEvents();
+        writeMovie(movieTitle, releaseDate, durationHours, durationMinutes, isOnWatchlist);
+        clickOn("#submitButton");
+        WaitForAsyncUtils.waitForFxEvents();
+
+        int ratingScore = 7;
+
+        clickOn(lookup("#Movie0").queryAll().stream().findFirst().get().lookup("#rateMovie"));
+
+        clickOn("#ratingList");
+        for (int i = 1; i < ratingScore; i++) {
+            press(KeyCode.DOWN);
+            release(KeyCode.DOWN);
+        }
+        press(KeyCode.ENTER);
+        release(KeyCode.ENTER);
+
+        clickOn("#submitReview");
+        
+        int actualScore = Integer.parseInt(((Label)(lookup("#Movie0").queryAll().stream().findFirst().get()).lookup("#ratingScore")).getText().substring(0, 1));
+        String actualComent = ((Label)(lookup("#Movie0").queryAll().stream().findFirst().get()).lookup("#ratingComment")).getText();
+
+        Assertions.assertEquals(ratingScore, actualScore);
+        Assertions.assertEquals("", actualComent);
+    }
+
+    @Test
+    @DisplayName("Test that you can open the statistic view from the mmt view")
+    public void testChangeView() {
+        clickOn("#statisticButton");
+        WaitForAsyncUtils.waitForFxEvents();
+    }
 }

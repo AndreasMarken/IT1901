@@ -6,11 +6,16 @@ import java.util.Collections;
 import java.util.List;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import mmt.core.Comparators;
+import mmt.core.IActor;
 import mmt.core.IMovie;
 import mmt.core.MovieList;
 
@@ -28,13 +33,13 @@ public class MyMovieTrackerController {
     @FXML
     protected Pane movieListView;
 
+    @FXML
+    private Button statisticButton;
+
     private MovieList movieList = new MovieList();
     
     @FXML
     protected VBox editMovieWindow;
-
-    @FXML
-    private Text headline;
     
     @FXML
     protected VBox giveRating;
@@ -42,6 +47,9 @@ public class MyMovieTrackerController {
     @FXML
     private CheckBox watchList;
     
+    @FXML
+    private TextField actorInputField;
+
     private String apiUri = "http://localhost:8080/mmt/";
 
     private IAccess access;
@@ -58,14 +66,10 @@ public class MyMovieTrackerController {
         try{
             this.access = new RemoteMmtAccess(apiUri);
             movieList = access.loadMovieList();
-            System.out.println("access er foreløpig remote");
-            headline.setText("My Movie Tracker: R");
         } catch (Exception e){
             // TODO: Fix feedback in the fxml file to show that we could not connect to server
             this.access = new LocalMmtAccess();
             movieList = access.loadMovieList();
-            headline.setText("My Movie Tracker: L");
-            
         }
 
        updateMovieListView();
@@ -132,19 +136,21 @@ public class MyMovieTrackerController {
      *
      * @param watchList : True if only movies on the watchlist is to be shown, false otherwise.
      */
-    protected void displayMovieListView(boolean watchList) {
+    protected void displayMovieListView(boolean watchList, MovieList movieList) {
         try {
             movieListView.getChildren().clear();
             int numberOfMovies = 0;
             double offsetX = movieListView.getPrefWidth() / 2;
             double offsetY = -1.0;
 
-            Collection<IMovie> movies = this.getMovies();
+            //Collection<IMovie> movies = this.getMovies();
+            Collection<IMovie> movies = movieList.getMovies();
 
             if (watchList) {
-                movies = this.getMovies().stream().filter(m -> m.getWatchlist()).toList();
+                //movies = this.getMovies().stream().filter(m -> m.getWatchlist()).toList();
+                movies = movies.stream().filter(m -> m.getWatchlist()).toList();
             }
-            
+
             for (IMovie movie : movies) {
                 FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("DisplayMovie.fxml"));
                 Pane moviePane = fxmlLoader.load();
@@ -170,10 +176,9 @@ public class MyMovieTrackerController {
             //If the movie was not able to be displayed, try skipping this movie.
         }
         try {
-            System.out.println(movieList);
             access.saveMovieList(movieList);
         } catch (IOException e) {
-            System.out.println("The movies was not saved");
+            System.out.println("The MovieList was not saved");
         }
     }
 
@@ -227,17 +232,82 @@ public class MyMovieTrackerController {
     }
 
     /**
-     * Updates themovielistview based on wheter the watchlistcheckbox is checked or not.
+     * Updates the movie listview based on wheter the watchlistcheckbox is checked or not.
      */
     @FXML
     protected void updateMovieListView() {
-        displayMovieListView(watchList.isSelected());
+        displayMovieListView(watchList.isSelected(), this.movieList);
     }
 
+    /**
+     * Method used to get the editmoviecontroller. Mostly used for testing, where this controller is needed.
+     * 
+     * @return EditMovieController: the editmoviecontroller that this controller is connected to.
+     */
     public EditMovieController getEditMovieController() {
         return this.editMovieController;
     }
+
+    // /**
+    //  * Method used to set the testingmode. When performing the test, you do not want to destroy
+    //  * the users database. Therefore you can set the controller to testing mode, which changes the file 
+    //  * that this controller writes to.
+    //  * @param testingMode True if testingmode is to be set, false if not.
+    //  * @throws IOException If it was unable to save the movielist to file.
+    //  */
+    // protected void setTestingMode(boolean testingMode) throws IOException {
+    //     this.testingMode = testingMode;
+    //     this.movieList = new MovieList();
+    //     saveMovieListToFile();
+    //     updateMovieListView();
+    // }
+
+    /**
+     * Changes this current view to the statisticsview. Used when the statisticsview button is clicked.
+     * @throws IOException if it was unnable to open and display the statistic view.
+     */
+    @FXML
+    public void showStatistics() throws IOException {
+        Stage stage = (Stage) statisticButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Statistic.fxml"));
+        Parent root = fxmlLoader.load();
+        StatisticController statisticController = fxmlLoader.getController();
+        statisticController.setMovieList(this.movieList);
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void searchActor() {
+        getMoviesFromActorSearch(() -> {
+            if (actorInputField.getText().equals("")) {
+                updateMovieListView();
+            }
+        });
+    }
+
+    
+    private void getMoviesFromActorSearch(Runnable search) {
+        MovieList movieListActors = new MovieList();
+        for (IMovie movie : this.movieList) {
+            if (movie.getTitle().contains(actorInputField.getText())) {
+                movieListActors.addMovie(movie);
+            }
+            try {
+                for (IActor actor : movie.getCast()) {
+                    if (actor.getName().contains(actorInputField.getText())) {
+                        if (movieListActors.getMovie(movie.getTitle()) == null) {
+                            movieListActors.addMovie(movie);
+                            break;
+                        }
+                    }
+                }
+            } catch (NullPointerException e) {
+                //Movie has got no cast, skip this movie and check next.
+            }
+        }
+        displayMovieListView(watchList.isSelected(), movieListActors);
+        search.run();
+    }
 }
-
- 
-

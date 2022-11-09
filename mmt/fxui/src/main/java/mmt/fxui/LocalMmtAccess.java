@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
-
 import mmt.core.MovieList;
 import mmt.json.MovieModule;
 
@@ -23,7 +21,6 @@ public class LocalMmtAccess implements IAccess {
     
     @Override
     public MovieList loadMovieList() throws IOException {
-        // TODO Auto-generated method stub
         mapper.registerModule(new MovieModule());
         MovieList temporaryMovieList = loadMovieListFromFile();
         return temporaryMovieList;

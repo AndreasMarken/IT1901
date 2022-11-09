@@ -29,7 +29,6 @@ public class RemoteMmtAccess implements IAccess {
     
     public void saveMovieList(MovieList movieList){
         try {
-            System.out.println(movieList.getMovies() + "dette er også movielist objekt i remote mmt access");
             String jsonBody = oMapper.writeValueAsString(movieList);
             HttpRequest request = HttpRequest.newBuilder()
                 .uri(getUri())
@@ -40,15 +39,12 @@ public class RemoteMmtAccess implements IAccess {
             final HttpResponse<String> response = HttpClient.newBuilder().build()
                 .send(request, HttpResponse.BodyHandlers.ofString());
             if (response.body().isEmpty()){
-                System.out.println("bodyen er tom i savemovielist remote mmt access");
+                // System.out.println("Response of the PUT-request is 'null'.");
             }else {
                 oMapper.readValue(response.body(), Boolean.class);
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage() + "feilmelding savemovielist");
-            System.out.println("eller her");
             throw new RuntimeException("Server is not running: " + e);
-
         }
     }
     
@@ -63,7 +59,6 @@ public class RemoteMmtAccess implements IAccess {
                     .send(request, HttpResponse.BodyHandlers.ofString());
             return oMapper.readValue(response.body(), MovieList.class);
         } catch (Exception e) {
-            System.out.println(e+ "ajkeføalj");
             throw new RuntimeException("Server is not running: " + e);
         }
     }

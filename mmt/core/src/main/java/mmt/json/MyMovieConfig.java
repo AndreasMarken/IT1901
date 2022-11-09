@@ -6,9 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
-import java.io.Writer;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -56,6 +54,7 @@ public class MyMovieConfig{
     try (Reader fileReader = new FileReader(path.toFile(), StandardCharsets.UTF_8)) {
       return oMapper.readValue(fileReader, MovieList.class);
     } catch (FileNotFoundException e) {
+      System.out.println("Something went wrong trying to load MovieList, returning new MovieList.");
       return new MovieList();
     }
   }
@@ -67,35 +66,10 @@ public class MyMovieConfig{
     try (FileWriter fileWriter = new FileWriter(path.toFile(), StandardCharsets.UTF_8)) {
       oMapper.writerWithDefaultPrettyPrinter().writeValue(fileWriter, movieList);
     } catch (Exception e) {
-      System.out.println(e);
+      System.out.println("Something went wrong trying to save MovieList: " + e);
     }
   }
 
-   //public void saveMovieList(MovieList movieList){
-   //    if (this.path == null){
-   //        throw new IllegalStateException("Filepath is not set.");
-   //    }
-   //    System.out.println("Kommer");
-   //    try (Writer writer = new FileWriter(getFile(), StandardCharsets.UTF_8)){
-   //        oMapper.writeValue(getFile(), movieList);     
-   //    } catch (Exception e) {
-   //        System.out.println("Something went wrong when trying to save movies");
-   //    }
-   //}
-
-    //public MovieList loadMovieList(){
-    //    System.out.println(this.path + "dette er pathen");
-    //    try (Reader reader = new FileReader(getFile(), StandardCharsets.UTF_8)) { 
-    //        System.out.println("Load movielist in mymovieconfig");
-    //        return oMapper.readValue(getFile(), MovieList.class);
-    //    } catch (Exception e) {
-    //        System.out.println("Something went wrong when trying to load file MyMovieCOnfig");
-    //        System.out.println(e.getMessage() + "er dette feilmeldingen?");
-    //        return new MovieList();
-    //        
-    //    }
-    //}
-//
     public ObjectMapper createOMapper() {
         return new ObjectMapper().registerModule(new MovieModule());
     }
