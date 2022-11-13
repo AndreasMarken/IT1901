@@ -28,14 +28,32 @@ package "mmt" {
     folder "mmt.json" {  
     }
   }
+
+  component "rest"{
+      folder "restapi"{
+      }
+      folder "restserver"{
+      }
+  }
+
+  component "jakarta"{
+    
+  }
+
+  component "jersey"{
+    
+  }
   
 }
 
-
-mmt.fxui ..> mmt.json
+restapi ..> restserver
+mmt.fxui ..> restapi
 mmt.fxui ..> mmt.core
 mmt.fxui ..> fxml
 mmt.json ..> jackson
-
+rest ..> mmt.core
+rest ..> mmt.json
+rest ..> jersey
+rest ..> jakarta
 
 @enduml
