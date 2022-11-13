@@ -9,7 +9,6 @@ module mmt.rest {
     requires jersey.common;
     requires jersey.server;
     requires jersey.media.json.jackson;
-
     exports mmt.restapi;
 
     opens mmt.restapi to jersey.server;

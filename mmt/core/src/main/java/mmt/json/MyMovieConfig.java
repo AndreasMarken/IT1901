@@ -70,7 +70,7 @@ public class MyMovieConfig{
     }
   }
 
-    public ObjectMapper createOMapper() {
+    public static ObjectMapper createOMapper() {
         return new ObjectMapper().registerModule(new MovieModule());
     }
 }

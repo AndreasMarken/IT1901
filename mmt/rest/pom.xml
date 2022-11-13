@@ -92,6 +92,36 @@
       <artifactId>jersey-container-servlet</artifactId>
       <version>${jerseyVersion}</version>
     </dependency>
+
+     <dependency>
+        <groupId>org.glassfish.jersey.test-framework</groupId>
+        <artifactId>jersey-test-framework-util</artifactId>
+        <version>${jerseyVersion}</version>
+        <scope>test</scope>
+     </dependency>
+
+     <dependency>
+        <groupId>org.glassfish.jersey.containers</groupId>
+        <artifactId>jersey-container-grizzly2-http</artifactId>
+        <version>${jerseyVersion}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.glassfish.jersey.test-framework.providers</groupId>
+        <artifactId>jersey-test-framework-provider-grizzly2</artifactId>
+        <version>${jerseyVersion}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+      </dependency>
+      
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+      </dependency>
   </dependencies>
 
 
