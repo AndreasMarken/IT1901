@@ -52,7 +52,7 @@ public class MyMovieTrackerController {
 
     private String apiUri = "http://localhost:8080/mmt/";
 
-    private IAccess access;
+    protected IAccess dataAccess;
     
     /**
      * Method that runs upon initializing the controller and app.
@@ -64,12 +64,12 @@ public class MyMovieTrackerController {
         editMovieController.setMyMovieTrackerController(this);
         hideEditMovie(false);
         try{
-            this.access = new RemoteMmtAccess(apiUri);
-            movieList = access.loadMovieList();
+            this.dataAccess = new RemoteMmtAccess(apiUri);
+            movieList = dataAccess.loadMovieList();
         } catch (Exception e){
             // TODO: Fix feedback in the fxml file to show that we could not connect to server
-            this.access = new LocalMmtAccess();
-            movieList = access.loadMovieList();
+            this.dataAccess = new LocalMmtAccess();
+            movieList = dataAccess.loadMovieList();
         }
 
        updateMovieListView();
@@ -175,18 +175,19 @@ public class MyMovieTrackerController {
         } catch (IOException e) {
             //If the movie was not able to be displayed, try skipping this movie.
         }
-        try {
-            access.saveMovieList(movieList);
-        } catch (IOException e) {
-            System.out.println("The MovieList was not saved");
-        }
+        //TODO
+        // try {
+        //     access.saveMovieList(movieList);
+        // } catch (IOException e) {
+        //     System.out.println("The MovieList was not saved");
+        // }
     }
 
 
     protected void setTestingMode(boolean testingMode) throws IOException {
-        access.setTestMode(testingMode);
+        dataAccess.setTestMode(testingMode);
         this.movieList = new MovieList();
-        access.saveMovieList(movieList);
+        dataAccess.saveMovieList(movieList);
         updateMovieListView();
     }
 
@@ -215,6 +216,7 @@ public class MyMovieTrackerController {
      */
     protected void deleteMovie(IMovie movie) {
         movieList.removeMovie(movie);
+        dataAccess.deleteMovie(movie);
         updateMovieListView();
     }
 

@@ -2,6 +2,7 @@ package mmt.fxui;
 
 import java.io.IOException;
 
+import mmt.core.IMovie;
 import mmt.core.MovieList;
 
 /**
@@ -22,4 +23,12 @@ public interface IAccess{
 
 
     public void setTestMode(boolean testingMode) throws IOException;
+
+    public void addMovie(IMovie movie);
+
+    public void updateMovie(IMovie movie);
+
+    public void deleteMovie(IMovie movie);
+        
+    
 }

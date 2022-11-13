@@ -64,7 +64,7 @@ public class EditMovieController {
 
     /**
      * The method that is called when the user has completed the editing/adding
-     * of a movie. Saves the updated movie or adds the movie to the movielist, and
+     * of a movie and clicks the save button. Saves the updated movie or adds the movie to the movielist, and
      * updates the movielistview.
      * If invalid information is given by the user, an errormessage is shown in the view.
      */
@@ -104,6 +104,7 @@ public class EditMovieController {
                     for (IActor actor : actors) {
                         movie.addActor(actor);
                     }
+                    myMovieTrackerController.dataAccess.addMovie(movie);
                 } else {
                     editExistingMovie(title, time, releaseDate, watchList);
                     this.movie = null;
@@ -133,6 +134,7 @@ public class EditMovieController {
         movie.setDuration(duration);
         movie.setReleaseDate(releaseDate);
         movie.setOnTakeOfWatchlist(watchList);
+        myMovieTrackerController.dataAccess.updateMovie(movie);
     }
 
     /**

@@ -72,6 +72,7 @@ public class GiveRatingController {
             movieToRate.setRating(new Rating(rating, comment));
         }
         cancelEditReview();
+        myMovieTrackerController.dataAccess.updateMovie(movieToRate);
         myMovieTrackerController.updateMovieListView();
     }
 
