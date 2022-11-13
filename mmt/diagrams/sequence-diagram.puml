@@ -24,6 +24,11 @@ MyMovieTrackerController -> MovieList: addMovie(movie)
 activate MovieList
 MovieList -> MovieList: add(movie)
 deactivate MovieList
+
+MyMovieTrackerController -> RemoteMovieListAccess: SaveMovieList(movieList)
+RemoteMovieListAccess -> MovieListService: SaveMovieList()
+MovieListService -> Storage: putMovieList()
+
 EditMovieController-> EditMovieController: clearInputFields();
 
 EditMovieController-> MyMovieTrackerController: updateMovieListView();
