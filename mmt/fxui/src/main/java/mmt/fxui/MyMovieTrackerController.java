@@ -72,13 +72,13 @@ public class MyMovieTrackerController {
         editMovieController.setMyMovieTrackerController(this);
         hideEditMovie(false);
         try{
-            this.access = new RemoteMmtAccess(apiUri);
-            movieList = access.loadMovieList();
+            this.dataAccess = new RemoteMmtAccess(apiUri);
+            movieList = dataAccess.loadMovieList();
             accessFeedback.setText("Connected to server");
             accessFeedback.setFill(Color.GREEN);
         } catch (Exception e){
-            this.access = new LocalMmtAccess();
-            movieList = access.loadMovieList();
+            this.dataAccess = new LocalMmtAccess();
+            movieList = dataAccess.loadMovieList();
             accessFeedback.setText("Not connected to server");
             accessFeedback.setFill(Color.RED);
         }
@@ -329,7 +329,7 @@ public class MyMovieTrackerController {
      */
     public void setAccess(IAccess access) {
         if(access != null){
-            this.access = access;
+            this.dataAccess = access;
         }
     }
 }

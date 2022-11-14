@@ -32,15 +32,6 @@ public class MyMovieConfig{
         this.initPath = Paths.get(System.getProperty("user.home"), "it1901", "mmt", "serverfiles");
     }
 
-     public void makefile(Path path){
-        try {
-            Files.createDirectories(this.initPath);
-            Files.createFile(path);
-        } catch (IOException e) {
-            System.out.println("File already exists");
-        }
-     }
-
     /**
     * Creates folder and file from the given path.
     *
@@ -104,7 +95,7 @@ public class MyMovieConfig{
    *
    * @param movieList the movielist object to be saved.
    */
-  public void saveMovieList(MovieList movieList) {
+  public boolean saveMovieList(MovieList movieList) {
     if (this.path == null) {
       throw new IllegalStateException("Filepath is not set.");
     }
