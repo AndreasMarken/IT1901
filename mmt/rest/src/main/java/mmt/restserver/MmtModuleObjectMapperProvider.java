@@ -10,11 +10,10 @@ import mmt.json.MovieModule;
 import jakarta.ws.rs.core.MediaType;
 
 /**
-* Provides a objectmapper to MmtConfig
+* MmtModuleObjectMapperProvider implements ContextResolver.
+* Contains an ObjectMapper.
 *
 */
-
-
 @Provider 
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -22,11 +21,20 @@ public class MmtModuleObjectMapperProvider implements ContextResolver<ObjectMapp
 
     private ObjectMapper oMapper;
 
-
+    /**
+     * Constructor for MmtModuleObjectMapperProvider.
+     */
     public MmtModuleObjectMapperProvider (){
         this.oMapper = new ObjectMapper().registerModule(new MovieModule());
     }
 
+    
+    /** 
+     * Returns the ObjectMapper of the class.
+     *
+     * @param arg0
+     * @return ObjectMapper
+     */
     @Override
     public ObjectMapper getContext(Class<?> arg0) {
         return oMapper;

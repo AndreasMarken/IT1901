@@ -6,12 +6,14 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 import mmt.json.MyMovieConfig;
 import mmt.restapi.MmtService;
 
+/**
+ * MmtConfig extends ResourceConfig.
+ */
 public class MmtConfig extends ResourceConfig{
     private MyMovieConfig myMovieConfig;
 
     /**
-    * Initializing MmtConfig
-    *
+    * Constructor for MmtConfig.
     */
     public MmtConfig() {
         myMovieConfig = new MyMovieConfig();

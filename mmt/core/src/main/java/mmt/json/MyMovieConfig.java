@@ -14,8 +14,9 @@ import java.nio.file.Paths;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import mmt.core.MovieList;
 
-
-
+/**
+ * MyMovieConfig: Class to load and save movies when connected to server.
+ */
 public class MyMovieConfig{
 
     private ObjectMapper oMapper;
@@ -24,8 +25,7 @@ public class MyMovieConfig{
 
 
     /**
-    * Constructor setting the objectmapper and the initpath 
-    *
+    * Constructor setting the objectmapper and the initpath.
     */
     public MyMovieConfig(){
         this.oMapper = createOMapper();
@@ -34,8 +34,9 @@ public class MyMovieConfig{
 
 
     /**
-    * Creates folder and file from the given path
-    * @param path: path to folder
+    * Creates folder and file from the given path.
+    *
+    * @param path path to folder
     */
     public void makefile(Path path){
        try {
@@ -47,26 +48,37 @@ public class MyMovieConfig{
     }
 
     /**
-    * Sets the filename
-    * @param filename: name of file
+    * Sets the filename.
+    *
+    * @param filename name of file
     */
     public void setFilePath(String filename){
         this.path = this.initPath.resolve(filename);
         makefile(this.path);
     }
 
+    /**
+     * Get the path to save MovieList.
+     *
+     * @return the path
+     */
     public Path getPath(){
         return this.path;
     }
 
-   public File getFile(){
-       return path.toFile();
-   }
+    /**
+     * Gets the file on this.path.
+     *
+     * @return the File
+     */
+    public File getFile(){
+      return path.toFile();
+    }
 
 
   /**
    * Loads movielist from json file. If the json file does not exist it returns an empty movieList.
-   * 
+   *
    * @return movielist.
    * @throws IOException when reading from json file fails.
    */ 
@@ -81,7 +93,7 @@ public class MyMovieConfig{
 
    /**
    * Saves the movielist to json file.
-   * 
+   *
    * @param movieList the movielist object to be saved.
    */
   public void saveMovieList(MovieList movieList) {
@@ -94,7 +106,11 @@ public class MyMovieConfig{
       System.out.println("Something went wrong trying to save MovieList: " + e);
     }
   }
-
+    /**
+     * Creates a new ObjectMapper.
+     *
+     * @return ObjectMapper
+     */
     public static ObjectMapper createOMapper() {
         return new ObjectMapper().registerModule(new MovieModule());
     }

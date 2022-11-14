@@ -76,7 +76,6 @@ public class MyMovieTrackerController {
             accessFeedback.setText("Connected to server");
             accessFeedback.setFill(Color.GREEN);
         } catch (Exception e){
-            // TODO: Fix feedback in the fxml file to show that we could not connect to server
             this.access = new LocalMmtAccess();
             movieList = access.loadMovieList();
             accessFeedback.setText("Not connected to server");
@@ -146,6 +145,7 @@ public class MyMovieTrackerController {
      * Displays the movies in the movielist to the user in the app.
      *
      * @param watchList : True if only movies on the watchlist is to be shown, false otherwise.
+     * @param moviList : MovieList to be displayed
      */
     protected void displayMovieListView(boolean watchList, MovieList movieList) {
         try {
@@ -252,29 +252,16 @@ public class MyMovieTrackerController {
 
     /**
      * Method used to get the editmoviecontroller. Mostly used for testing, where this controller is needed.
-     * 
+     *
      * @return EditMovieController: the editmoviecontroller that this controller is connected to.
      */
     public EditMovieController getEditMovieController() {
         return this.editMovieController;
     }
 
-    // /**
-    //  * Method used to set the testingmode. When performing the test, you do not want to destroy
-    //  * the users database. Therefore you can set the controller to testing mode, which changes the file 
-    //  * that this controller writes to.
-    //  * @param testingMode True if testingmode is to be set, false if not.
-    //  * @throws IOException If it was unable to save the movielist to file.
-    //  */
-    // protected void setTestingMode(boolean testingMode) throws IOException {
-    //     this.testingMode = testingMode;
-    //     this.movieList = new MovieList();
-    //     saveMovieListToFile();
-    //     updateMovieListView();
-    // }
-
     /**
      * Changes this current view to the statisticsview. Used when the statisticsview button is clicked.
+     *
      * @throws IOException if it was unnable to open and display the statistic view.
      */
     @FXML
@@ -322,7 +309,11 @@ public class MyMovieTrackerController {
         search.run();
     }
 
-    // used when testing:
+    /**
+     * Sets the access.
+     *
+     * @param access to be set
+     */
     public void setAccess(IAccess access) {
         if(access != null){
             this.access = access;

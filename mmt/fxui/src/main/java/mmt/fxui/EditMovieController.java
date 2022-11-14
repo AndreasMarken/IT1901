@@ -261,7 +261,7 @@ public class EditMovieController {
     }
 
     /**
-     * Modify cells in the cast-listview to match the specifications for our app
+     * Modify cells in the cast-listview to match the specifications for our app.
      */
     private class ActorListViewCell extends ListCell<String> {
         HBox hbox = new HBox();
@@ -295,7 +295,7 @@ public class EditMovieController {
         }
     }
     /**
-    * Every time an actor is added to the Movie, the actor list view gets updated
+    * Every time an actor is added to the Movie, the actor list view gets updated.
     */
     private void updateActorsListView(){
         ObservableList<String> observableActorList = FXCollections.observableArrayList();

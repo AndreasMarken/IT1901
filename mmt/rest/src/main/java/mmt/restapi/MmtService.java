@@ -16,6 +16,9 @@ import mmt.core.IMovie;
 import mmt.core.MovieList;
 import mmt.json.MyMovieConfig;
 
+/**
+ * Class that defines the HTTP request that is supported.
+ */
 @Path(MmtService.MMT_SERVICE_PATH)
 @Produces(MediaType.APPLICATION_JSON)
 public class MmtService {
@@ -28,10 +31,10 @@ public class MmtService {
 
 
 
-     /**
-     * Gets movielist stored in the server
+    /**
+     * Gets MovieList stored in the server.
      *
-     * @return MovieList: An object that contains a list of movies.
+     * @return MovieList
      */
     @GET
     public MovieList getMovieList(){
@@ -45,10 +48,10 @@ public class MmtService {
         }
     }
 
-     /**
-     * Saves a given movielist in the server.
+    /**
+     * Puts MovieList to server.
      *
-     * @param MovieList: An object that contains a list of movies.
+     * @param movieList The MovieList to be put
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
@@ -59,10 +62,11 @@ public class MmtService {
     }
 
    
-     /**
-     * Gets a movie from the movielist stored in the server
-     * @param the movie to be returned
-     * @return the movie 
+    /**
+     * Gets a Movie from the MovieList that is stored in the server.
+     *
+     * @param movie Name of the Movie to get
+     * @return Movie with the right name
      */
     @GET
     @Path("/{movie}")
@@ -77,10 +81,10 @@ public class MmtService {
       return getMovieList().getMovie(movie);
     }
 
-     /**
-     * Deletes a movie from the movielist stored in the server
-     * @param the movie to be deleted
-     * 
+    /**
+     * Deletes a Movie from the MovieList that is stored in the server.
+     *
+     * @param movie Name of the Movie to delete
      */
     @DELETE
     @Path("/{movie}")

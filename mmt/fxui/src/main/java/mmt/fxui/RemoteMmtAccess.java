@@ -13,6 +13,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import mmt.core.MovieList;
 import mmt.json.MovieModule;
 
+/**
+ * RemoteMmtAccess implements IAccess.
+ * Handles remote saving/loading.
+ */
 public class RemoteMmtAccess implements IAccess {
 
     private String apiUri;
@@ -23,16 +27,17 @@ public class RemoteMmtAccess implements IAccess {
         this.oMapper = new ObjectMapper().registerModule(new MovieModule());
     }
 
+    
+    /** 
+     * Method to get the baseURI.
+     *
+     * @return URI
+     */
     public URI getUri(){
         return URI.create(apiUri);
     }
 
-    /**
-    * Generates a PUT-Request to the server.
-    * Sends movielist to server
-    *
-    * @param MovieList: An object that contains a list of movies.
-    */
+    @Override
     public void saveMovieList(MovieList movieList){
         try {
             String jsonBody = oMapper.writeValueAsString(movieList);
@@ -53,8 +58,8 @@ public class RemoteMmtAccess implements IAccess {
             throw new RuntimeException("Server is not running: " + e);
         }
     }
-    
-    
+
+    @Override
     public MovieList loadMovieList() throws IOException{
         HttpRequest request = HttpRequest.newBuilder()
             .uri(getUri())
@@ -69,13 +74,9 @@ public class RemoteMmtAccess implements IAccess {
             throw new RuntimeException("Server is not running: " + e);
         }
     }
-    
 
-	@Override
-	public void setTestMode(boolean testingMode) throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
-
+    @Override
+    public void setTestMode(boolean testingMode) throws IOException {
+    }
 }
 

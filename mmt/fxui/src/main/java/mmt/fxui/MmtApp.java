@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 public class MmtApp extends Application {
 
     /**
-    * Method used in MmtAppIT
+    * Method used in MmtAppIT.
     */
     public static void headless() {
         if (Boolean.getBoolean("headless")) {
