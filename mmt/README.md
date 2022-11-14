@@ -33,26 +33,32 @@ Functionality currently implemented in the application:
 We now se the MMT app as a finished product. We have implemented all of the functionality described in the userstories. If we were going to have more sprints of this project, our next focus points would be to create a more pleasing fxml design, as well as another application (i.e web-application). There is also possibilities to perform usertests and get feedback to more functionality that could be added. In the coming parts, you will be able to read about and view the different functionality the app has to offer.
 
 ### Main page
-This is the main page of My Movie Tracker. The user is now able to add a new movie to the database, edit the movie, review the movie and delete the movie from the database. It is also possible to sort the movies by title, rating and duration by clicking on the "Sort" button. The button located below sort will show all movies added to the users watchlist when clicked.
-![Image was not shown](images/MainPage.png)
-TODO:
+This is the main page of My Movie Tracker. The user is now able to add a new movie to the database, edit the movie, review the movie and delete the movie from the database. It is also possible to sort the movies by title, rating and duration by clicking on the "Sort" button. The button located below sort will show all movies added to the users watchlist when clicked. The user also has the possibility to open the [statistic view](#statistics), or [search for movies by actor or movie name](#search-for-movies).
+
+![Image was not shown](images/mmt.png)
+
 ### New Movie
-When the "New Movie" button is clicked, the new movie page will appear on the screen. As the picture shows, the user will have the opporunity to set title, release date, duration and if wanted, put the movie on the watchlist.
-![Image was not shown](images/AddMovie.png)
-TODO:
+When the "New Movie" button is clicked, the new movie page will appear on the screen. As the picture shows, the user will have the opporunity to set title, release date, duration and if wanted, put the movie on the watchlist and add a cast to the movie.
+
+![Image was not shown](images/addmovie.png)
 ### Edit
 
 The "Edit" button will show a new page where the user can edit a movie. As shown in the picture, the current fields of the movie will show in the input spaces. The user will easely be able to edit the movie by changing the current value of an input space to something else.
-![Image was not shown](images/EditMovie.png)
-TODO:
+This is the same view as [add movies](#new-movie), however, the title has been changed in the controller.
+
+![Image was not shown](images/editmovie.png)
 ### Rate
-The "Review" button will also show a new page. This page enables the user to review a movie. The user can leave a comment on the movie and rate the movie from 1-10. 
-![Image was not shown](images/Review.png)
-TODO:
+The "Rate" button will also show a new page. This page enables the user to review a movie. The user can leave a comment on the movie and rate the movie from 1-10. 
+
+![Image was not shown](images/ratemovie.png)
 ### Statistics
-TODO:
+Once you press the button to view the statistics view, you will be able to look at the different statistics mentioned in the [MMT](#my-movie-tracker) describtion. The user also has the possibility to go back to the main view using the back button.
+
+![Image was not shown](images/statistics.png)
 ### Search for movies
-TODO:
+The last of the new functionality added to the mmt app, is the possibility to search for movies. As you can see in the picture below, the user has searched for movies containing either an actor who has got a name containing `Harr` or for a movie that contains `Harr` in its title. This updates the listview shown to the user, and allows it to search for its favorite movies.
+
+![Image was not shown](images/searchmovie.png)
 ## Diagrams
 We have created three different diagrams for the project.
 - A Package Diagram for [the projects architecture](#the-projects-architecture).
