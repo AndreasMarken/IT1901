@@ -13,6 +13,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import mmt.core.Comparators;
 import mmt.core.IActor;
@@ -50,7 +51,11 @@ public class MyMovieTrackerController {
     @FXML
     private TextField actorInputField;
 
-    private String apiUri = "http://localhost:8080/mmt/";
+    @FXML
+    private String apiUri;
+
+    @FXML
+    private Text accessFeedback;
 
     private IAccess access;
     
@@ -66,10 +71,12 @@ public class MyMovieTrackerController {
         try{
             this.access = new RemoteMmtAccess(apiUri);
             movieList = access.loadMovieList();
+            accessFeedback.setText("Connected to server");
         } catch (Exception e){
             // TODO: Fix feedback in the fxml file to show that we could not connect to server
             this.access = new LocalMmtAccess();
             movieList = access.loadMovieList();
+            accessFeedback.setText("Not connected to server");
         }
 
        updateMovieListView();
