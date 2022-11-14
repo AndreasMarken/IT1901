@@ -26,6 +26,13 @@ public class MmtService {
     @Context
     private MyMovieConfig myMovieConfig= new MyMovieConfig();
 
+
+
+     /**
+     * Gets movielist stored in the server
+     *
+     * @return MovieList: An object that contains a list of movies.
+     */
     @GET
     public MovieList getMovieList(){
         try{
@@ -38,6 +45,11 @@ public class MmtService {
         }
     }
 
+     /**
+     * Saves a given movielist in the server.
+     *
+     * @param MovieList: An object that contains a list of movies.
+     */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -47,6 +59,11 @@ public class MmtService {
     }
 
    
+     /**
+     * Gets a movie from the movielist stored in the server
+     * @param the movie to be returned
+     * @return the movie 
+     */
     @GET
     @Path("/{movie}")
     public IMovie getMovie(@PathParam("movie") String movie) {
@@ -60,6 +77,11 @@ public class MmtService {
       return getMovieList().getMovie(movie);
     }
 
+     /**
+     * Deletes a movie from the movielist stored in the server
+     * @param the movie to be deleted
+     * 
+     */
     @DELETE
     @Path("/{movie}")
     public void deleteMovie(@PathParam("movie") String movie) {
@@ -75,5 +97,4 @@ public class MmtService {
         LOG.debug("movie " + movie + " successfully deleted");
       }
     }
-
 }

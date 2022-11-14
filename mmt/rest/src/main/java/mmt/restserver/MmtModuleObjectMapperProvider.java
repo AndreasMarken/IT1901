@@ -9,6 +9,12 @@ import jakarta.ws.rs.ext.Provider;
 import mmt.json.MovieModule;
 import jakarta.ws.rs.core.MediaType;
 
+/**
+* Provides a objectmapper to MmtConfig
+*
+*/
+
+
 @Provider 
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)

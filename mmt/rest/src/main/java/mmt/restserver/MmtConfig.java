@@ -9,6 +9,10 @@ import mmt.restapi.MmtService;
 public class MmtConfig extends ResourceConfig{
     private MyMovieConfig myMovieConfig;
 
+    /**
+    * Initializing MmtConfig
+    *
+    */
     public MmtConfig() {
         myMovieConfig = new MyMovieConfig();
         myMovieConfig.setFilePath("server-movielist.json");
