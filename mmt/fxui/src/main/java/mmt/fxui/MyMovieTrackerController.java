@@ -310,4 +310,11 @@ public class MyMovieTrackerController {
         displayMovieListView(watchList.isSelected(), movieListActors);
         search.run();
     }
+
+    // used when testing:
+    public void setAccess(IAccess access) {
+        if(access != null){
+            this.access = access;
+        }
+    }
 }
