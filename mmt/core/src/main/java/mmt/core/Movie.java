@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.UUID;
 
 /** 
  * Class to represent Movie objects.
@@ -17,6 +18,7 @@ public class Movie implements IMovie {
     private IRating rating;
     private Boolean watchlist = false;
     private Collection<IActor> cast;
+    private String ID;
     
     /** 
      * One of two constructors for Movie.
@@ -35,6 +37,13 @@ public class Movie implements IMovie {
         if (checkIfNull(releaseDate)) {
             this.releaseDate = releaseDate;
         }
+        this.ID = UUID.randomUUID().toString();
+
+    }
+
+    public Movie(String title, Time duration, Date releaseDate, String id) {
+        this(title, duration, releaseDate);
+        this.ID = id;
     }
   
     @Override
@@ -152,5 +161,11 @@ public class Movie implements IMovie {
             cast = null;
         }		
 	}
+
+    @Override
+    public String getID() {
+        // TODO Auto-generated method stub
+        return this.ID;
+    }
 }     
 
