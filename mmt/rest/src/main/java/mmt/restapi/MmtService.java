@@ -18,6 +18,9 @@ import mmt.core.IMovie;
 import mmt.core.MovieList;
 import mmt.json.MyMovieConfig;
 
+/**
+ * Class that defines the HTTP request that is supported.
+ */
 @Path(MmtService.MMT_SERVICE_PATH)
 @Produces(MediaType.APPLICATION_JSON)
 public class MmtService {
@@ -28,6 +31,13 @@ public class MmtService {
     @Context
     private MyMovieConfig myMovieConfig= new MyMovieConfig();
 
+
+
+    /**
+     * Gets MovieList stored in the server.
+     *
+     * @return MovieList
+     */
     @GET
     public MovieList getMovieList(){
         try{
@@ -118,5 +128,4 @@ public class MmtService {
         return isStored;  
       }
     }
-
 }

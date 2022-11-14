@@ -11,6 +11,10 @@ import mmt.core.Movie;
 import mmt.core.MovieList;
 import mmt.json.MovieModule;
 
+/**
+ * RemoteMmtAccess implements IAccess.
+ * Handles local saving/loading.
+ */
 public class LocalMmtAccess implements IAccess {
 
     private boolean testingMode = false;
@@ -78,11 +82,21 @@ public class LocalMmtAccess implements IAccess {
         this.testingMode = testingMode;
     }
 
-
+    /**
+     * Gets the path to file.
+     *
+     * @param fileName
+     * @return path to file
+     */
     private Path getSaveFilePath(String fileName) {
         return getSaveFolderPath().resolve(fileName);
     }
 
+    /**
+     * Gets path to folder.
+     *
+     * @return path to folder
+     */
     private Path getSaveFolderPath() {
         return Path.of(System.getProperty("user.home"), "it1901", "mmt", "saveFiles");
     }

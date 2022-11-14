@@ -14,6 +14,10 @@ import mmt.core.Movie;
 import mmt.core.MovieList;
 import mmt.json.MovieModule;
 
+/**
+ * RemoteMmtAccess implements IAccess.
+ * Handles remote saving/loading.
+ */
 public class RemoteMmtAccess implements IAccess {
 
     private String apiUri;
@@ -36,7 +40,8 @@ public class RemoteMmtAccess implements IAccess {
         //Never used
         
     }
-    
+
+    @Override
     public MovieList loadMovieList() throws IOException{
         HttpRequest request = HttpRequest.newBuilder()
             .uri(getUri())

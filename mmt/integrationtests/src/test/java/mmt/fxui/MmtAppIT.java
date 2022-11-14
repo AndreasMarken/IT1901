@@ -17,8 +17,7 @@ import javafx.stage.Stage;
 
 public class MmtAppIT extends ApplicationTest  {
     
-    private MyMovieTrackerController controller;
-    private EditMovieController editController;
+    private MyMovieTrackerController mmtController;
 
     @BeforeAll
     public static void headless() {
@@ -29,7 +28,7 @@ public class MmtAppIT extends ApplicationTest  {
     public void start(final Stage stage) throws Exception {
       final FXMLLoader loader = new FXMLLoader(getClass().getResource("MyMovieTracker.fxml"));
       final Parent root = loader.load();
-      this.controller = loader.getController();
+      this.mmtController = loader.getController();
       stage.setScene(new Scene(root));
       stage.show();
     }
@@ -39,11 +38,10 @@ public class MmtAppIT extends ApplicationTest  {
     public void setUp(){
       try {
         String port = System.getProperty("mmt.port");
-        System.out.println(System.getProperty("mmt.port"));
-        assertNotNull(port, "mmt.port currently not set or available");
+        assertNotNull(port, "mmt.port is currently null");
         URI baseUri = new URI("http://localhost:" + port + "/mmt/");
-        //System.out.println(baseUri);
-      //this.controller.setTodoModelAccess(new RemoteTodoModelAccess(baseUri));
+        System.out.println("Base URI:" + baseUri);
+        this.mmtController.setAccess(new RemoteMmtAccess(baseUri.toString()));
 
       } catch (Exception e) {
         fail(e.getMessage());
@@ -52,7 +50,7 @@ public class MmtAppIT extends ApplicationTest  {
 
     @Test
     public void testController() {
-    assertNotNull(this.controller);
+    assertNotNull(this.mmtController);
   }
   
 }

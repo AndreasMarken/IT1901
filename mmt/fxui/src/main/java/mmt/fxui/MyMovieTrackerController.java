@@ -13,6 +13,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import mmt.core.Comparators;
 import mmt.core.IActor;
@@ -51,12 +53,17 @@ public class MyMovieTrackerController {
     @FXML
     private TextField actorInputField;
 
-    private String apiUri = "http://localhost:8080/mmt/";
+    @FXML
+    private String apiUri;
+
+    @FXML
+    private Text accessFeedback;
 
     protected IAccess dataAccess;
     
     /**
      * Method that runs upon initializing the controller and app.
+     * Tries connecting to server, if not possible it runs localy
      *
      * @throws IOException When movies from the file cannot be loaded.
      */
@@ -65,12 +72,15 @@ public class MyMovieTrackerController {
         editMovieController.setMyMovieTrackerController(this);
         hideEditMovie(false);
         try{
-            this.dataAccess = new RemoteMmtAccess(apiUri);
-            movieList = dataAccess.loadMovieList();
+            this.access = new RemoteMmtAccess(apiUri);
+            movieList = access.loadMovieList();
+            accessFeedback.setText("Connected to server");
+            accessFeedback.setFill(Color.GREEN);
         } catch (Exception e){
-            // TODO: Fix feedback in the fxml file to show that we could not connect to server
-            this.dataAccess = new LocalMmtAccess();
-            movieList = dataAccess.loadMovieList();
+            this.access = new LocalMmtAccess();
+            movieList = access.loadMovieList();
+            accessFeedback.setText("Not connected to server");
+            accessFeedback.setFill(Color.RED);
         }
 
        updateMovieListView();
@@ -136,6 +146,7 @@ public class MyMovieTrackerController {
      * Displays the movies in the movielist to the user in the app.
      *
      * @param watchList : True if only movies on the watchlist is to be shown, false otherwise.
+     * @param moviList : MovieList to be displayed
      */
     protected void displayMovieListView(boolean watchList, MovieList movieList) {
         try {
@@ -240,7 +251,7 @@ public class MyMovieTrackerController {
 
     /**
      * Method used to get the editmoviecontroller. Mostly used for testing, where this controller is needed.
-     * 
+     *
      * @return EditMovieController: the editmoviecontroller that this controller is connected to.
      */
     public EditMovieController getEditMovieController() {
@@ -263,6 +274,7 @@ public class MyMovieTrackerController {
 
     /**
      * Changes this current view to the statisticsview. Used when the statisticsview button is clicked.
+     *
      * @throws IOException if it was unnable to open and display the statistic view.
      */
     @FXML
@@ -308,5 +320,16 @@ public class MyMovieTrackerController {
         }
         displayMovieListView(watchList.isSelected(), movieListActors);
         search.run();
+    }
+
+    /**
+     * Sets the access.
+     *
+     * @param access to be set
+     */
+    public void setAccess(IAccess access) {
+        if(access != null){
+            this.access = access;
+        }
     }
 }

@@ -18,7 +18,7 @@ import mmt.core.IMovie;
 import mmt.core.MovieList;
 
 /**
- * The controller that is used to display the statistics of a given movielist to the 
+ * The controller that is used to display the statistics of a given movielist to the.
  * Statistics view to the user. Used in the MMT app.
  */
 public class StatisticController {
@@ -58,6 +58,7 @@ public class StatisticController {
 
     /**
      * Changes this current view to the MyMovieTrackerView. Used when the back button is clicked.
+     *
      * @throws IOException if it was unnable to open and display the MyMovieTrackerView.
      */
     @FXML
@@ -71,8 +72,9 @@ public class StatisticController {
     }
 
     /**
-     * Method used to set the movielist from the mmt controller. Sets the movielist that
-     * is to display the statistics to the user.
+     * Method used to set the movielist from the mmt controller.
+     * Sets the movielist that is to display the statistics to the user.
+     *
      * @param movieList the movielist to be set
      */
     protected void setMovieList(MovieList movieList) {
@@ -86,6 +88,7 @@ public class StatisticController {
     /**
      * Method used to get the average rating on all the movies in the movielist. This only checks for moveis that have a rating.
      * Method that is used when setting the information in the statstics view.
+     *
      * @return the average rating given to the movies.
      */
     private float getAverageRating() {
@@ -103,6 +106,7 @@ public class StatisticController {
     /**
      * Method used to get the number of movies in the movielist.
      * Method that is used when setting the information in the statstics view.
+     *
      * @return the number of movies that is in the movielist.
      */
     private int getNumerOfMovies() {
@@ -112,6 +116,7 @@ public class StatisticController {
     /**
      * Method used to get the number of movies on the users watchlist in the movielist.
      * Method that is used when setting the information in the statstics view.
+     *
      * @return the number of movies that is on the watchlist.
      */
     private int getNumberOfMoviesOnWatchList() {
@@ -121,6 +126,7 @@ public class StatisticController {
     /**
      * Method used to get the average movielength of a list of movies given as an input.
      * Method that is used when setting the information in the statstics view.
+     *
      * @param movies the list of movies to get the average duration of.
      * @return null if the length of the list is 0. The average lenght of the movielist given as a Time object.
      */
@@ -143,6 +149,7 @@ public class StatisticController {
 
     /**
      * Method used to search through the database to get the actor that plays in the most movies.
+     *
      * @return The actor that plays in the most movies, if there are no actors in the database, return "No actors".
      */
     private String getMostCommonActor() {

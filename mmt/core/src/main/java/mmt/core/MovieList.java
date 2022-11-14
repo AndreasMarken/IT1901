@@ -72,6 +72,12 @@ public class MovieList implements Iterable<IMovie> {
         return this.movieList;
     } 
 
+    /**
+     * Gets the cast of the Movie.
+     *
+     * @param movie to get cast from.
+     * @return collection of the actors.
+     */
     public Collection<IActor> getCast(IMovie movie){
         if(!movieList.contains(movie)){
             throw new IllegalArgumentException("The movie" + movie.getTitle() + " does not exist in the movielist");
