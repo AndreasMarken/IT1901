@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import mmt.core.Comparators;
 import mmt.core.IActor;
 import mmt.core.IMovie;
+import mmt.core.Movie;
 import mmt.core.MovieList;
 
 
@@ -175,12 +176,6 @@ public class MyMovieTrackerController {
         } catch (IOException e) {
             //If the movie was not able to be displayed, try skipping this movie.
         }
-        //TODO
-        // try {
-        //     access.saveMovieList(movieList);
-        // } catch (IOException e) {
-        //     System.out.println("The MovieList was not saved");
-        // }
     }
 
 
@@ -216,7 +211,9 @@ public class MyMovieTrackerController {
      */
     protected void deleteMovie(IMovie movie) {
         movieList.removeMovie(movie);
-        dataAccess.deleteMovie(movie);
+        if(movie instanceof Movie){
+            dataAccess.deleteMovie((Movie) movie);
+        }     
         updateMovieListView();
     }
 
@@ -250,13 +247,13 @@ public class MyMovieTrackerController {
         return this.editMovieController;
     }
 
-    // /**
-    //  * Method used to set the testingmode. When performing the test, you do not want to destroy
-    //  * the users database. Therefore you can set the controller to testing mode, which changes the file 
-    //  * that this controller writes to.
-    //  * @param testingMode True if testingmode is to be set, false if not.
-    //  * @throws IOException If it was unable to save the movielist to file.
-    //  */
+    /**
+     * Method used to set the testingmode. When performing the test, you do not want to destroy
+     * the users database. Therefore you can set the controller to testing mode, which changes the file 
+     * that this controller writes to.
+     * @param testingMode True if testingmode is to be set, false if not.
+     * @throws IOException If it was unable to save the movielist to file.
+     */
     // protected void setTestingMode(boolean testingMode) throws IOException {
     //     this.testingMode = testingMode;
     //     this.movieList = new MovieList();

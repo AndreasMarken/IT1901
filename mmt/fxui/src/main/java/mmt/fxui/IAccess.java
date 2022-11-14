@@ -2,7 +2,7 @@ package mmt.fxui;
 
 import java.io.IOException;
 
-import mmt.core.IMovie;
+import mmt.core.Movie;
 import mmt.core.MovieList;
 
 /**
@@ -24,11 +24,27 @@ public interface IAccess{
 
     public void setTestMode(boolean testingMode) throws IOException;
 
-    public void addMovie(IMovie movie);
+    public void addMovie(Movie movie);
 
-    public void updateMovie(IMovie movie);
+    public void updateMovie(Movie movie, String oldMovieID);
 
-    public void deleteMovie(IMovie movie);
+    public void deleteMovie(Movie movie);
         
     
 }
+
+// public boolean putMovieList(MovieList movieList) {
+//     try {
+//       String jsonBody = objectMapper.writeValueAsString(movieList);
+//       HttpRequest request = HttpRequest.newBuilder(baseUri)
+//           .header("Accept", "application/json")
+//           .header("Content-Type", "application/json")
+//           .PUT(BodyPublishers.ofString(jsonBody))
+//           .build();
+//       final HttpResponse<String> response = HttpClient.newBuilder().build()
+//           .send(request, HttpResponse.BodyHandlers.ofString());
+//       return objectMapper.readValue(response.body(), Boolean.class);
+//     } catch (Exception e) {
+//       throw new RuntimeException("Server is not running: " + e);
+//     }
+//   }

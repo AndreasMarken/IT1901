@@ -85,6 +85,6 @@ public class MovieList implements Iterable<IMovie> {
             return "Movielist is empty!";
         }
 
-        return Arrays.toString(movieList.toArray());
+        return Arrays.toString(movieList.stream().map(m -> m.getTitle()).toArray());
     }
 }

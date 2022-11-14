@@ -104,13 +104,15 @@ public class EditMovieController {
                     for (IActor actor : actors) {
                         movie.addActor(actor);
                     }
-                    myMovieTrackerController.dataAccess.addMovie(movie);
+                    if(movie instanceof Movie){
+                        myMovieTrackerController.dataAccess.addMovie((Movie) movie);
+                    }
                 } else {
                     editExistingMovie(title, time, releaseDate, watchList);
                     this.movie = null;
                 }
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
             clearInputFields();
             myMovieTrackerController.updateMovieListView();
@@ -130,11 +132,14 @@ public class EditMovieController {
      * @param watchList : The new watchlist-status to be given 
      */
     private void editExistingMovie(String title, Time duration, Date releaseDate, boolean watchList) {
+        String oldMovieID = movie.getID();
         movie.setTitle(title);
         movie.setDuration(duration);
         movie.setReleaseDate(releaseDate);
         movie.setOnTakeOfWatchlist(watchList);
-        myMovieTrackerController.dataAccess.updateMovie(movie);
+        if(movie instanceof Movie){
+            myMovieTrackerController.dataAccess.updateMovie((Movie) movie, oldMovieID);
+        }
     }
 
     /**

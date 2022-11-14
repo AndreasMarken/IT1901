@@ -10,6 +10,7 @@ import java.net.http.HttpRequest.BodyPublishers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import mmt.core.Movie;
 import mmt.core.MovieList;
 import mmt.json.MovieModule;
 
@@ -23,29 +24,17 @@ public class RemoteMmtAccess implements IAccess {
         this.oMapper = new ObjectMapper().registerModule(new MovieModule());
     }
 
-    public URI getUri(){
+    private URI getUri(){
         return URI.create(apiUri);
+    }
+
+    private URI getUriForMovie(String movieTitle){
+        return URI.create(apiUri + movieTitle);
     }
     
     public void saveMovieList(MovieList movieList){
-        try {
-            String jsonBody = oMapper.writeValueAsString(movieList);
-            HttpRequest request = HttpRequest.newBuilder()
-                .uri(getUri())
-                .header("Accept", "application/json")
-                .header("Content-Type", "application/json")
-                .PUT(BodyPublishers.ofString(jsonBody))
-                .build();
-            final HttpResponse<String> response = HttpClient.newBuilder().build()
-                .send(request, HttpResponse.BodyHandlers.ofString());
-            if (response.body().isEmpty()){
-                // System.out.println("Response of the PUT-request is 'null'.");
-            }else {
-                oMapper.readValue(response.body(), Boolean.class);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("Server is not running: " + e);
-        }
+        //Never used
+        
     }
     
     public MovieList loadMovieList() throws IOException{
@@ -58,17 +47,94 @@ public class RemoteMmtAccess implements IAccess {
             final HttpResponse<String> response = HttpClient.newBuilder().build()
                     .send(request, HttpResponse.BodyHandlers.ofString());
             return oMapper.readValue(response.body(), MovieList.class);
-        } catch (Exception e) {
-            throw new RuntimeException("Server is not running: " + e);
+        } catch (IOException | InterruptedException  e) {
+            throw new RuntimeException(e);
         }
     }
     
 
 	@Override
 	public void setTestMode(boolean testingMode) throws IOException {
-		// TODO Auto-generated method stub
-		
+		//Never used	
 	}
+
+    @Override
+    public void addMovie(Movie movie) {
+        try {
+            String jsonBody = oMapper.writeValueAsString(movie);
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(getUri())
+                .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .POST(BodyPublishers.ofString(jsonBody))
+                .build();
+            final HttpResponse<String> response = HttpClient.newBuilder().build()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+            
+            
+            Boolean successfullyAdded = oMapper.readValue(response.body(), Boolean.class);
+            if (!(successfullyAdded != null && successfullyAdded)) {
+                System.err.println("Failed to store movie: " + movie.getTitle());
+            }
+            
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+            }
+        
+    }
+
+    @Override
+    public void updateMovie(Movie movie, String oldMovieID) {
+        try {
+            String jsonBody = oMapper.writeValueAsString(movie);
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(getUriForMovie(oldMovieID))
+                .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .PUT(BodyPublishers.ofString(jsonBody))
+                .build();
+            final HttpResponse<String> response = HttpClient.newBuilder().build()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+            
+            
+            Boolean successfullyAdded = oMapper.readValue(response.body(), Boolean.class);
+            if (!(successfullyAdded != null && successfullyAdded)) {
+                System.err.println("Failed to update movie: " + movie.getTitle());
+            }
+            
+            } catch (IOException | InterruptedException e) {
+                throw new RuntimeException(e);
+                }
+    }
+
+    @Override
+    public void deleteMovie(Movie movie) {
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(getUriForMovie(movie.getID()))
+                .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .DELETE()
+                .build();
+            
+            final HttpResponse<String> response = HttpClient.newBuilder().build()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+           
+            Boolean successfullyAdded = oMapper.readValue((String) response.body(), Boolean.class);
+            if (!(successfullyAdded != null && successfullyAdded)) {
+                System.err.println("Failed to delete movie: " + movie.getTitle());
+            }
+        }                        
+        catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+               
+    
+        
+    }
+
+    
 
 }
 

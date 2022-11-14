@@ -32,7 +32,6 @@ public class MyMovieConfig{
             Files.createDirectories(this.initPath);
             Files.createFile(path);
         } catch (IOException e) {
-            // TODO: handle exception
             System.out.println("File already exists");
         }
      }
@@ -59,14 +58,16 @@ public class MyMovieConfig{
     }
   }
 
-  public void saveMovieList(MovieList movieList) {
+  public boolean saveMovieList(MovieList movieList) {
     if (this.path == null) {
       throw new IllegalStateException("Filepath is not set.");
     }
     try (FileWriter fileWriter = new FileWriter(path.toFile(), StandardCharsets.UTF_8)) {
       oMapper.writerWithDefaultPrettyPrinter().writeValue(fileWriter, movieList);
+      return true;
     } catch (Exception e) {
       System.out.println("Something went wrong trying to save MovieList: " + e);
+      return false;
     }
   }
 
