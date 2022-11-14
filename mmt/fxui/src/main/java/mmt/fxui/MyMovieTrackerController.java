@@ -13,6 +13,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import mmt.core.Comparators;
@@ -72,11 +73,13 @@ public class MyMovieTrackerController {
             this.access = new RemoteMmtAccess(apiUri);
             movieList = access.loadMovieList();
             accessFeedback.setText("Connected to server");
+            accessFeedback.setFill(Color.GREEN);
         } catch (Exception e){
             // TODO: Fix feedback in the fxml file to show that we could not connect to server
             this.access = new LocalMmtAccess();
             movieList = access.loadMovieList();
             accessFeedback.setText("Not connected to server");
+            accessFeedback.setFill(Color.RED);
         }
 
        updateMovieListView();
