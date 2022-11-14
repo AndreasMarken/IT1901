@@ -61,6 +61,7 @@ public class MyMovieTrackerController {
     
     /**
      * Method that runs upon initializing the controller and app.
+     * Tries connecting to server, if not possible it runs localy
      *
      * @throws IOException When movies from the file cannot be loaded.
      */

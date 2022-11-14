@@ -22,23 +22,36 @@ public class MyMovieConfig{
     private Path initPath;
     private Path path;
 
+
+    /**
+    * Constructor setting the objectmapper and the initpath 
+    *
+    */
     public MyMovieConfig(){
         this.oMapper = createOMapper();
         this.initPath = Paths.get(System.getProperty("user.home"), "it1901", "mmt", "serverfiles");
     }
 
-     public void makefile(Path path){
-        try {
-            Files.createDirectories(this.initPath);
-            Files.createFile(path);
-        } catch (IOException e) {
-            // TODO: handle exception
-            System.out.println("File already exists");
-        }
-     }
 
-    public void setFilePath(String name){
-        this.path = this.initPath.resolve(name);
+    /**
+    * Creates folder and file from the given path
+    * @param path: path to folder
+    */
+    public void makefile(Path path){
+       try {
+           Files.createDirectories(this.initPath);
+           Files.createFile(path);
+       } catch (IOException e) {
+           System.out.println("File already exists");
+       }
+    }
+
+    /**
+    * Sets the filename
+    * @param filename: name of file
+    */
+    public void setFilePath(String filename){
+        this.path = this.initPath.resolve(filename);
         makefile(this.path);
     }
 
@@ -50,6 +63,13 @@ public class MyMovieConfig{
        return path.toFile();
    }
 
+
+  /**
+   * Loads movielist from json file. If the json file does not exist it returns an empty movieList.
+   * 
+   * @return movielist.
+   * @throws IOException when reading from json file fails.
+   */ 
    public MovieList loadMovieList() throws IOException {
     try (Reader fileReader = new FileReader(path.toFile(), StandardCharsets.UTF_8)) {
       return oMapper.readValue(fileReader, MovieList.class);
@@ -59,6 +79,11 @@ public class MyMovieConfig{
     }
   }
 
+   /**
+   * Saves the movielist to json file.
+   * 
+   * @param movieList the movielist object to be saved.
+   */
   public void saveMovieList(MovieList movieList) {
     if (this.path == null) {
       throw new IllegalStateException("Filepath is not set.");

@@ -26,7 +26,13 @@ public class RemoteMmtAccess implements IAccess {
     public URI getUri(){
         return URI.create(apiUri);
     }
-    
+
+    /**
+    * Generates a PUT-Request to the server.
+    * Sends movielist to server
+    *
+    * @param MovieList: An object that contains a list of movies.
+    */
     public void saveMovieList(MovieList movieList){
         try {
             String jsonBody = oMapper.writeValueAsString(movieList);
@@ -47,6 +53,7 @@ public class RemoteMmtAccess implements IAccess {
             throw new RuntimeException("Server is not running: " + e);
         }
     }
+    
     
     public MovieList loadMovieList() throws IOException{
         HttpRequest request = HttpRequest.newBuilder()
