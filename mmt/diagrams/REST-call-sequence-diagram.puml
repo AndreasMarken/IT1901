@@ -1,0 +1,43 @@
+
+@startuml "sequence-diagram"
+actor User as user
+
+group Add New Movie
+
+user -> fxui: click "New Movie", fill fields and click "save"
+
+fxui --> fxui: validate
+fxui -> rest: POST[serialize(movie)]
+rest -> storage: store
+rest <-- storage: stored
+fxui <-- rest: response
+fxui --> fxui: displayMovieListView()
+user <-- fxui: movie appears
+
+
+
+
+end
+
+group Edit existing Movie
+
+user -> fxui: click "edit", fill fields and click "save"
+
+fxui --> fxui: validate
+fxui -> rest: PUT[serialize(movie)]
+rest -> storage: read from storage
+rest <-- storage: return movieList
+rest --> rest: update movie
+rest -> storage: store movieList
+rest <-- storage: saved
+fxui <-- rest: response
+fxui --> fxui: displayMovieListView()
+user <-- fxui: updated movie appears
+
+
+
+
+
+end
+
+@enduml
