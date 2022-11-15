@@ -1,5 +1,7 @@
 package mmt.restserver;
 
+import java.nio.file.Paths;
+
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.jackson.JacksonFeature;
@@ -17,7 +19,7 @@ public class MmtConfig extends ResourceConfig{
     */
     public MmtConfig() {
         myMovieConfig = new MyMovieConfig();
-        myMovieConfig.setFilePath("server-movielist.json");
+        MyMovieConfig.filepath = Paths.get(System.getProperty("user.home"), "it1901", "mmt", "serverfiles", "server-movielist.json");
         register(MmtService.class);
         register(JacksonFeature.class);
         register(MmtModuleObjectMapperProvider.class);

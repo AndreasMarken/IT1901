@@ -45,7 +45,6 @@ public class MmtServerTest extends JerseyTest{
         Response response = target(MmtService.MMT_SERVICE_PATH)
             .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER + "=UTF-8")
             .get();
-        System.out.println(response+ " dette er responsen");
         assertEquals(200, response.getStatus());
 
         try {

@@ -56,12 +56,6 @@ public class RemoteMmtAccess implements IAccess {
             throw new RuntimeException(e);
         }
     }
-    
-
-	@Override
-	public void setTestMode(boolean testingMode) throws IOException {
-		//Never used	
-	}
 
     @Override
     public void addMovie(Movie movie) {
@@ -132,14 +126,13 @@ public class RemoteMmtAccess implements IAccess {
         }                        
         catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
-        }
-
-               
-    
-        
+        }  
     }
 
-    
-
+    @Override
+    public void setTestMode(boolean testingMode) throws IOException {
+        // TODO Auto-generated method stub
+        
+    }   
 }
 

@@ -21,7 +21,7 @@ public class MyMovieConfig{
 
     private ObjectMapper oMapper;
     private Path initPath;
-    private Path path;
+    public static Path filepath;
 
 
     /**
@@ -52,8 +52,8 @@ public class MyMovieConfig{
     * @param filename name of file
     */
     public void setFilePath(String filename){
-        this.path = this.initPath.resolve(filename);
-        makefile(this.path);
+        MyMovieConfig.filepath = this.initPath.resolve(filename);
+        makefile(MyMovieConfig.filepath);
     }
 
     /**
@@ -62,7 +62,7 @@ public class MyMovieConfig{
      * @return the path
      */
     public Path getPath(){
-        return this.path;
+        return MyMovieConfig.filepath;
     }
 
     /**
@@ -71,7 +71,7 @@ public class MyMovieConfig{
      * @return the File
      */
     public File getFile(){
-      return path.toFile();
+      return MyMovieConfig.filepath.toFile();
     }
 
 
@@ -82,7 +82,8 @@ public class MyMovieConfig{
    * @throws IOException when reading from json file fails.
    */ 
    public MovieList loadMovieList() throws IOException {
-    try (Reader fileReader = new FileReader(path.toFile(), StandardCharsets.UTF_8)) {
+    makefile(MyMovieConfig.filepath);
+    try (Reader fileReader = new FileReader(MyMovieConfig.filepath.toFile(), StandardCharsets.UTF_8)) {
       return oMapper.readValue(fileReader, MovieList.class);
     } catch (FileNotFoundException e) {
       System.out.println("Something went wrong trying to load MovieList, returning new MovieList.");
@@ -96,10 +97,11 @@ public class MyMovieConfig{
    * @param movieList the movielist object to be saved.
    */
   public boolean saveMovieList(MovieList movieList) {
-    if (this.path == null) {
+    makefile(MyMovieConfig.filepath);
+    if (MyMovieConfig.filepath == null) {
       throw new IllegalStateException("Filepath is not set.");
     }
-    try (FileWriter fileWriter = new FileWriter(path.toFile(), StandardCharsets.UTF_8)) {
+    try (FileWriter fileWriter = new FileWriter(MyMovieConfig.filepath.toFile(), StandardCharsets.UTF_8)) {
       oMapper.writerWithDefaultPrettyPrinter().writeValue(fileWriter, movieList);
       return true;
     } catch (Exception e) {
@@ -116,3 +118,4 @@ public class MyMovieConfig{
         return new ObjectMapper().registerModule(new MovieModule());
     }
 }
+
