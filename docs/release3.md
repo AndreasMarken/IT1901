@@ -11,18 +11,148 @@ The logic we have focused on implementing to this sprint, has mainly been the im
 
 The actor class has given movies another dimension, where one actor can be linked to multiple movies, and one movie can have multiple actors. In the mmt-app, you can now also search for movies containing certain actors or by movie name. By giving the user this possibility, the user can now find movies containing their favorite actor, or search for sequels to movies that you enjoy watching.
 
-The implementation of the REST-API gives the user the possibility to either run the application on locally stored files or using a server. To make this possible we have created an interface named IAccess, which we have implemented in LocalMmtAccess and RemoteMmtAcces. This gives us two different implementations of the way mmt can be stored. You can read more about our API set up and base endpoints [here](../mmt/rest/README.md)
+The implementation of the REST-API gives the user the possibility to either run the application on locally stored files or using a server. To make this possible we have created an interface named IAccess, which we have implemented in LocalMmtAccess and RemoteMmtAcces. This gives us two different implementations of the way mmt can be stored. You can read more about our API set up and base endpoints [here](../mmt/rest/README.md), or continue reading the [API-setup](#api-setup) in this file.
 
-To read more about the implementations and how it is intended to use the mmt app, read [here](../mmt/README.md).
+To read more about the implementations and how it is intended to use the mmt app, read [here](../mmt/README.md#my-movie-tracker).
 
 We have also made our product shippable, as the requirements in `arbeidskrav` states. To read more about the shippable configuration, read [here](../mmt/README.md#shippable-product---export-the-project)
 
-We have also updated the diagrams we created for deliverable 2. To read more about the diagrams, check out the [diagrams](../mmt/README.md#diagrams) section in the mmt README file.
+We have also updated the diagrams we created for deliverable 2. To read more about the diagrams, check out the [diagrams section](../mmt/README.md#diagrams) in the mmt README file.
+
+As our focus have been in prior sprints, our focus has been on having descriptive branch names, as well as branches that links to each userstorie/issue. Our branches are ment to have the same start as the names in the table in the root [readme file](../README.md#commits). Followed by a descriptive name of the issue it is linked with. We have also decided to create a table showing witch issue is linked to which userstory. Under the last table row, you can see the issues we feel are essential for the project, but not necessarily linked to a userstory.
+
+| Userstory | Issue |
+| --- | --- |
+| As a user, I want to add movies to a list which contains movies that I find interesting, so that when i want to watch a movie I know which ones i like. | #10, #19, #14, #42|
+| As a user, I want to be able to add movies that I like to a watchlist that contains movies that I am due to watch, so that I know which movie I should watch when the weekend comes | #27, #46 |
+| As a user, I want to remove movies from a list which contains movies that I like, in case i do not like them anymore | #27 |
+| As a user, I want to sort my list of movies that I like based on duration | #44 |
+| As a user, I want to sort my list of movies that I like based on the title, so that when I have a lot of movies in my list, it is easy to find the one I am looking for | #44 |
+| As a user, I want to sort my list of movies that I like based on rating, in case someone asks me what my all-time favorite movie is, it is easy for me to figure out which. | #44 |
+| As a user, I want to have a list of movies that I find interesting available, so that I have suggestions when being asked for a recommendation | #15, #16, #18, #47, #27, #46 |
+| As a user, I want to write a short summary of each movie that i like, so that at a later time I would remind myself of what the movie was about when considering to watch it | #15, #16, #18, #47 |
+| As a user, I want to give each movie that a like a rating on a 1/10 scale (1.1, 1.2, ...,10), so that i know which movie is the best of the best | #15, #16, #18, $47 |
+| As a user, I want to add a cast to a Movie, so that I can see which actors play in which movies | #22 |
+| As a user, I want to be able to search among my movies, so that I can see if my list contains a specific movie | #22 |
+| As a user, I want to search for movies that contain a specific actor, so that it is easy to find a movie to watch that a specific actor plays in | #22 |
+| As a user, I want to see statistics like the mean rating of the movies, mean duration, and the actor that plays in most movies, so that I can get an overview of the characteristics of my list of movies | #55, #53 |
+
+Issues based on requirements in `arbeidskrav` or project related issues:
+
+| Requirement/description | Issue |
+| --- | --- |
+| Rest API/Localy storage | #13, #31, #38, #61, #52, #67 |
+| Shippable Product | #58 |
+| Spotbugs | #35, #56 |
+| Checkstyle | #35, #48, #54 |
+| Documentation | #23, #24, #21, #6, #5, #29, #32, #49, #33, #34, #40, #41, #51, #63, #55, #61, #60, 359 |
+| Project set up | #3, #9, #8, #28, #30, #20, #36, #62 |
+| User interface | #11, #17, #45, #43 |
+| Ci | #12 |
+| Testing | #37, #39 |
 
 ## Modularization and architecture
 The new modules added to the project is:
 - [Rest](../mmt/rest/README.md)
 - [Integrationtests](../mmt/integrationtests/README.md)
 
+Which adds to the existing modules:
+- [Core](../mmt/core/README.md#module---core)
+- [Fxui](../mmt/fxui/README.md#module---fxui)
+
 ## Code quality 
 To ensure even more code quality, we have updated our pipeline to also perform a formating check. This makes the pipeline use the `mvn prettier:check` command, and ensure that the project contains a good code formatting.
+
+We have also continued with making the pipeline ensure that the project compiles, as well as that the core-tests runs without any failures.
+
+## Documentation
+As we have continued developing the project, some of the commands to run the project needs to be altered, as well as new ones are added. Therefore we have updated the readme files that describes how to use the application. We have also moved all of the documentation that describes how to run the project into one readme file, insted of having some in the root file and some in the mmt file. If you want to read more about how to run the project, read [here](../README.md#build-the-project). In the root readme file you can also read about our workflow, which we have written to inform future contributors and readers about how we work on our project.
+
+For release 3, we have also decided to write documentation about the different modules, which can be read in the different modules README-files that are linked [above](#modularization-and-architecture).
+
+## Testing
+TODO: skriv om testing og testdekningsgrad.
+
+## API-Setup
+TODO: skriv litt om API
+
+## JSON-Storage Format
+Underneath is a description on how we serialize our different objects. This is the way we store our objects both localy and to the server.
+
+Actor:
+```json
+ {
+    "name" : "Daniel Craig"
+ }
+```
+
+Rating:
+```json
+ {
+    "rating" : 10,
+    "comment" : "This was a great movie, glad i got around to watch it!"
+ }
+```
+
+Movie:
+```json
+ {
+    "title" : "No Time to Die",
+    "releaseDate" : "2021-10-01",
+    "duration" : "02:43:00",
+    "rating" : {
+        "rating" : 10,
+        "comment" : "This was a great movie, glad i got around to watch it!"
+    },
+    "watchlist" : true,
+    "cast" : [
+        {
+        "name" : "Daniel Craig"
+        },
+        {
+        "name" : "Rami Malek"
+        },
+        {
+        "name" : "Lashana Lynch"
+        },
+        {
+        "name" : "Léa Seydoux"
+        }
+    ],
+    "id" : "e65b957e-6415-11ed-81ce-0242ac120002"
+ }
+```
+
+MovieList:
+```json
+    {
+        "movies" : [
+            {
+            "title" : "No Time to Die",
+            "releaseDate" : "2021-10-01",
+            "duration" : "02:43:00",
+            "rating" : {
+                "rating" : 10,
+                "comment" : "This was a great movie, glad i got around to watch it!"
+            },
+            "watchlist" : true,
+            "cast" : [
+                {
+                "name" : "Daniel Craig"
+                },
+                {
+                "name" : "Rami Malek"
+                },
+                {
+                "name" : "Lashana Lynch"
+                },
+                {
+                "name" : "Léa Seydoux"
+                }
+            ],
+            "id" : "e65b957e-6415-11ed-81ce-0242ac120002"
+            }, 
+            ...//And the list continues
+        ]
+    }
+```

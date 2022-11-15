@@ -1,12 +1,11 @@
 # Userstories
-
 - As a user, I want to add movies to a list which contains movies that I find interesting, so that when i want to watch a movie I know which ones i like.
 
 - As a user, I want to be able to add movies that I like to a watchlist that contains movies that I am due to watch, so that I know which movie I should watch when the weekend comes
 
 - As a user, I want to remove movies from a list which contains movies that I like, in case i do not like them anymore
 
-- As a user, I want to sort my list of movies that I like based on duration, so that if a friend asks me for a good movie that lasts less than an hour
+- As a user, I want to sort my list of movies that I like based on duration
 
 - As a user, I want to sort my list of movies that I like based on the title, so that when I have a lot of movies in my list, it is easy to find the one I am looking for
 
