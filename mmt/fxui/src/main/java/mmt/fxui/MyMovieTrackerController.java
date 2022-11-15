@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import mmt.core.Comparators;
 import mmt.core.IActor;
 import mmt.core.IMovie;
+import mmt.core.Movie;
 import mmt.core.MovieList;
 
 
@@ -58,7 +59,7 @@ public class MyMovieTrackerController {
     @FXML
     private Text accessFeedback;
 
-    private IAccess access;
+    protected IAccess dataAccess;
     
     /**
      * Method that runs upon initializing the controller and app.
@@ -71,13 +72,13 @@ public class MyMovieTrackerController {
         editMovieController.setMyMovieTrackerController(this);
         hideEditMovie(false);
         try{
-            this.access = new RemoteMmtAccess(apiUri);
-            movieList = access.loadMovieList();
+            this.dataAccess = new RemoteMmtAccess(apiUri);
+            movieList = dataAccess.loadMovieList();
             accessFeedback.setText("Connected to server");
             accessFeedback.setFill(Color.GREEN);
         } catch (Exception e){
-            this.access = new LocalMmtAccess();
-            movieList = access.loadMovieList();
+            this.dataAccess = new LocalMmtAccess();
+            movieList = dataAccess.loadMovieList();
             accessFeedback.setText("Not connected to server");
             accessFeedback.setFill(Color.RED);
         }
@@ -186,18 +187,13 @@ public class MyMovieTrackerController {
         } catch (IOException e) {
             //If the movie was not able to be displayed, try skipping this movie.
         }
-        try {
-            access.saveMovieList(movieList);
-        } catch (IOException e) {
-            System.out.println("The MovieList was not saved");
-        }
     }
 
 
     protected void setTestingMode(boolean testingMode) throws IOException {
-        access.setTestMode(testingMode);
+        dataAccess.setTestMode(testingMode);
         this.movieList = new MovieList();
-        access.saveMovieList(movieList);
+        dataAccess.saveMovieList(movieList);
         updateMovieListView();
     }
 
@@ -226,6 +222,9 @@ public class MyMovieTrackerController {
      */
     protected void deleteMovie(IMovie movie) {
         movieList.removeMovie(movie);
+        if(movie instanceof Movie){
+            dataAccess.deleteMovie((Movie) movie);
+        }     
         updateMovieListView();
     }
 
@@ -258,6 +257,20 @@ public class MyMovieTrackerController {
     public EditMovieController getEditMovieController() {
         return this.editMovieController;
     }
+
+    /**
+     * Method used to set the testingmode. When performing the test, you do not want to destroy
+     * the users database. Therefore you can set the controller to testing mode, which changes the file 
+     * that this controller writes to.
+     * @param testingMode True if testingmode is to be set, false if not.
+     * @throws IOException If it was unable to save the movielist to file.
+     */
+    // protected void setTestingMode(boolean testingMode) throws IOException {
+    //     this.testingMode = testingMode;
+    //     this.movieList = new MovieList();
+    //     saveMovieListToFile();
+    //     updateMovieListView();
+    // }
 
     /**
      * Changes this current view to the statisticsview. Used when the statisticsview button is clicked.
@@ -316,7 +329,7 @@ public class MyMovieTrackerController {
      */
     public void setAccess(IAccess access) {
         if(access != null){
-            this.access = access;
+            this.dataAccess = access;
         }
     }
 }

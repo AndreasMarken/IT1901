@@ -1,6 +1,7 @@
 package mmt.core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -90,10 +91,6 @@ public class MovieList implements Iterable<IMovie> {
             return "Movielist is empty!";
         }
 
-        StringBuilder sb = new StringBuilder();
-        for (IMovie iMovie : movieList) {
-            sb.append(iMovie.getTitle());
-        }
-        return sb.toString();
+        return Arrays.toString(movieList.stream().map(m -> m.getTitle()).toArray());
     }
 }

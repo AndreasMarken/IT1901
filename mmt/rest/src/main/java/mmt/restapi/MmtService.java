@@ -6,12 +6,14 @@ import org.slf4j.LoggerFactory;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import mmt.core.Movie;
 import mmt.core.IMovie;
 import mmt.core.MovieList;
 import mmt.json.MyMovieConfig;
@@ -48,57 +50,82 @@ public class MmtService {
         }
     }
 
-    /**
-     * Puts MovieList to server.
-     *
-     * @param movieList The MovieList to be put
-     */
+    private boolean storeMovieList(MovieList movieList){
+        return myMovieConfig.saveMovieList(movieList);
+    }
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public void putMovieList(MovieList movieList){
-        LOG.debug("MovieList successfully updated:" + movieList.toString());
-        myMovieConfig.saveMovieList(movieList);
+    @Path("/{oldMovieID}")
+    public Boolean putMovie(@PathParam("oldMovieID") String oldMovieID, Movie movie){
+        IMovie updatedMovie = movie;
+        MovieList movieListFromStorage = getMovieList();
+        IMovie oldMovie = movieListFromStorage.getMovies().stream().filter(m -> m.getID().equals(oldMovieID)).findAny().orElse(null);
+        movieListFromStorage.removeMovie(oldMovie);
+        movieListFromStorage.addMovie(updatedMovie);   
+        boolean isStored = storeMovieList(movieListFromStorage);
+        
+        if(isStored){
+            LOG.debug("old movie " + oldMovie.getTitle() + " updated and stored. Updated movie:" + movie.getTitle());  
+        }
+        else{
+            LOG.debug("failed to store update of old movie " + oldMovie.getTitle());
+        }
+        return isStored;
     }
 
    
-    /**
-     * Gets a Movie from the MovieList that is stored in the server.
-     *
-     * @param movie Name of the Movie to get
-     * @return Movie with the right name
-     */
-    @GET
-    @Path("/{movie}")
-    public IMovie getMovie(@PathParam("movie") String movie) {
-      IMovie movieFromMovieList = getMovieList().getMovie(movie);
-      if (movieFromMovieList == null){
-        LOG.debug("requested movie does not exist!");
-      }
-      else{
-        LOG.debug("getting movie " + movie);
-      }
-      return getMovieList().getMovie(movie);
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public boolean addMovie(Movie movie) {
+        IMovie movieToAdd = movie;
+        MovieList movieListFromStorage = getMovieList();
+        movieListFromStorage.addMovie(movieToAdd);
+        
+        boolean isStored = storeMovieList(movieListFromStorage);        
+        if(isStored){
+            LOG.debug("Movie " + movie.getTitle() + " successfully stored");  
+        }
+        else{
+            LOG.debug("Failed to store movie: " + movie.getTitle());
+        }
+        return isStored;    
     }
 
-    /**
-     * Deletes a Movie from the MovieList that is stored in the server.
-     *
-     * @param movie Name of the Movie to delete
-     */
+    //TODO never used?
+    // @GET
+    // @Path("/{movie}")
+    // public IMovie getMovie(@PathParam("movie") String movie) {
+    //   IMovie movieFromMovieList = getMovieList().getMovie(movie);
+    //   if (movieFromMovieList == null){
+    //     LOG.debug("requested movie does not exist!");
+    //   }
+    //   else{
+    //     LOG.debug("getting movie " + movie);
+    //   }
+    //   return getMovieList().getMovie(movie);
+    // }
+
     @DELETE
-    @Path("/{movie}")
-    public void deleteMovie(@PathParam("movie") String movie) {
-      MovieList movieListFromFile = getMovieList();
-      IMovie movieToDelete = movieListFromFile.getMovie(movie);
+    @Path("/{movieID}")
+    public boolean deleteMovie(@PathParam("movieID") String movieID) {
+      MovieList movieListFromStorage = getMovieList();
+      IMovie movieToDelete = movieListFromStorage.getMovies().stream().filter(m -> m.getID().equals(movieID)).findAny().orElse(null);
 
       if (movieToDelete == null){
         LOG.debug("the movie requested to delete does not exist!");
+        return false;
       }
       else{
-        movieListFromFile.removeMovie(movieToDelete);
-        putMovieList(movieListFromFile);
-        LOG.debug("movie " + movie + " successfully deleted");
+        movieListFromStorage.removeMovie(movieToDelete);
+        boolean isStored = storeMovieList(movieListFromStorage);        
+        if(isStored){
+            LOG.debug("Movie " + movieToDelete.getTitle() + " successfully deleted from storage");  
+        }
+        else{
+            LOG.debug("Failed to delete movie from storage: " + movieToDelete.getTitle());
+        }
+        return isStored;  
       }
     }
 }

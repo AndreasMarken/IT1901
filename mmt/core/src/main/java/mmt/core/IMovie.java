@@ -17,6 +17,11 @@ public interface IMovie {
     String getTitle();
 
     /**
+     * @return the unique ID of this movie object.
+     */
+    String getID();
+
+    /**
      * Method that sets a new title for a movie.
      *
      * @param title The title to be given ot the movie.

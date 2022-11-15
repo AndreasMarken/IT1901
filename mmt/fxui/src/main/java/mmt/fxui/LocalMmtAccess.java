@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
+
+import mmt.core.Movie;
 import mmt.core.MovieList;
 import mmt.json.MovieModule;
 
@@ -98,4 +100,47 @@ public class LocalMmtAccess implements IAccess {
     private Path getSaveFolderPath() {
         return Path.of(System.getProperty("user.home"), "it1901", "mmt", "saveFiles");
     }
+
+
+    @Override
+    public void addMovie(Movie movie) {
+        try {
+            MovieList ml = loadMovieList();
+            ml.addMovie(movie);
+            saveMovieList(ml);
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println(e);
+        }
+        
+    }
+
+
+   
+
+
+    @Override
+    public void deleteMovie(Movie movie) {
+        try {
+            MovieList ml = loadMovieList();
+            ml.removeMovie(movie);
+            saveMovieList(ml);
+        } catch (Exception e) {
+            System.out.println(e);
+        }        
+    }
+
+
+    @Override
+    public void updateMovie(Movie movie, String oldMovieID) {
+        try {
+            MovieList ml = loadMovieList();
+            Movie oldMovie = (Movie) ml.getMovies().stream().filter(m -> m.getID().equals(oldMovieID)).findAny().orElse(null);
+            ml.removeMovie(oldMovie);
+            ml.addMovie(movie);
+            saveMovieList(ml);
+        } catch (Exception e) {
+            System.out.println(e);
+        }         
+    }  
 }

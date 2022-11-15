@@ -32,7 +32,6 @@ public class MyMovieConfig{
         this.initPath = Paths.get(System.getProperty("user.home"), "it1901", "mmt", "serverfiles");
     }
 
-
     /**
     * Creates folder and file from the given path.
     *
@@ -96,14 +95,16 @@ public class MyMovieConfig{
    *
    * @param movieList the movielist object to be saved.
    */
-  public void saveMovieList(MovieList movieList) {
+  public boolean saveMovieList(MovieList movieList) {
     if (this.path == null) {
       throw new IllegalStateException("Filepath is not set.");
     }
     try (FileWriter fileWriter = new FileWriter(path.toFile(), StandardCharsets.UTF_8)) {
       oMapper.writerWithDefaultPrettyPrinter().writeValue(fileWriter, movieList);
+      return true;
     } catch (Exception e) {
       System.out.println("Something went wrong trying to save MovieList: " + e);
+      return false;
     }
   }
     /**

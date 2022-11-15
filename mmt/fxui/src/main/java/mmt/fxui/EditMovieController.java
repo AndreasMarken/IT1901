@@ -64,7 +64,7 @@ public class EditMovieController {
 
     /**
      * The method that is called when the user has completed the editing/adding
-     * of a movie. Saves the updated movie or adds the movie to the movielist, and
+     * of a movie and clicks the save button. Saves the updated movie or adds the movie to the movielist, and
      * updates the movielistview.
      * If invalid information is given by the user, an errormessage is shown in the view.
      */
@@ -104,12 +104,15 @@ public class EditMovieController {
                     for (IActor actor : actors) {
                         movie.addActor(actor);
                     }
+                    if(movie instanceof Movie){
+                        myMovieTrackerController.dataAccess.addMovie((Movie) movie);
+                    }
                 } else {
                     editExistingMovie(title, time, releaseDate, watchList);
                     this.movie = null;
                 }
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
             clearInputFields();
             myMovieTrackerController.updateMovieListView();
@@ -129,10 +132,14 @@ public class EditMovieController {
      * @param watchList : The new watchlist-status to be given 
      */
     private void editExistingMovie(String title, Time duration, Date releaseDate, boolean watchList) {
+        String oldMovieID = movie.getID();
         movie.setTitle(title);
         movie.setDuration(duration);
         movie.setReleaseDate(releaseDate);
         movie.setOnTakeOfWatchlist(watchList);
+        if(movie instanceof Movie){
+            myMovieTrackerController.dataAccess.updateMovie((Movie) movie, oldMovieID);
+        }
     }
 
     /**
