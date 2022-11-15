@@ -26,21 +26,27 @@
     </dependency>
 
     <dependency>
-      <groupId>jakarta.ws.rs</groupId>
-      <artifactId>jakarta.ws.rs-api</artifactId>
-      <version>${jakartaVersion}</version> 
+      <groupId>it1901.mmt</groupId>
+      <artifactId>fxui</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
     </dependency>
 
+    <!-- Used for logging (showing response in server terminal) -->
     <dependency> 
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>${slf4jVersion}</version>
     </dependency>
-
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <version>${slf4jVersion}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>jakarta.ws.rs</groupId>
+      <artifactId>jakarta.ws.rs-api</artifactId>
+      <version>${jakartaVersion}</version> 
     </dependency>
 
     <dependency>

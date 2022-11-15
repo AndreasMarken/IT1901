@@ -29,7 +29,7 @@ public class MmtService {
     private static final Logger LOG = LoggerFactory.getLogger(MmtService.class);
 
     @Context
-    private MyMovieConfig myMovieConfig= new MyMovieConfig();
+    public MyMovieConfig myMovieConfig= new MyMovieConfig();
 
 
 
