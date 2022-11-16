@@ -10,6 +10,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -28,7 +29,7 @@ public class MethodTests extends JerseyTest {
 
     private ObjectMapper oMapper;
 
-    private static RemoteMmtAccess access;
+    private static RemoteMmtAccess access = new RemoteMmtAccess("http://localhost:8080/mmt/"); 
     private Time duration; 
     private Date releasDate;
     private Movie avengers, dune;
@@ -38,7 +39,7 @@ public class MethodTests extends JerseyTest {
 
 
     public MethodTests(){
-        MethodTests.access = new RemoteMmtAccess("http://localhost:8080/mmt/");
+        //MethodTests.access = 
         //this.duration = new Time(2, 22, 25);
         this.duration = Time.valueOf("02:22:25");
         //this.releasDate = new Date(2010, 8, 7);
@@ -62,9 +63,10 @@ public class MethodTests extends JerseyTest {
     public static void setOrigList(){
         try {
             origList = access.loadMovieList();    
-            System.out.println("kommer vi hit");        
+            System.out.println("kommer vi hit");  
         } catch (Exception e) {
             System.out.println(e.getMessage() + "dette er medlingen");
+            
         }
     } 
 
@@ -82,7 +84,7 @@ public class MethodTests extends JerseyTest {
             // TODO: handle exception
         }
         System.out.println(origList + "dette er origlist");
-        assertEquals(origList, List.of("Something"));
+        assertEquals(origList.toString(), list2.toString());
     }
 
     @BeforeEach
@@ -107,7 +109,7 @@ public class MethodTests extends JerseyTest {
         try {
             list = access.loadMovieList();
         } catch (Exception e) {
-            // TODO: handle exception
+            Assertions.fail();
         }
         assertNotNull(list);
         assertEquals(List.of("James Bond", "Lange flate ballær", "iodhosa").toString(), list.toString());
@@ -121,7 +123,7 @@ public class MethodTests extends JerseyTest {
             list = access.loadMovieList();
             access.deleteMovie(avengers);
         } catch (Exception e) {
-            // TODO: handle exception
+            Assertions.fail(); 
         }
         assertEquals(List.of("James Bond", "Lange flate ballær", "iodhosa", "Avengers").toString(), list.toString());
     }
@@ -134,7 +136,7 @@ public class MethodTests extends JerseyTest {
             access.deleteMovie(avengers);
             list = access.loadMovieList();
         } catch (Exception e) {
-            // TODO: handle exception
+            Assertions.fail();
         }
         assertEquals(List.of("James Bond", "Lange flate ballær", "iodhosa", "Dune").toString(), list.toString());
     }
@@ -146,7 +148,7 @@ public class MethodTests extends JerseyTest {
             access.updateMovie(dune, avengers.getID());
             list = access.loadMovieList();
         } catch (Exception e) {
-            // TODO: handle exception
+            Assertions.fail();
         }
         assertEquals(List.of("James Bond", "Lange flate ballær", "iodhosa","Dune").toString(), list.toString());
       
@@ -161,17 +163,6 @@ public class MethodTests extends JerseyTest {
             System.out.println("Failed to get movielist");
             //return new MovieList();
             return null;
-        }
-    }
-
-    private static MovieList getOrigMovieList(){
-        try {
-            MovieList list = access.loadMovieList();
-            return list;
-        } catch (Exception e) {
-            // TODO: handle exception
-            return null;
-
         }
     }
 }
