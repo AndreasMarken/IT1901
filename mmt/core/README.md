@@ -16,6 +16,87 @@ The json package consists of the different serializers and deserializers for the
 
 The different serializers and deserializers is combined into the MovieModule which extends SimpleModule. Something that comes with the jackson-databind dependecy that is used for registration of serializers and deserializers.
 
+### Storing format
+Underneath is a description on how we serialize our different objects. This is the way we store our objects both localy and to the server.
+
+Actor:
+```json
+ {
+    "name" : "Daniel Craig"
+ }
+```
+
+Rating:
+```json
+ {
+    "rating" : 10,
+    "comment" : "This was a great movie, glad i got around to watch it!"
+ }
+```
+
+Movie:
+```json
+ {
+    "title" : "No Time to Die",
+    "releaseDate" : "2021-10-01",
+    "duration" : "02:43:00",
+    "rating" : {
+        "rating" : 10,
+        "comment" : "This was a great movie, glad i got around to watch it!"
+    },
+    "watchlist" : true,
+    "cast" : [
+        {
+        "name" : "Daniel Craig"
+        },
+        {
+        "name" : "Rami Malek"
+        },
+        {
+        "name" : "Lashana Lynch"
+        },
+        {
+        "name" : "Léa Seydoux"
+        }
+    ],
+    "id" : "e65b957e-6415-11ed-81ce-0242ac120002"
+ }
+```
+
+MovieList:
+```json
+    {
+        "movies" : [
+            {
+            "title" : "No Time to Die",
+            "releaseDate" : "2021-10-01",
+            "duration" : "02:43:00",
+            "rating" : {
+                "rating" : 10,
+                "comment" : "This was a great movie, glad i got around to watch it!"
+            },
+            "watchlist" : true,
+            "cast" : [
+                {
+                "name" : "Daniel Craig"
+                },
+                {
+                "name" : "Rami Malek"
+                },
+                {
+                "name" : "Lashana Lynch"
+                },
+                {
+                "name" : "Léa Seydoux"
+                }
+            ],
+            "id" : "e65b957e-6415-11ed-81ce-0242ac120002"
+            }, 
+            ...//And the list continues
+        ]
+    }
+```
+
 ## Why is core and json combined
 In the architecture of the project we have choosen to keep core and json combined in the same module. There are plenty of reasons to why we have felt that this is the correct architecture of the project. Here we will give a list of the main reasons:
 

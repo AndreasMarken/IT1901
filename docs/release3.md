@@ -11,13 +11,13 @@ The logic we have focused on implementing to this sprint, has mainly been the im
 
 The actor class has given movies another dimension, where one actor can be linked to multiple movies, and one movie can have multiple actors. In the mmt-app, you can now also search for movies containing certain actors or by movie name. By giving the user this possibility, the user can now find movies containing their favorite actor, or search for sequels to movies that you enjoy watching.
 
-The implementation of the REST-API gives the user the possibility to either run the application on locally stored files or using a server. To make this possible we have created an interface named IAccess, which we have implemented in LocalMmtAccess and RemoteMmtAcces. This gives us two different implementations of the way mmt can be stored. You can read more about our API set up and base endpoints [here](../mmt/rest/README.md), or continue reading the [API-setup](#api-setup) in this file.
+The implementation of the REST-API gives the user the possibility to either run the application on locally stored files or using a server. To make this possible we have created an interface named IAccess, which we have implemented in LocalMmtAccess and RemoteMmtAcces. This gives us two different implementations of the way mmt can be stored. You can read more about our API set up and base endpoints [here](../mmt/rest/README.md), or continue reading the [API-setup](#api-setup) section in this file.
 
 To read more about the implementations and how it is intended to use the mmt app, read [here](../mmt/README.md#my-movie-tracker).
 
-We have also made our product shippable, as the requirements in `arbeidskrav` states. To read more about the shippable configuration, read [here](../mmt/README.md#shippable-product---export-the-project)
+We have also made our product shippable, as the requirements in `arbeidskrav` states. To read more about the shippable configuration, read [here](../mmt/README.md#shippable-product---export-the-project).
 
-We have also updated the diagrams we created for deliverable 2. To read more about the diagrams, check out the [diagrams section](../mmt/README.md#diagrams) in the mmt README file.
+We have also updated the diagrams we created for deliverable 2. To read more about the diagrams, check out the [diagrams section](../mmt/README.md#diagrams) in the mmt README file. We have also created diagrams that displays the endpoint usage, you can view them [here](TODO:)
 
 As our focus have been in prior sprints, our focus has been on having descriptive branch names, as well as branches that links to each userstorie/issue. Our branches are ment to have the same start as the names in the table in the root [readme file](../README.md#commits). Followed by a descriptive name of the issue it is linked with. We have also decided to create a table showing witch issue is linked to which userstory. Under the last table row, you can see the issues we feel are essential for the project, but not necessarily linked to a userstory.
 
@@ -31,7 +31,7 @@ As our focus have been in prior sprints, our focus has been on having descriptiv
 | As a user, I want to sort my list of movies that I like based on rating, in case someone asks me what my all-time favorite movie is, it is easy for me to figure out which. | #44 |
 | As a user, I want to have a list of movies that I find interesting available, so that I have suggestions when being asked for a recommendation | #15, #16, #18, #47, #27, #46 |
 | As a user, I want to write a short summary of each movie that i like, so that at a later time I would remind myself of what the movie was about when considering to watch it | #15, #16, #18, #47 |
-| As a user, I want to give each movie that a like a rating on a 1/10 scale (1.1, 1.2, ...,10), so that i know which movie is the best of the best | #15, #16, #18, $47 |
+| As a user, I want to give each movie that a like a rating on a 1/10 scale (1.1, 1.2, ...,10), so that i know which movie is the best of the best | #15, #16, #18, #47 |
 | As a user, I want to add a cast to a Movie, so that I can see which actors play in which movies | #22 |
 | As a user, I want to be able to search among my movies, so that I can see if my list contains a specific movie | #22 |
 | As a user, I want to search for movies that contain a specific actor, so that it is easy to find a movie to watch that a specific actor plays in | #22 |
@@ -41,11 +41,11 @@ Issues based on requirements in `arbeidskrav` or project related issues:
 
 | Requirement/description | Issue |
 | --- | --- |
-| Rest API/Localy storage | #13, #31, #38, #61, #52, #67 |
+| Rest API/Local storage | #13, #31, #38, #61, #52, #57 |
 | Shippable Product | #58 |
 | Spotbugs | #35, #56 |
 | Checkstyle | #35, #48, #54 |
-| Documentation | #23, #24, #21, #6, #5, #29, #32, #49, #33, #34, #40, #41, #51, #63, #55, #61, #60, 359 |
+| Documentation | #23, #24, #21, #6, #5, #29, #32, #49, #33, #34, #40, #41, #51, #63, #55, #61, #60, #59 |
 | Project set up | #3, #9, #8, #28, #30, #20, #36, #62 |
 | User interface | #11, #17, #45, #43 |
 | Ci | #12 |
@@ -71,57 +71,16 @@ As we have continued developing the project, some of the commands to run the pro
 For release 3, we have also decided to write documentation about the different modules, which can be read in the different modules README-files that are linked [above](#modularization-and-architecture).
 
 ## Testing
-TODO: skriv om testing og testdekningsgrad.
+As we have done throughout the whole project, we have focused on maintaining a good degree of testing. For us, we have said that we want at least 80% testing degree in our jacoco reports. By obtaining this, we can ensure that the system works as intended, and not lead to any errors. 
 
-## API-Setup
-TODO: skriv litt om API
+We have added new tests to the new parts of the system. We have written tests that ensure that the statistics view performs correct calucation. We have also written tests for the rest api, endpoints and to ensure that the server can run.
+
+If you want to view our jacoco reports, you can run the maven test command, described in the [root README](../README.md#testing-the-project), and follow the steps listed in there to view the report.
 
 ## JSON-Storage Format
-Underneath is a description on how we serialize our different objects. This is the way we store our objects both localy and to the server.
+To get the full display on how each class is serialized, check out the [core module README file](../mmt/core/README.md#storing-format).
 
-Actor:
-```json
- {
-    "name" : "Daniel Craig"
- }
-```
-
-Rating:
-```json
- {
-    "rating" : 10,
-    "comment" : "This was a great movie, glad i got around to watch it!"
- }
-```
-
-Movie:
-```json
- {
-    "title" : "No Time to Die",
-    "releaseDate" : "2021-10-01",
-    "duration" : "02:43:00",
-    "rating" : {
-        "rating" : 10,
-        "comment" : "This was a great movie, glad i got around to watch it!"
-    },
-    "watchlist" : true,
-    "cast" : [
-        {
-        "name" : "Daniel Craig"
-        },
-        {
-        "name" : "Rami Malek"
-        },
-        {
-        "name" : "Lashana Lynch"
-        },
-        {
-        "name" : "Léa Seydoux"
-        }
-    ],
-    "id" : "e65b957e-6415-11ed-81ce-0242ac120002"
- }
-```
+Underneath you can see the storage format for a movielist. The newly added component to milestone release 3, is the including of a cast list and a movie ID. The reason we have added a movie ID is to always be able to get the correct movie from the server when using endpoints.
 
 MovieList:
 ```json
@@ -156,3 +115,21 @@ MovieList:
         ]
     }
 ```
+As you probably can see, as the size of the movielist grows, the data flow increases. As we first had implemented in our system, the complete movielist was always serialized and deserialized and displayed to the user. This leads to a huge amount of data flow, which can slow the system down. Therefore we have made som adjustments in the MMT controller, to better the data flow.
+
+## API-Setup
+In our API-Setup, we have created 4 base endpoints. 
+- Get
+    - Returns the complete movielist stored in the file.
+- Put
+    - Updates a movie in the movielist that is stored.
+- Post
+    - Adds a new movie to the file.
+- Delete
+    - Deletes a movie in the file.
+
+As we first set up the api, we only had Get movielist, and put movielist, which ment that we had to always send huge amounts of data. This lead to a bad dataflow, as described earlier. We then removed the endpoint, put movielist, and instead created the three more shown above.
+
+This is the reason we also included an ID to a movie. With this ID, we can search for movies in the server, and get the correct one. From there we can easily delete or update that movie.
+
+You can read more about the [rest module](../mmt/rest/README.md) and the description of the [endpoints](../mmt/rest/API-Schema.md) should you find this interesting.
