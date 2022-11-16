@@ -42,6 +42,7 @@ public class MmtServerTest extends JerseyTest{
 
     @Test
     public void testApiGetMethod(){
+        System.out.println("er vi her");
         Response response = target(MmtService.MMT_SERVICE_PATH)
             .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER + "=UTF-8")
             .get();
@@ -49,7 +50,6 @@ public class MmtServerTest extends JerseyTest{
 
         try {
             MovieList movieList = oMapper.readValue(response.readEntity(String.class), MovieList.class);
-            System.out.println(movieList);
             assertNotNull(movieList);
             
         } catch (JsonProcessingException e) {

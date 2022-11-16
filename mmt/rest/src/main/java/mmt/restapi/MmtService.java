@@ -92,20 +92,6 @@ public class MmtService {
         return isStored;    
     }
 
-    //TODO never used?
-    // @GET
-    // @Path("/{movie}")
-    // public IMovie getMovie(@PathParam("movie") String movie) {
-    //   IMovie movieFromMovieList = getMovieList().getMovie(movie);
-    //   if (movieFromMovieList == null){
-    //     LOG.debug("requested movie does not exist!");
-    //   }
-    //   else{
-    //     LOG.debug("getting movie " + movie);
-    //   }
-    //   return getMovieList().getMovie(movie);
-    // }
-
     @DELETE
     @Path("/{movieID}")
     public boolean deleteMovie(@PathParam("movieID") String movieID) {

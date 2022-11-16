@@ -21,7 +21,7 @@ public class MyMovieConfig{
 
     private ObjectMapper oMapper;
     private Path initPath;
-    public static Path filepath;
+    public  Path filepath;
 
 
     /**
@@ -52,8 +52,8 @@ public class MyMovieConfig{
     * @param filename name of file
     */
     public void setFilePath(String filename){
-        MyMovieConfig.filepath = this.initPath.resolve(filename);
-        makefile(MyMovieConfig.filepath);
+        this.filepath = this.initPath.resolve(filename);
+        makefile(this.filepath);
     }
 
     /**
@@ -62,7 +62,7 @@ public class MyMovieConfig{
      * @return the path
      */
     public Path getPath(){
-        return MyMovieConfig.filepath;
+        return this.filepath;
     }
 
     /**
@@ -71,7 +71,7 @@ public class MyMovieConfig{
      * @return the File
      */
     public File getFile(){
-      return MyMovieConfig.filepath.toFile();
+      return this.filepath.toFile();
     }
 
 
@@ -82,8 +82,7 @@ public class MyMovieConfig{
    * @throws IOException when reading from json file fails.
    */ 
    public MovieList loadMovieList() throws IOException {
-    makefile(MyMovieConfig.filepath);
-    try (Reader fileReader = new FileReader(MyMovieConfig.filepath.toFile(), StandardCharsets.UTF_8)) {
+    try (Reader fileReader = new FileReader(getFile(), StandardCharsets.UTF_8)) {
       return oMapper.readValue(fileReader, MovieList.class);
     } catch (FileNotFoundException e) {
       System.out.println("Something went wrong trying to load MovieList, returning new MovieList.");
@@ -97,11 +96,10 @@ public class MyMovieConfig{
    * @param movieList the movielist object to be saved.
    */
   public boolean saveMovieList(MovieList movieList) {
-    makefile(MyMovieConfig.filepath);
-    if (MyMovieConfig.filepath == null) {
+    if (this.filepath == null) {
       throw new IllegalStateException("Filepath is not set.");
     }
-    try (FileWriter fileWriter = new FileWriter(MyMovieConfig.filepath.toFile(), StandardCharsets.UTF_8)) {
+    try (FileWriter fileWriter = new FileWriter(getFile(), StandardCharsets.UTF_8)) {
       oMapper.writerWithDefaultPrettyPrinter().writeValue(fileWriter, movieList);
       return true;
     } catch (Exception e) {
