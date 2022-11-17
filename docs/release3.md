@@ -39,15 +39,15 @@ Issues based on requirements in `arbeidskrav` or project related issues:
 
 | Requirement/description | Issue |
 | --- | --- |
-| Rest API/Local storage | #13, #31, #38, #61, #52, #57 |
+| Rest API/Local storage | #13, #31, #38, #52, #57 |
 | Shippable Product | #58 |
-| Spotbugs | #35, #56 |
+| Spotbugs | #35, #56, #62 |
 | Checkstyle | #35, #48, #54 |
-| Documentation | #23, #24, #21, #6, #5, #29, #32, #49, #33, #34, #40, #41, #51, #63, #55, #61, #60, #59 |
-| Project set up | #3, #9, #8, #28, #30, #20, #36, #62 |
-| User interface | #11, #17, #45, #43 |
+| Documentation | #5, #6, #21, #23, #24, #29, #32, #33, #34, #40, #41, #49, #51, #55, #59, #60, #61, #63 |
+| Project set up | #3, #8, #9, #20, #28, #30, #36, #62, #68 |
+| User interface | #11, #17, #45, #43, #65, #66 |
 | Ci | #12 |
-| Testing | #37, #39 |
+| Testing | #37, #39, #67, #69 |
 
 To read more about the implementations and how it is intended to use the mmt app, read [here](../mmt/README.md#my-movie-tracker).
 
@@ -94,13 +94,13 @@ As we previously have said, making sure that our program is tested, is important
 | RatingSerializer | 100% |
 | ActorSerializer | 100% |
 | ActorDeserializer | 100% |
-| MyMovieConfig | 76% |
+| MyMovieConfig | 83% |
 | DisplayMovieController | 100% |
-| EditMovieController | 89% |
+| EditMovieController | 95% |
 | GiveRatingController | 100% |
 | LocalMmtAccess | 79% |
 | MyMovieTrackerController | 94% |
-| RemoteMmtAccess | 87% |
+| RemoteMmtAccess | 88% |
 | StatisticController | 99% |
 | MmtService | 85% |
 | MmtConfig | 100% |
