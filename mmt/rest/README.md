@@ -11,6 +11,7 @@ Classes:
 - [MmtService.java](src/main/java/mmt/restapi/MmtService.java)
 
 Methods:
+
 - @GET
   - getMovieList() -> Gets the stored MovieList.
 - @PUT
@@ -30,7 +31,8 @@ The package contains these classes and methods:
   - MmtModuleObjectMapperProvider() -> Initilizes the class
   - getContext(Class<?> arg0) -> returns the objectmapper of given class
 
-TODO: Add picture of flow
+## Picture of flow with rest:
+![REST flow](../diagrams/%20REST-call-sequence-diagram.png)
 
 
 
