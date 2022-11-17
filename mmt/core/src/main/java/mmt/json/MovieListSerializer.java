@@ -13,7 +13,7 @@ import mmt.core.MovieList;
  */
 public class MovieListSerializer extends JsonSerializer<MovieList> {
 
-    /** 
+    /**
      * Method to serialize (object to text) MovieList objects.
      *
      * @param movieList MovieList object to serialize
@@ -22,7 +22,8 @@ public class MovieListSerializer extends JsonSerializer<MovieList> {
      * @throws IOException Method could throw IOException
      */
     @Override
-    public void serialize(MovieList movieList, JsonGenerator jsonGen, SerializerProvider serializerProvider) throws IOException {
+    public void serialize(MovieList movieList, JsonGenerator jsonGen, SerializerProvider serializerProvider)
+        throws IOException {
         jsonGen.writeStartObject();
         jsonGen.writeArrayFieldStart("movies");
         for (IMovie movie : movieList) {

@@ -5,7 +5,6 @@ import java.sql.Time;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -25,7 +24,22 @@ public class StatisticController {
     private MovieList movieList = new MovieList();
 
     @FXML
-    protected Label avRating, avLength, higActor, numOfMovies, numOfWatchMovies, avWLength;
+    protected Label avRating;
+
+    @FXML
+    protected Label avWLength;
+
+    @FXML
+    protected Label numOfWatchMovies;
+
+    @FXML
+    protected Label higActor;
+
+    @FXML
+    protected Label avLength;
+
+    @FXML
+    protected Label numOfMovies;
 
     @FXML
     private Button backButton;
@@ -40,7 +54,7 @@ public class StatisticController {
         } else {
             this.avRating.setText(Float.toString(getAverageRating()));
         }
-        
+
         if (getAverageMovieLength(this.movieList.getMovies()) == null) {
             this.avLength.setText("No movies in the database");
         } else {
@@ -52,7 +66,8 @@ public class StatisticController {
         if (getAverageMovieLength(this.movieList.getMovies().stream().filter(m -> m.getWatchlist()).toList()) == null) {
             this.avWLength.setText("No movies on watchlist");
         } else {
-            this.avWLength.setText(getAverageMovieLength(this.movieList.getMovies().stream().filter(m -> m.getWatchlist()).toList()).toString());
+            Collection<IMovie> ml = this.movieList.getMovies().stream().filter(m -> m.getWatchlist()).toList();
+            this.avWLength.setText(getAverageMovieLength(ml).toString());
         }
     }
 
@@ -79,7 +94,7 @@ public class StatisticController {
      */
     protected void setMovieList(MovieList movieList) {
         if (movieList == null) {
-           throw new NullPointerException("You cannot set null as the movielist");
+            throw new NullPointerException("You cannot set null as the movielist");
         }
         this.movieList = movieList;
         this.setStatisticInformation();
@@ -93,7 +108,8 @@ public class StatisticController {
      */
     private float getAverageRating() {
         int rating = 0;
-        Collection<IMovie> moviesWithRating =  this.movieList.getMovies().stream().filter(m -> m.getRating() != null).toList();
+        Collection<IMovie> moviesWithRating =
+            this.movieList.getMovies().stream().filter(m -> m.getRating() != null).toList();
         if (moviesWithRating.size() == 0) {
             return -1;
         }
@@ -102,7 +118,7 @@ public class StatisticController {
         }
         return rating / (float) moviesWithRating.size();
     }
-    
+
     /**
      * Method used to get the number of movies in the movielist.
      * Method that is used when setting the information in the statstics view.
@@ -165,6 +181,11 @@ public class StatisticController {
         if (actorsmap.size() == 0) {
             return "No actors";
         }
-        return actorsmap.entrySet().stream().max((entry1, entry2) -> entry1.getValue() >= entry2.getValue() ? 1 : -1).get().getKey();
+        return actorsmap
+            .entrySet()
+            .stream()
+            .max((entry1, entry2) -> entry1.getValue() >= entry2.getValue() ? 1 : -1)
+            .get()
+            .getKey();
     }
 }

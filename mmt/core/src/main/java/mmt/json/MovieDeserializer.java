@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.node.TextNode;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
-
 import mmt.core.Actor;
 import mmt.core.Movie;
 import mmt.core.Rating;
@@ -22,7 +21,6 @@ import mmt.core.Rating;
  * Class to deserialize (text to object) Movie objects.
  */
 public class MovieDeserializer extends JsonDeserializer<Movie> {
-
     private RatingDeserializer ratingDeserializer = new RatingDeserializer();
     private ActorDeserializer actorDeserializer = new ActorDeserializer();
 
@@ -65,29 +63,45 @@ public class MovieDeserializer extends JsonDeserializer<Movie> {
      * @return Deserialized Movie object
      */
     public Movie deserialize(JsonNode jsonNode) {
-        if (jsonNode instanceof ObjectNode objectNode) {
-            JsonNode titleNode = objectNode.get("title");
-            JsonNode releaseDateNode = objectNode.get("releaseDate");
-            JsonNode durationNode = objectNode.get("duration");
-            JsonNode ratingNode = objectNode.get("rating");
-            JsonNode watchListNode = objectNode.get("watchlist");
-            JsonNode castNode = objectNode.get("cast");
-            JsonNode IDnode = objectNode.get("ID");
+        if (jsonNode instanceof ObjectNode) {
+            JsonNode titleNode = jsonNode.get("title");
+            JsonNode releaseDateNode = jsonNode.get("releaseDate");
+            JsonNode durationNode = jsonNode.get("duration");
+            JsonNode ratingNode = jsonNode.get("rating");
+            JsonNode watchListNode = jsonNode.get("watchlist");
+            JsonNode castNode = jsonNode.get("cast");
+            JsonNode idNode = jsonNode.get("ID");
+            Boolean nodesAreValidInstances =
+                (
+                    titleNode instanceof TextNode &&
+                    releaseDateNode instanceof TextNode &&
+                    durationNode instanceof TextNode &&
+                    watchListNode instanceof BooleanNode &&
+                    idNode instanceof TextNode
+                );
 
-            
-            if (titleNode instanceof TextNode 
-                && releaseDateNode instanceof TextNode
-                && durationNode instanceof TextNode
-                && watchListNode instanceof BooleanNode
-                && IDnode instanceof TextNode) {
+            if (nodesAreValidInstances) {
                 String title = titleNode.asText();
                 String releaseDate = releaseDateNode.asText();
                 String duration = durationNode.asText();
-                String ID = IDnode.asText();
+                String id = idNode.asText();
                 boolean watchlist = watchListNode.asBoolean();
-                Date date = Date.valueOf(Integer.parseInt((String) releaseDate.substring(0, 4)) + "-" + Integer.parseInt((String) releaseDate.substring(5, 7)) + "-" + Integer.parseInt((String) releaseDate.substring(8, 10)));
-                Time time = Time.valueOf(Integer.parseInt((String) duration.substring(0, 2)) + ":" + Integer.parseInt((String) duration.substring(3, 5)) + ":" + "" + Integer.parseInt((String) duration.substring(6, 8)));
-                Movie movie = new Movie(title, time, date, ID);
+                Date date = Date.valueOf(
+                    Integer.parseInt((String) releaseDate.substring(0, 4)) +
+                    "-" +
+                    Integer.parseInt((String) releaseDate.substring(5, 7)) +
+                    "-" +
+                    Integer.parseInt((String) releaseDate.substring(8, 10))
+                );
+                Time time = Time.valueOf(
+                    Integer.parseInt((String) duration.substring(0, 2)) +
+                    ":" +
+                    Integer.parseInt((String) duration.substring(3, 5)) +
+                    ":" +
+                    "" +
+                    Integer.parseInt((String) duration.substring(6, 8))
+                );
+                Movie movie = new Movie(title, time, date, id);
                 movie.setOnTakeOfWatchlist(watchlist);
 
                 if (ratingNode instanceof ObjectNode) {

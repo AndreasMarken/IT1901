@@ -1,8 +1,8 @@
 module mmt.fxui {
     requires com.fasterxml.jackson.databind;
-    
+
     requires mmt.core;
-    
+
     requires javafx.base;
     requires javafx.controls;
     requires javafx.fxml;

@@ -135,6 +135,7 @@
               <configLocation>config/checkstyle/checkstyle_google.xml</configLocation>
               <encoding>UTF-8</encoding>
               <consoleOutput>true</consoleOutput>
+              <!-- <violationSeverity>warning</violationSeverity> -->
               <failsOnError>true</failsOnError>
               <linkXRef>false</linkXRef>
           </configuration>
@@ -148,6 +149,29 @@
               </execution>
           </executions>
         </plugin>
+
+         <!-- Plugin for prettier-java -->
+        <plugin>
+          <groupId>com.hubspot.maven.plugins</groupId>
+          <artifactId>prettier-maven-plugin</artifactId>
+          <version>0.7</version>
+          <configuration>
+            <printWidth>120</printWidth>
+            <tabWidth>4</tabWidth>
+            <useTabs>false</useTabs>
+            <ignoreConfigFile>true</ignoreConfigFile>
+            <ignoreEditorConfig>true</ignoreEditorConfig>
+          </configuration>
+          <executions>
+            <execution>
+              <phase>validate</phase>
+              <goals>
+                <goal>write</goal>
+              </goals>
+            </execution>
+          </executions>      
+        </plugin>
+
       </plugins>
     </pluginManagement>
   </build>

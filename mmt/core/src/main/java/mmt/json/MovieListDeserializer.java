@@ -16,10 +16,9 @@ import mmt.core.MovieList;
  * Class to deserialize (text to object) MovieList objects.
  */
 public class MovieListDeserializer extends JsonDeserializer<MovieList> {
-
     private MovieDeserializer movieDeserializer = new MovieDeserializer();
 
-    /** 
+    /**
      * Method to deserialize (text to object) MovieList objects.
      *
      * @param parser JsonParser
@@ -32,8 +31,8 @@ public class MovieListDeserializer extends JsonDeserializer<MovieList> {
     public MovieList deserialize(JsonParser parser, DeserializationContext ctxt) throws IOException, JacksonException {
         MovieList movieList = new MovieList();
         TreeNode treeNode = parser.getCodec().readTree(parser);
-        if (treeNode instanceof ObjectNode objectNode) {
-            JsonNode moviesNode = objectNode.get("movies");
+        if (treeNode instanceof ObjectNode) {
+            JsonNode moviesNode = (JsonNode) treeNode.get("movies");
             if (moviesNode instanceof ArrayNode) {
                 for (JsonNode movieNode : ((ArrayNode) moviesNode)) {
                     Movie movie = movieDeserializer.deserialize(movieNode);
@@ -42,11 +41,11 @@ public class MovieListDeserializer extends JsonDeserializer<MovieList> {
                             movieList.addMovie(movie);
                         } catch (IllegalArgumentException e) {
                             //If A movie was attempted added multiple times, skip the movie
-                        } 
+                        }
                     }
                 }
             }
         }
         return movieList;
-    }    
+    }
 }

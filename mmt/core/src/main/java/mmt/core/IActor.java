@@ -6,7 +6,6 @@ import java.util.Collection;
  * Actor Interface.
  */
 public interface IActor {
-    
     /**
      * Method to get the name of the actor belonging to this actor object.
      *
