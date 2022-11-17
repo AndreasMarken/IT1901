@@ -13,6 +13,7 @@ interface IMovie {
     void setTitle(String title)
     void setDuration(Time duration)
     void setReleaseDate(Date releaseDate)
+    String getID()
     Collection<IActor> getCast()
     void addActor(IActor actor)
     void removeActor(IActor actor)
@@ -24,6 +25,7 @@ class Movie {
     - Time duration
     - IRating rating
     - Boolean watchlist
+    - String ID
     - Collection<IActor> cast
     + Movie(String title, Time duration, Date releaseDate)
     + Movie(String title, Time duration)

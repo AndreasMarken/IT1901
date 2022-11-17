@@ -32,9 +32,9 @@ public class MovieModuleTest {
         
     }
 
-    private final static String movieWithOneRating = "{\"title\":\"Bond\",\"releaseDate\":\"2002-01-02\",\"duration\":\"01:50:00\",\"rating\":{\"rating\":9,\"comment\":\"Very good.\"},\"watchlist\":false,\"cast\":[null]}";
-    private final static String movieListWithThreeMovies = "{\"movies\":[{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null]},{\"title\":\"Lange flate ballær\",\"releaseDate\":\"2022-09-05\",\"duration\":\"02:03:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null]},{\"title\":\"iodhosa\",\"releaseDate\":\"2022-09-02\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null]}]}";
-    private final static String duplicateMovieList = "{\"movies\":[{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null]},{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null]}]}";
+    private final static String movieWithOneRating = "{\"title\":\"Bond\",\"releaseDate\":\"2002-01-02\",\"duration\":\"01:50:00\",\"rating\":{\"rating\":9,\"comment\":\"Very good.\"},\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}";
+    private final static String movieListWithThreeMovies = "{\"movies\":[{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"},{\"title\":\"Lange flate ballær\",\"releaseDate\":\"2022-09-05\",\"duration\":\"02:03:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"},{\"title\":\"iodhosa\",\"releaseDate\":\"2022-09-02\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}]}";
+    private final static String duplicateMovieList = "{\"movies\":[{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"},{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}]}";
 
     private static Stream<Arguments> testMovieListDeserializer() {
         return Stream.of(
@@ -46,10 +46,10 @@ public class MovieModuleTest {
 
     private static Stream<Arguments> testIllegalInputMovieListDeserializer() {
         return Stream.of(
-            Arguments.arguments("{\"movies\":[{\"tite\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false},{\"title\":\"Lange flate ballær\",\"releaseDate\":\"2022-09-05\",\"duration\":\"02:03:00\",\"rating\":null,\"watchlist\":false},{\"title\":\"iodhosa\",\"releaseDate\":\"2022-09-02\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false}]}"),
-            Arguments.arguments("{\"movies\":[{\"title\":\"James Bond \",\"reeaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false},{\"title\":\"Lange flate ballær\",\"releaseDate\":\"2022-09-05\",\"duration\":\"02:03:00\",\"rating\":null,\"watchlist\":false},{\"title\":\"iodhosa\",\"releaseDate\":\"2022-09-02\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false}]}"),
-            Arguments.arguments("{\"movies\":[{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duraion\":\"02:02:00\",\"rating\":null,\"watchlist\":false},{\"title\":\"Lange flate ballær\",\"releaseDate\":\"2022-09-05\",\"duration\":\"02:03:00\",\"rating\":null,\"watchlist\":false},{\"title\":\"iodhosa\",\"releaseDate\":\"2022-09-02\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false}]}"),
-            Arguments.arguments("{\"movies\":[{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchist\":false},{\"title\":\"Lange flate ballær\",\"releaseDate\":\"2022-09-05\",\"duration\":\"02:03:00\",\"rating\":null,\"watchlist\":false},{\"title\":\"iodhosa\",\"releaseDate\":\"2022-09-02\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false}]}")
+            Arguments.arguments("{\"movies\":[{\"tite\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"},{\"title\":\"Lange flate ballær\",\"releaseDate\":\"2022-09-05\",\"duration\":\"02:03:00\",\"rating\":null,\"watchlist\":false,\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120001\"},{\"title\":\"iodhosa\",\"releaseDate\":\"2022-09-02\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}]}"),
+            Arguments.arguments("{\"movies\":[{\"title\":\"James Bond \",\"reeaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"},{\"title\":\"Lange flate ballær\",\"releaseDate\":\"2022-09-05\",\"duration\":\"02:03:00\",\"rating\":null,\"watchlist\":false,\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120001\"},{\"title\":\"iodhosa\",\"releaseDate\":\"2022-09-02\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}]}"),
+            Arguments.arguments("{\"movies\":[{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duraion\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"},{\"title\":\"Lange flate ballær\",\"releaseDate\":\"2022-09-05\",\"duration\":\"02:03:00\",\"rating\":null,\"watchlist\":false,\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120001\"},{\"title\":\"iodhosa\",\"releaseDate\":\"2022-09-02\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}]}"),
+            Arguments.arguments("{\"movies\":[{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchist\":false,\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"},{\"title\":\"Lange flate ballær\",\"releaseDate\":\"2022-09-05\",\"duration\":\"02:03:00\",\"rating\":null,\"watchlist\":false,\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120001\"},{\"title\":\"iodhosa\",\"releaseDate\":\"2022-09-02\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}]}")
         );
     }
 
@@ -90,7 +90,7 @@ public class MovieModuleTest {
     public void testMovieSerializer() {
         Date date = Date.valueOf("2002-01-02");
         Time time = Time.valueOf("01:50:00");
-        Movie movie = new Movie("Bond", time, date);
+        Movie movie = new Movie("Bond", time, date, "e65b957e-6415-11ed-81ce-0242ac120002");
         movie.setRating(new Rating(9, "Very good."));
         try {
             Assertions.assertEquals(movieWithOneRating, mapper.writeValueAsString(movie));
@@ -126,9 +126,9 @@ public class MovieModuleTest {
     @DisplayName("Test the movielist serializer")
     public void testMovieListSerializer() {
         MovieList movieList = new MovieList();
-        movieList.addMovie(new Movie("James Bond ", Time.valueOf("02:02:00"), Date.valueOf("2022-09-09")));
-        movieList.addMovie(new Movie("Lange flate ballær", Time.valueOf("02:03:00"), Date.valueOf("2022-09-05")));
-        movieList.addMovie(new Movie("iodhosa", Time.valueOf("02:02:00"), Date.valueOf("2022-09-02")));
+        movieList.addMovie(new Movie("James Bond ", Time.valueOf("02:02:00"), Date.valueOf("2022-09-09"), "e65b957e-6415-11ed-81ce-0242ac120002"));
+        movieList.addMovie(new Movie("Lange flate ballær", Time.valueOf("02:03:00"), Date.valueOf("2022-09-05"), "e65b957e-6415-11ed-81ce-0242ac120002"));
+        movieList.addMovie(new Movie("iodhosa", Time.valueOf("02:02:00"), Date.valueOf("2022-09-02"), "e65b957e-6415-11ed-81ce-0242ac120002"));
 
         try {
             Assertions.assertEquals(movieListWithThreeMovies, mapper.writeValueAsString(movieList));

@@ -64,7 +64,7 @@ public class EditMovieController {
 
     /**
      * The method that is called when the user has completed the editing/adding
-     * of a movie. Saves the updated movie or adds the movie to the movielist, and
+     * of a movie and clicks the save button. Saves the updated movie or adds the movie to the movielist, and
      * updates the movielistview.
      * If invalid information is given by the user, an errormessage is shown in the view.
      */
@@ -104,12 +104,15 @@ public class EditMovieController {
                     for (IActor actor : actors) {
                         movie.addActor(actor);
                     }
+                    if(movie instanceof Movie){
+                        myMovieTrackerController.dataAccess.addMovie((Movie) movie);
+                    }
                 } else {
                     editExistingMovie(title, time, releaseDate, watchList);
                     this.movie = null;
                 }
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
             clearInputFields();
             myMovieTrackerController.updateMovieListView();
@@ -129,10 +132,14 @@ public class EditMovieController {
      * @param watchList : The new watchlist-status to be given 
      */
     private void editExistingMovie(String title, Time duration, Date releaseDate, boolean watchList) {
+        String oldMovieID = movie.getID();
         movie.setTitle(title);
         movie.setDuration(duration);
         movie.setReleaseDate(releaseDate);
         movie.setOnTakeOfWatchlist(watchList);
+        if(movie instanceof Movie){
+            myMovieTrackerController.dataAccess.updateMovie((Movie) movie, oldMovieID);
+        }
     }
 
     /**
@@ -261,7 +268,7 @@ public class EditMovieController {
     }
 
     /**
-     * Modify cells in the cast-listview to match the specifications for our app
+     * Modify cells in the cast-listview to match the specifications for our app.
      */
     private class ActorListViewCell extends ListCell<String> {
         HBox hbox = new HBox();
@@ -276,8 +283,18 @@ public class EditMovieController {
             HBox.setHgrow(pane, Priority.ALWAYS);
             button.setOnAction(event -> {String actorToBeRemoved = getItem();
                                         getListView().getItems().remove(actorToBeRemoved);
-                                        IActor actorObjToBeRemoved = movie.getCast().stream().filter(actor -> actor.getName().equals(actorToBeRemoved)).findAny().orElse(null);
-                                        movie.removeActor(actorObjToBeRemoved);                                                                            
+                                        if(movie == null){
+                                            IActor actorObjToBeRemoved = null;
+                                            for (IActor actor : actors) {
+                                                if (actor.getName().equals(actorToBeRemoved)){
+                                                    actorObjToBeRemoved = actor;
+                                                }                                                
+                                            }
+                                            actors.remove(actorObjToBeRemoved);
+                                        } else{
+                                            IActor actorObjToBeRemoved = movie.getCast().stream().filter(actor -> actor.getName().equals(actorToBeRemoved)).findAny().orElse(null);
+                                            movie.removeActor(actorObjToBeRemoved); 
+                                        }                                                                           
             });
             button.setId("removeActorFromMovie");
         }
@@ -295,7 +312,7 @@ public class EditMovieController {
         }
     }
     /**
-    * Every time an actor is added to the Movie, the actor list view gets updated
+    * Every time an actor is added to the Movie, the actor list view gets updated.
     */
     private void updateActorsListView(){
         ObservableList<String> observableActorList = FXCollections.observableArrayList();

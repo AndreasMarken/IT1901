@@ -96,6 +96,7 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MyMovieTracker.fxml"));
         Parent root = loader.load();
         myMovieTrackerController = loader.getController();
+        myMovieTrackerController.setAccess(new LocalMmtAccess());
         myMovieTrackerController.setTestingMode(true);
         stage.setScene(new Scene(root));
         stage.show();

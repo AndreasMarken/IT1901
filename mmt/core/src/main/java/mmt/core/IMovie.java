@@ -17,6 +17,11 @@ public interface IMovie {
     String getTitle();
 
     /**
+     * @return the unique ID of this movie object.
+     */
+    String getID();
+
+    /**
      * Method that sets a new title for a movie.
      *
      * @param title The title to be given ot the movie.
@@ -94,7 +99,7 @@ public interface IMovie {
     Collection<IActor> getCast();
 
     /** 
-     * Method that adds an actor to the cast of the movie
+     * Method that adds an actor to the cast of the movie.
      *
      * @param actor the actor to be addded to the cast
      * @throws IllegalStateException if the actor to be added already exists in the cast
@@ -102,7 +107,7 @@ public interface IMovie {
     void addActor(IActor actor);
 
     /** 
-     * Method that removes an actor from the cast of the movie
+     * Method that removes an actor from the cast of the movie.
      *
      * @param actor the actor that should be removed from the cast
      * @throws IllegalArgumentException if the actor to be removed does not exist in the cast

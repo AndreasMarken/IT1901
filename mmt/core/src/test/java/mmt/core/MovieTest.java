@@ -43,6 +43,18 @@ public class MovieTest {
     }
 
     @Test
+    public void testID() {
+        //Arrange
+        String UUID = "e65b957e-6415-11ed-81ce-0242ac120002"; 
+        
+        //Act
+        Movie movie = new Movie("dune", duneT, duneD, UUID);
+
+        //Assert
+        Assertions.assertEquals(UUID, movie.getID());
+    }
+
+    @Test
     @DisplayName("Testing that the constructor is working")
     public void testingConstructor(){
         Assertions.assertEquals("Star Trek", starTrek.getTitle());
