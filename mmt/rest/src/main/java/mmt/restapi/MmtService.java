@@ -18,8 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Class that defines the supported HTTP requests
- * 
+ * Class that defines the supported HTTP requests.
  * For further information visit README in mmt/rest/
  */
 @Path(MmtService.MMT_SERVICE_PATH)
@@ -32,7 +31,7 @@ public class MmtService {
     public MyMovieConfig myMovieConfig = new MyMovieConfig();
 
     /**
-     * GET endpoint mmt/
+     * GET endpoint ".../mmt/"
      *
      * @return Movie list stored in storage if movieList was successfully retrieved from storage, null otherwise
      */
@@ -53,8 +52,8 @@ public class MmtService {
     }
 
     /**
-     * PUT endpoint mmt/{oldMovieID}
-     * 
+     * PUT endpoint ".../mmt/{oldMovieID}".
+     *
      * @param oldMovieID the ID of the movie to be updated
      * @param movie the updated version of the movie corresponding to oldMovieID
      * @return true if the movie was successfully updated in storage, false otherwise
@@ -84,8 +83,8 @@ public class MmtService {
     }
 
     /**
-     * POST endpoint mmt/
-     * 
+     * POST endpoint ".../mmt/".
+     *
      * @param movie the movie to be added to the movieList in storage
      * @return true if the movie was successfully stored in storage, false otherwise
      */
@@ -106,8 +105,8 @@ public class MmtService {
     }
 
     /**
-     * DELETE endpoint mmt/{movieID}
-     * 
+     * DELETE endpoint ".../mmt/{movieID}".
+     *
      * @param movieID the ID of the movie in storage to be deleted
      * @return true if the movie with id movieID was successfully deleted in storage, false otherwise
      */
