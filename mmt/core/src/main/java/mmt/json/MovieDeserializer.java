@@ -72,18 +72,22 @@ public class MovieDeserializer extends JsonDeserializer<Movie> {
             JsonNode ratingNode = objectNode.get("rating");
             JsonNode watchListNode = objectNode.get("watchlist");
             JsonNode castNode = objectNode.get("cast");
+            JsonNode IDnode = objectNode.get("ID");
+
             
             if (titleNode instanceof TextNode 
                 && releaseDateNode instanceof TextNode
                 && durationNode instanceof TextNode
-                && watchListNode instanceof BooleanNode) {
+                && watchListNode instanceof BooleanNode
+                && IDnode instanceof TextNode) {
                 String title = titleNode.asText();
                 String releaseDate = releaseDateNode.asText();
                 String duration = durationNode.asText();
+                String ID = IDnode.asText();
                 boolean watchlist = watchListNode.asBoolean();
                 Date date = Date.valueOf(Integer.parseInt((String) releaseDate.substring(0, 4)) + "-" + Integer.parseInt((String) releaseDate.substring(5, 7)) + "-" + Integer.parseInt((String) releaseDate.substring(8, 10)));
                 Time time = Time.valueOf(Integer.parseInt((String) duration.substring(0, 2)) + ":" + Integer.parseInt((String) duration.substring(3, 5)) + ":" + "" + Integer.parseInt((String) duration.substring(6, 8)));
-                Movie movie = new Movie(title, time, date);
+                Movie movie = new Movie(title, time, date, ID);
                 movie.setOnTakeOfWatchlist(watchlist);
 
                 // if (ratingNode instanceof ArrayNode) {

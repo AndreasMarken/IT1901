@@ -1,0 +1,72 @@
+
+@startuml "sequence-diagram"
+actor User as user
+database storage as storage order 4
+
+group User runs app with server
+
+user -> fxui: run
+
+fxui --> fxui: initialize();
+fxui --> fxui: loadMovieList();
+fxui -> rest: GET[]; mmt/
+rest -> storage: read from storage
+rest <-- storage: return movieList
+fxui <-- rest: response
+fxui --> fxui: deserialize(response)
+fxui --> fxui: displayMovieListView()
+user <-- fxui: app is running
+
+end
+
+' explained in complete rest sequence.
+' group Add New Movie
+
+' user -> fxui: click "New Movie", fill fields and click "save"
+
+
+' fxui --> fxui: validate
+' fxui -> rest: POST[serialize(movie)]; mmt/
+' rest -> storage: store
+' rest <-- storage: stored
+' fxui <-- rest: response
+' fxui --> fxui: displayMovieListView()
+' user <-- fxui: movie appears
+
+' end
+
+group User edits existing Movie
+
+user -> fxui: click "edit" or "rate" on a movie, fill fields and click "save"
+note left: Called when: \n-editing a movie \n-rating a movie 
+
+
+fxui --> fxui: validate
+fxui --> fxui: updateMovie(movie, oldMovieId)
+fxui -> rest: PUT[serialize(movie)]; mmt/{oldMovieID}
+rest -> storage: read from storage
+rest <-- storage: return movieList
+rest --> rest: replace movie with id oldMovieID, with movie 
+rest -> storage: store movieList
+rest <-- storage: saved
+fxui <-- rest: response
+fxui --> fxui: displayMovieListView()
+user <-- fxui: updated movie appears
+end
+
+group User deletes existing Movie
+
+user -> fxui: click "delete" on a movie
+
+fxui -> rest: DELETE[]; mmt/{movieID}
+rest -> storage: read from storage
+rest <-- storage: return movieList
+rest --> rest: delete movie with id movieID
+rest -> storage: store movieList
+rest <-- storage: saved
+fxui <-- rest: response
+fxui --> fxui: displayMovieListView()
+user <-- fxui: movie removed
+end
+
+@enduml

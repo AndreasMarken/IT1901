@@ -7,6 +7,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Class to represent Actor objects.
+ * Implements the interface IActor.
+ */
 public class Actor implements IActor{
     private String name;
     private Collection<IMovie> starredMovies = new ArrayList<>();
@@ -15,6 +19,11 @@ public class Actor implements IActor{
     '\\','/',':','*','"','<','>','|','~','!','@','#','$','%',
     '^','&','(',')','{','}','_',';');
 
+    /**
+     * Constructor for Actor class.
+     *
+     * @param name of the actor
+     */
     public Actor(String name) {
         if (name == (null) || name.isBlank() || !Collections.disjoint(invalidChars, name.chars().mapToObj(e -> (char)e).collect(Collectors.toList()))) {
             throw new IllegalArgumentException("The input must be valid");

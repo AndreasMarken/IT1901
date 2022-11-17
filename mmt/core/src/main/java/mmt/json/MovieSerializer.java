@@ -48,6 +48,7 @@ public class MovieSerializer extends JsonSerializer<Movie> {
             jsonGen.writeNull();
         }
         jsonGen.writeEndArray();
+        jsonGen.writeStringField("ID", movie.getID());
         jsonGen.writeEndObject();
     }
 }

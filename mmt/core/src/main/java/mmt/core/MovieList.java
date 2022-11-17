@@ -1,6 +1,7 @@
 package mmt.core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -44,7 +45,7 @@ public class MovieList implements Iterable<IMovie> {
      * Gets a movie by title.
      *
      * @param title title of the movie
-     * @return IMovie with matcing title from the list
+     * @return IMovie with matcing title from the list, or null if movie does not exist
      */
     public IMovie getMovie(String title) {
         return movieList.stream().filter(movie -> movie.getTitle().equals(title)).findFirst().orElse(null);
@@ -71,10 +72,25 @@ public class MovieList implements Iterable<IMovie> {
         return this.movieList;
     } 
 
+    /**
+     * Gets the cast of the Movie.
+     *
+     * @param movie to get cast from.
+     * @return collection of the actors.
+     */
     public Collection<IActor> getCast(IMovie movie){
         if(!movieList.contains(movie)){
             throw new IllegalArgumentException("The movie" + movie.getTitle() + " does not exist in the movielist");
         }
         return movie.getCast();
+    }
+
+    @Override
+    public String toString() {        
+        if(movieList.isEmpty()){
+            return "Movielist is empty!";
+        }
+
+        return Arrays.toString(movieList.stream().map(m -> m.getTitle()).toArray());
     }
 }

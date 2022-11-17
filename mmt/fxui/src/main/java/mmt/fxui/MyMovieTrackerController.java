@@ -1,11 +1,6 @@
 package mmt.fxui;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -18,12 +13,15 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import mmt.core.Comparators;
 import mmt.core.IActor;
 import mmt.core.IMovie;
+import mmt.core.Movie;
 import mmt.core.MovieList;
-import mmt.json.MovieModule;
+
 
 /**
  * The main controller used for the My Movie Tracker Application.
@@ -42,43 +40,30 @@ public class MyMovieTrackerController {
     private Button statisticButton;
 
     private MovieList movieList = new MovieList();
-    private ObjectMapper mapper = new ObjectMapper();
-
+    
     @FXML
     protected VBox editMovieWindow;
-
+    
     @FXML
     protected VBox giveRating;
-
+    
     @FXML
     private CheckBox watchList;
-
+    
     @FXML
     private TextField actorInputField;
 
-    private boolean testingMode = false;
+    @FXML
+    private String apiUri;
 
-    /**
-     * Method to get the save file path used. This is set to be the users home folder:
-     * User.home/it1901/mmt/saveFiles/filename
-     * @param fileName the filename to get the path to.
-     * @return the path to the filename given as parameter.
-     */
-    private Path getSaveFilePath(String fileName) {
-        return getSaveFolderPath().resolve(fileName);
-    }
+    @FXML
+    private Text accessFeedback;
 
-    /**
-     * Method to get the save folder path used. This is set to be the users home folder:
-     * User.home/it1901/mmt/saveFiles/
-     * @return the path to the savefolder.
-     */
-    private Path getSaveFolderPath() {
-        return Path.of(System.getProperty("user.home"), "it1901", "mmt", "saveFiles");
-    }
+    protected IAccess dataAccess;
     
     /**
      * Method that runs upon initializing the controller and app.
+     * Tries connecting to server, if not possible it runs localy
      *
      * @throws IOException When movies from the file cannot be loaded.
      */
@@ -86,62 +71,22 @@ public class MyMovieTrackerController {
     void initialize() throws IOException {
         editMovieController.setMyMovieTrackerController(this);
         hideEditMovie(false);
-
-        // Load the movies registered in the movie.json file.
-        mapper.registerModule(new MovieModule());
-        MovieList temporaryMovieList = loadMovieListFromFile();
-        for (IMovie iMovie : temporaryMovieList) {
-            movieList.addMovie(iMovie);
+        try{
+            this.dataAccess = new RemoteMmtAccess(apiUri);
+            movieList = dataAccess.loadMovieList();
+            accessFeedback.setText("Connected to server");
+            accessFeedback.setFill(Color.GREEN);
+        } catch (Exception e){
+            this.dataAccess = new LocalMmtAccess();
+            movieList = dataAccess.loadMovieList();
+            accessFeedback.setText("Not connected to server");
+            accessFeedback.setFill(Color.RED);
         }
-        // Display the movies in the file
-        updateMovieListView();
+
+       updateMovieListView();
     }
 
-    /**
-     * Loads movies form the given file.
-     *
-     * @return MovieList: An object that contains a list of movies.
-     * @throws IOException If the movies cannot be loaded from the file.
-     */
-    protected MovieList loadMovieListFromFile() throws IOException {
-        //If the filepath does not exist, it will be generated.
-        Files.createDirectories(getSaveFolderPath());
-        try {
-            if (testingMode) {
-                Files.createFile(getSaveFilePath("movieTest.json"));
-            } else {
-                Files.createFile(getSaveFilePath("movie.json"));
-            }   
-        } catch (FileAlreadyExistsException e) {
-            //If the file already exist, FileAlreadyExistException will be thrown.
-            //Do nothing if the file already exists
-        }
-        
-        //this.movieList = mapper.readValue(new File("movie.json"), MovieList.class);
-        try {
-            if (testingMode) {
-                return mapper.readValue(getSaveFilePath("movieTest.json").toFile(), MovieList.class);
-            }
-            return mapper.readValue(getSaveFilePath("movie.json").toFile(), MovieList.class);
-        } catch (MismatchedInputException e) {
-            return new MovieList();
-            //If there is no information stored in the file, return a new instance of a movielist.
-        }
-        
-    }
-
-    /**
-     * Saves the movielist that is stored in the controller to the given file.
-     *
-     * @throws IOException if the movies cannot be saved to file.a
-     */
-    private void saveMovieListToFile() throws IOException {
-        if (testingMode) {  
-            mapper.writeValue(getSaveFilePath("movieTest.json").toFile(), movieList);
-        } else {
-            mapper.writeValue(getSaveFilePath("movie.json").toFile(), movieList);
-        }
-    }
+   
 
     /**
      * Sorts the movielist based on rating from best to worst.
@@ -201,6 +146,7 @@ public class MyMovieTrackerController {
      * Displays the movies in the movielist to the user in the app.
      *
      * @param watchList : True if only movies on the watchlist is to be shown, false otherwise.
+     * @param moviList : MovieList to be displayed
      */
     protected void displayMovieListView(boolean watchList, MovieList movieList) {
         try {
@@ -241,10 +187,16 @@ public class MyMovieTrackerController {
         } catch (IOException e) {
             //If the movie was not able to be displayed, try skipping this movie.
         }
-        try {
-            saveMovieListToFile();
-        } catch (IOException e) {
-            System.out.println("The movies was not saved to file");
+    }
+
+
+    protected void setTestingMode(boolean testingMode) throws IOException {
+        if (this.dataAccess instanceof LocalMmtAccess){
+            LocalMmtAccess localAccess = (LocalMmtAccess) dataAccess;
+            localAccess.setTestMode(testingMode);
+            this.movieList = new MovieList();
+            dataAccess.saveMovieList(movieList);
+            updateMovieListView();
         }
     }
 
@@ -273,6 +225,9 @@ public class MyMovieTrackerController {
      */
     protected void deleteMovie(IMovie movie) {
         movieList.removeMovie(movie);
+        if(movie instanceof Movie){
+            dataAccess.deleteMovie((Movie) movie);
+        }     
         updateMovieListView();
     }
 
@@ -299,7 +254,7 @@ public class MyMovieTrackerController {
 
     /**
      * Method used to get the editmoviecontroller. Mostly used for testing, where this controller is needed.
-     * 
+     *
      * @return EditMovieController: the editmoviecontroller that this controller is connected to.
      */
     public EditMovieController getEditMovieController() {
@@ -313,15 +268,16 @@ public class MyMovieTrackerController {
      * @param testingMode True if testingmode is to be set, false if not.
      * @throws IOException If it was unable to save the movielist to file.
      */
-    protected void setTestingMode(boolean testingMode) throws IOException {
-        this.testingMode = testingMode;
-        this.movieList = new MovieList();
-        saveMovieListToFile();
-        updateMovieListView();
-    }
+    // protected void setTestingMode(boolean testingMode) throws IOException {
+    //     this.testingMode = testingMode;
+    //     this.movieList = new MovieList();
+    //     saveMovieListToFile();
+    //     updateMovieListView();
+    // }
 
     /**
      * Changes this current view to the statisticsview. Used when the statisticsview button is clicked.
+     *
      * @throws IOException if it was unnable to open and display the statistic view.
      */
     @FXML
@@ -367,5 +323,16 @@ public class MyMovieTrackerController {
         }
         displayMovieListView(watchList.isSelected(), movieListActors);
         search.run();
+    }
+
+    /**
+     * Sets the access.
+     *
+     * @param access to be set
+     */
+    public void setAccess(IAccess access) {
+        if(access != null){
+            this.dataAccess = access;
+        }
     }
 }

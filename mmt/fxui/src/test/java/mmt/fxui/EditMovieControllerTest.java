@@ -78,6 +78,7 @@ public class EditMovieControllerTest extends ApplicationTest{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MyMovieTracker.fxml"));
         Parent root = loader.load();
         myMovieTrackerController = loader.getController();
+        myMovieTrackerController.setAccess(new LocalMmtAccess());
         myMovieTrackerController.setTestingMode(true); 
         this.editMovieController = myMovieTrackerController.getEditMovieController();
         stage.setScene(new Scene(root));

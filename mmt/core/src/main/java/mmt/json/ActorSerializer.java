@@ -8,6 +8,9 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import mmt.core.Actor;
 
+/**
+ * Class to serialize (object to text) Actor objects.
+ */
 public class ActorSerializer extends JsonSerializer<Actor> {
 
     /** Method to serialize (object to text) Actor objects
@@ -15,7 +18,7 @@ public class ActorSerializer extends JsonSerializer<Actor> {
      * {
      * "name" : "..."
      * }
-     * 
+     *
      * @param actor Actor object to serialize
      * @param jsonGen JsonGenerator
      * @param serializerProvider SerializerProvider
