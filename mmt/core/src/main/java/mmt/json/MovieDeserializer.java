@@ -116,7 +116,7 @@ public class MovieDeserializer extends JsonDeserializer<Movie> {
                                 movie.addActor(actor);
                             } catch (IllegalArgumentException e) {
                                 //If A movie was attempted added multiple times, skip the movie
-                            } 
+                            }
                         }
                     }
                 }

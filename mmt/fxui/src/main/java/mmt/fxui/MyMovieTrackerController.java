@@ -297,7 +297,7 @@ public class MyMovieTrackerController {
             if (movie.getTitle().contains(actorInputField.getText())) {
                 movieListActors.addMovie(movie);
             }
-            if (movie.getCast() != null){
+            if (movie.getCast() != null) {
                 for (IActor actor : movie.getCast()) {
                     if (actor.getName().contains(actorInputField.getText())) {
                         if (movieListActors.getMovie(movie.getTitle()) == null) {

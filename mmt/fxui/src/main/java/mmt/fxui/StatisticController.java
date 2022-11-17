@@ -172,12 +172,13 @@ public class StatisticController {
         Map<String, Integer> actorsmap = new HashMap<>();
 
         for (IMovie movie : movieList) {
-            if(movie.getCast() != null)
+            if (movie.getCast() != null) {
                 for (IActor actor : movie.getCast()) {
                     actorsmap.put(actor.getName(), actorsmap.getOrDefault(actor.getName(), 0) + 1);
                 }
+            }
         }
-        
+
         if (actorsmap.size() == 0) {
             return "No actors";
         }
