@@ -1,19 +1,16 @@
 package mmt.json;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import mmt.core.Actor;
 import mmt.core.Movie;
 import mmt.core.MovieList;
 import mmt.core.Rating;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class MyMovieConfigTest {
     private static MyMovieConfig myMovieConfig;
@@ -31,9 +28,9 @@ public class MyMovieConfigTest {
 
     @Test
     public void testFilePath() {
-        Assertions.assertEquals(userHomeName+"/it1901/mmt/serverfiles/test", myMovieConfig.getPath().toString());
+        Assertions.assertEquals(userHomeName + "/it1901/mmt/serverfiles/test", myMovieConfig.getPath().toString());
 
-        Assertions.assertEquals(userHomeName+"/it1901/mmt/serverfiles/test", myMovieConfig.getFile().toString());
+        Assertions.assertEquals(userHomeName + "/it1901/mmt/serverfiles/test", myMovieConfig.getFile().toString());
     }
 
     @Test

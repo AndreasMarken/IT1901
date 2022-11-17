@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.stream.Stream;
+import mmt.core.Actor;
 import mmt.core.IMovie;
 import mmt.core.Movie;
 import mmt.core.MovieList;
@@ -16,7 +17,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import mmt.core.Actor;
 
 public class MovieModuleTest {
     private static ObjectMapper mapper;
@@ -27,10 +27,14 @@ public class MovieModuleTest {
         mapper.registerModule(new MovieModule());
     }
 
-    private final static String movieWithOneRating = "{\"title\":\"Bond\",\"releaseDate\":\"2002-01-02\",\"duration\":\"01:50:00\",\"rating\":{\"rating\":9,\"comment\":\"Very good.\"},\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}";
-    private final static String movieWithOneRatingAndAnActor = "{\"title\":\"Bond\",\"releaseDate\":\"2002-01-02\",\"duration\":\"01:50:00\",\"rating\":{\"rating\":9,\"comment\":\"Very good.\"},\"watchlist\":false,\"cast\":[{\"name\":\"Daniel Craig\"}],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}";
-    private final static String movieListWithThreeMovies = "{\"movies\":[{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"},{\"title\":\"Lange flate ballær\",\"releaseDate\":\"2022-09-05\",\"duration\":\"02:03:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"},{\"title\":\"iodhosa\",\"releaseDate\":\"2022-09-02\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}]}";
-    private final static String duplicateMovieList = "{\"movies\":[{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"},{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}]}";
+    private static final String movieWithOneRating =
+        "{\"title\":\"Bond\",\"releaseDate\":\"2002-01-02\",\"duration\":\"01:50:00\",\"rating\":{\"rating\":9,\"comment\":\"Very good.\"},\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}";
+    private static final String movieWithOneRatingAndAnActor =
+        "{\"title\":\"Bond\",\"releaseDate\":\"2002-01-02\",\"duration\":\"01:50:00\",\"rating\":{\"rating\":9,\"comment\":\"Very good.\"},\"watchlist\":false,\"cast\":[{\"name\":\"Daniel Craig\"}],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}";
+    private static final String movieListWithThreeMovies =
+        "{\"movies\":[{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"},{\"title\":\"Lange flate ballær\",\"releaseDate\":\"2022-09-05\",\"duration\":\"02:03:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"},{\"title\":\"iodhosa\",\"releaseDate\":\"2022-09-02\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}]}";
+    private static final String duplicateMovieList =
+        "{\"movies\":[{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"},{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}]}";
 
     private static Stream<Arguments> testMovieListDeserializer() {
         return Stream.of(
@@ -225,7 +229,7 @@ public class MovieModuleTest {
     @Test
     @DisplayName("Test that the actor serializer works as intended with correct input")
     public void testActorSerializer() {
-        Actor actor = new Actor("Tom Cruise");    
+        Actor actor = new Actor("Tom Cruise");
         String expectedString = "{\"name\":\"Tom Cruise\"}";
 
         try {
@@ -257,8 +261,7 @@ public class MovieModuleTest {
         Actor actor = null;
         try {
             actor = mapper.readValue(inputString, Actor.class);
-        } catch (JsonProcessingException e) {
-        }
+        } catch (JsonProcessingException e) {}
 
         Assertions.assertNull(actor);
     }
