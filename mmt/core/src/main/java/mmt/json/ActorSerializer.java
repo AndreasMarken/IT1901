@@ -30,5 +30,4 @@ public class ActorSerializer extends JsonSerializer<Actor> {
         jsonGen.writeStringField("name", actor.getName());
         jsonGen.writeEndObject();
     }
-    
 }
