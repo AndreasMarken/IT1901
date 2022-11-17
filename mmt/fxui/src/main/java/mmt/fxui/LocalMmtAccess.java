@@ -102,7 +102,6 @@ public class LocalMmtAccess implements IAccess {
             saveMovieList(ml);
             return true;
         } catch (Exception e) {
-            // TODO: handle exception
             System.out.println(e);
             return false;
         }

@@ -67,7 +67,7 @@ public class RemoteMmtAccess implements IAccess {
                 .send(request, HttpResponse.BodyHandlers.ofString());
 
             Boolean successfullyAdded = Boolean.parseBoolean(response.body());
-            if (!(successfullyAdded != null && successfullyAdded)) {
+            if (!successfullyAdded) {
                 System.err.println("Failed to store movie: " + movie.getTitle());
             }
             return successfullyAdded;
@@ -93,7 +93,7 @@ public class RemoteMmtAccess implements IAccess {
                 .send(request, HttpResponse.BodyHandlers.ofString());
 
             Boolean successfullyAdded = Boolean.parseBoolean(response.body());
-            if (!(successfullyAdded != null && successfullyAdded)) {
+            if (!successfullyAdded) {
                 System.err.println("Failed to update movie: " + movie.getTitle());
             }
             return successfullyAdded;
@@ -119,7 +119,7 @@ public class RemoteMmtAccess implements IAccess {
                 .send(request, HttpResponse.BodyHandlers.ofString());
 
             Boolean successfullyAdded = Boolean.parseBoolean(response.body());
-            if (!(successfullyAdded != null && successfullyAdded)) {
+            if (!successfullyAdded) {
                 System.err.println("Failed to delete movie: " + movie.getTitle());
             }
 
