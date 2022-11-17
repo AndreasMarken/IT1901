@@ -300,6 +300,8 @@ public class EditMovieControllerTest extends ApplicationTest {
         WaitForAsyncUtils.waitForFxEvents();
         clickOn("#removeActorFromMovie");
         WaitForAsyncUtils.waitForFxEvents();
+        clickOn("#submitButton");
+        WaitForAsyncUtils.waitForFxEvents();
 
         //Assert
         final Collection<IActor> actualCastObjects = myMovieTrackerController
