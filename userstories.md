@@ -79,9 +79,9 @@ Our personas are based on the user stories and the article "Norsk mediebarometer
 ## Magnus Lysnes
 ![Image was not shown](images-userstories/Magnus.jpeg)
 
-*Photo retrived from Utdanning.no*[^2]
+*Photo retrived from freepik.com, free license*[^2]
 
-[^2]: https://utdanning.no/tema/yrkesintervju/vei-_og_anleggsarbeider 
+[^2]: https://www.freepik.com/free-photo/male-worker-factory_4410543.htm
 
 ### Description
 
