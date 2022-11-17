@@ -1,29 +1,23 @@
 # Userstories
-- As a user, I want to add movies to a list which contains movies that I find interesting, so that when i want to watch a movie I know which ones i like.
+- As a user, I want to add movies to a list that contains movies that I find interesting, so that when i want to watch a movie I know which ones i like.
 
 - As a user, I want to be able to add movies that I like to a watchlist that contains movies that I am due to watch, so that I know which movie I should watch when the weekend comes
 
 - As a user, I want to remove movies from a list which contains movies that I like, in case i do not like them anymore
 
-- As a user, I want to sort my list of movies that I like based on duration
+- As a user, I want to sort my list of movies that I like based on duration, so that if a friend asks me for a good movie that lasts less than an hour
 
 - As a user, I want to sort my list of movies that I like based on the title, so that when I have a lot of movies in my list, it is easy to find the one I am looking for
 
 - As a user, I want to sort my list of movies that I like based on rating, in case someone asks me what my all-time favorite movie is, it is easy for me to figure out which.
 
-- As a user, I want to have a list of movies that I find interesting available, so that I have suggestions when being asked for a recommendation
+- As a user, I want to have a list of movies that I find interesting available so that I have suggestions when being asked for a recommendation
 
-- As a user, I want to write a short summary of each movie that i like, so that at a later time I would remind myself of what the movie was about when considering to watch it
+- As a user, I want to write a short summary of each movie that I like, so that at a later time I would remind myself of what the movie was about when considering watching it
 
-- As a user, I want to give each movie that a like a rating on a 1/10 scale (1.1, 1.2, ...,10), so that i know which movie is the best of the best
+- As a user, I want to give each movie that a like a rating on a 1/10 scale (1, 2, ...,10), so that I know which movie is the best of the best
 
-- As a user, I want to add a cast to a Movie, so that I can see which actors play in which movies
-
-- As a user, I want to be able to search among my movies, so that I can see if my list contains a specific movie
-
-- As a user, I want to search for movies that contain a specific actor, so that it is easy to find a movie to watch that a specific actor plays in
-
-- As a user, I want to see statistics like the mean rating of the movies, mean duration, and the actor that plays in most movies, so that I can get an overview of the characteristics of my list of movies 
+- As a user, I want to see relevant statistics of the movies in my movie list, so that I can get a quick overview of what it contains 
 
 # Conceptual model
 
@@ -44,7 +38,7 @@
 - Title
 - Release date
 - Duration
-- Rating (1, 1.1, 1.2, ..., 10)
+- Rating (1, 2, ..., 10)
 - Watchlist (boolean: in or not in the watchlist)
 
 #### Movie-object operations
@@ -65,11 +59,11 @@
 
 ### Mapping
 - The list-objects corresponds to a library of movies
-- A Movie-object corresponds to an existing movie that the user has added some details to
+- A Movie-object corresponds to an existing movie which the user is able to give his or hers own rating. Duration, title and cast is also determined by the user.
 
 # Personas
 
-Our personas are based on the user stories and the article "Norsk mediebarometer 2021" concucted by SSB, Statistics Norway [^1]. From the article, it appears that young men watch the most video and film media on average every day. That is why Magnus is one of our personas. If we manage to make an app that satisfies Magnus, our app should satisfy a large group of users in Norway, which is our goal. Figure 1 displays the proportion of the population that watches video media on an average day, by gender, age and education, in 2021. As one can see, there are also a lot of women that watch movies in the age group 25-44. That is why we included Live, so that the impacts of her and Magnus on the app can complement each other, and make a great product.
+Our personas are based on the user stories and the article "Norsk mediebarometer 2021" concucted by SSB, Statistics Norway [^1]. From the article, it appears that young men watch the most video and film media on average every day. That is why Magnus is one of our personas. If we manage to make an app that satisfies Magnus, our app should satisfy a large group of users in Norway, which is our goal. Figure 1 displays the proportion of the population that watches video media on an average day, by gender, age and education, in 2021. As one can see, there are also a lot of women that watch movies in the age group 25-44. That is why we included Live, so that the impacts of her and Magnus on the app can complement each other, and make a great product. We do not have personas for the age group 9-15 years old. The reason is that our target group and the users we have interviewed do not find themselves in this age group. Nevertheless, interviewing younger users should be considered when further developing the app in the future
 [^1]: https://www.ssb.no/kultur-og-fritid/tids-og-mediebruk/artikler/norsk-mediebarometer-2021/_/attachment/inline/21eec81a-a3d3-4cac-abd5-f08465e840a0:c55b76d6b22c727056ab0b4c3cb8798e4142820d/SA169_web.pdf
 
 ![Image was not shown](images-userstories/SSB-table.jpeg)
@@ -237,7 +231,7 @@ Live is 40 years old and works as a doctor at the St. Olavs hospital. Her days a
 ![Image was not shown](images-userstories/mmtUImockup.png)
 
 # Sources
-Last quality control: 18. okt 2022
+Last quality control: 17. nov 2022
 
 
 
