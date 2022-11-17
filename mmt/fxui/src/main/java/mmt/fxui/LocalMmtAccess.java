@@ -103,20 +103,22 @@ public class LocalMmtAccess implements IAccess {
 
 
     @Override
-    public void addMovie(Movie movie) {
+    public boolean addMovie(Movie movie) {
         try {
             MovieList ml = loadMovieList();
             ml.addMovie(movie);
             saveMovieList(ml);
+            return true;
         } catch (Exception e) {
             // TODO: handle exception
             System.out.println(e);
+            return false;
         }
         
     }
 
     @Override
-    public void deleteMovie(Movie movie) {
+    public boolean deleteMovie(Movie movie) {
         try {
             MovieList ml = loadMovieList();
             String movieID = movie.getID();
@@ -125,22 +127,26 @@ public class LocalMmtAccess implements IAccess {
             ml.removeMovie(movieToBeRemoved);
             System.out.println(ml.toString());
             saveMovieList(ml);
+            return true;
         } catch (Exception e) {
             System.out.println(e);
+            return false;
         }        
     }
 
 
     @Override
-    public void updateMovie(Movie movie, String oldMovieID) {
+    public boolean updateMovie(Movie movie, String oldMovieID) {
         try {
             MovieList ml = loadMovieList();
             Movie oldMovie = (Movie) ml.getMovies().stream().filter(m -> m.getID().equals(oldMovieID)).findAny().orElse(null);
             ml.removeMovie(oldMovie);
             ml.addMovie(movie);
             saveMovieList(ml);
+            return true;
         } catch (Exception e) {
             System.out.println(e);
+            return false;
         }         
     }  
 }

@@ -58,7 +58,7 @@ public class RemoteMmtAccess implements IAccess {
     }
 
     @Override
-    public void addMovie(Movie movie) {
+    public boolean addMovie(Movie movie) {
         try {
             String jsonBody = oMapper.writeValueAsString(movie);
             HttpRequest request = HttpRequest.newBuilder()
@@ -74,16 +74,18 @@ public class RemoteMmtAccess implements IAccess {
             Boolean successfullyAdded = oMapper.readValue(response.body(), Boolean.class);
             if (!(successfullyAdded != null && successfullyAdded)) {
                 System.err.println("Failed to store movie: " + movie.getTitle());
+                return false;
             }
+            return true;
             
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
-            }
+        }
         
     }
 
     @Override
-    public void updateMovie(Movie movie, String oldMovieID) {
+    public boolean updateMovie(Movie movie, String oldMovieID) {
         try {
             String jsonBody = oMapper.writeValueAsString(movie);
             HttpRequest request = HttpRequest.newBuilder()
@@ -96,18 +98,25 @@ public class RemoteMmtAccess implements IAccess {
                 .send(request, HttpResponse.BodyHandlers.ofString());
             
             
-            Boolean successfullyAdded = oMapper.readValue(response.body(), Boolean.class);
+            if (response.body().isEmpty()){
+                System.err.println("Failed to delete movie: " + movie.getTitle());
+                return false;
+            }
+            return true;
+            /* Boolean successfullyAdded = oMapper.readValue(response.body(), Boolean.class);
             if (!(successfullyAdded != null && successfullyAdded)) {
                 System.err.println("Failed to update movie: " + movie.getTitle());
+                return false;
             }
+            return true; */
             
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
-                }
+            }
     }
 
     @Override
-    public void deleteMovie(Movie movie) {
+    public boolean deleteMovie(Movie movie) {
         try {
             HttpRequest request = HttpRequest.newBuilder()
                 .uri(getUriForMovie(movie.getID()))
@@ -118,11 +127,18 @@ public class RemoteMmtAccess implements IAccess {
             
             final HttpResponse<String> response = HttpClient.newBuilder().build()
                 .send(request, HttpResponse.BodyHandlers.ofString());
-           
-            Boolean successfullyAdded = oMapper.readValue((String) response.body(), Boolean.class);
+                
+            if (response.body().isEmpty()){
+                System.err.println("Failed to delete movie: " + movie.getTitle());
+                return false;
+            }
+            return true;
+            /* Boolean successfullyAdded = oMapper.readValue(response.body(), Boolean.class);
             if (!(successfullyAdded != null && successfullyAdded)) {
                 System.err.println("Failed to delete movie: " + movie.getTitle());
+                return false;
             }
+            return true; */
         }                        
         catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
