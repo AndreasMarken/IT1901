@@ -77,6 +77,35 @@ We have added new tests to the new parts of the system. We have written tests th
 
 If you want to view our jacoco reports, you can run the maven test command, described in the [root README](../README.md#testing-the-project), and follow the steps listed in there to view the report.
 
+As we previously have said, making sure that our program is tested, is important for us. Therefore, we have made sure that all classes have a good line testing degree. Under, you can see a table displaying the line testing degree of the different classes. To view a picture of the jacoco report, check out the [images](../mmt/images/) folder.
+
+| Class | Line testing degree |
+| --- | --- |
+| Movie | 92% |
+| MovieList |  |
+| Rating | 100% |
+| Actor | 94% |
+| MovieDeserializer | 96% |
+| MovieListDeserializer | 100% |
+| MovieListSerializer | 100% |
+| MovieModule | 100% |
+| MovieSerializer |  |
+| RatingDeserializer | 100% |
+| RatingSerializer | 100% |
+| ActorSerializer |  |
+| ActorDeserializer |  |
+| MyMovieConfig |  |
+| DisplayMovieController | 100% |
+| EditMovieController | 89% |
+| GiveRatingController | 100% |
+| LocalMmtAccess | 79% |
+| MyMovieTrackerController | 94% |
+| RemoteMmtAccess | 87% |
+| StatisticController | 99% |
+| MmtService | 85% |
+| MmtConfig | 100% |
+| MmtModuleObjectMapperProvider | 100% |
+
 ## JSON-Storage Format
 To get the full display on how each class is serialized, check out the [core module README file](../mmt/core/README.md#storing-format).
 
