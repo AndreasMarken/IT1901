@@ -90,15 +90,6 @@ public class MovieDeserializer extends JsonDeserializer<Movie> {
                 Movie movie = new Movie(title, time, date, ID);
                 movie.setOnTakeOfWatchlist(watchlist);
 
-                // if (ratingNode instanceof ArrayNode) {
-                //     for(JsonNode element : (ArrayNode) ratingNode) {
-                //         Rating rating = ratingDeserializer.deserialize(element);
-                //         if (rating != null) {
-                //             movie.setRating(rating);
-                //         }
-                //     }
-                // }
-
                 if (ratingNode instanceof ObjectNode) {
                     Rating rating = ratingDeserializer.deserialize((ObjectNode) ratingNode);
                     movie.setRating(rating);

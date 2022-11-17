@@ -94,7 +94,7 @@ public class MyMovieTrackerController {
     @FXML
     private void handleSortRating() {
         Collections.sort((List<IMovie>) movieList.getMovies(), Comparators.sortByHighestRating());
-        updateMovieListView();
+        searchActor();
     }
 
     /**
@@ -103,7 +103,7 @@ public class MyMovieTrackerController {
     @FXML
     private void handleSortTitle() {
         Collections.sort((List<IMovie>) movieList.getMovies(), Comparators.sortByTitle());
-        updateMovieListView();
+        searchActor();
     }
 
     /**
@@ -112,7 +112,7 @@ public class MyMovieTrackerController {
     @FXML
     private void handleSortDuration() {
         Collections.sort((List<IMovie>) movieList.getMovies(), Comparators.sortByDuration());
-        updateMovieListView();
+        searchActor();
     }
 
     /**
@@ -155,11 +155,9 @@ public class MyMovieTrackerController {
             double offsetX = movieListView.getPrefWidth() / 2;
             double offsetY = -1.0;
 
-            //Collection<IMovie> movies = this.getMovies();
             Collection<IMovie> movies = movieList.getMovies();
 
             if (watchList) {
-                //movies = this.getMovies().stream().filter(m -> m.getWatchlist()).toList();
                 movies = movies.stream().filter(m -> m.getWatchlist()).toList();
             }
 
@@ -260,20 +258,6 @@ public class MyMovieTrackerController {
     public EditMovieController getEditMovieController() {
         return this.editMovieController;
     }
-
-    /**
-     * Method used to set the testingmode. When performing the test, you do not want to destroy
-     * the users database. Therefore you can set the controller to testing mode, which changes the file 
-     * that this controller writes to.
-     * @param testingMode True if testingmode is to be set, false if not.
-     * @throws IOException If it was unable to save the movielist to file.
-     */
-    // protected void setTestingMode(boolean testingMode) throws IOException {
-    //     this.testingMode = testingMode;
-    //     this.movieList = new MovieList();
-    //     saveMovieListToFile();
-    //     updateMovieListView();
-    // }
 
     /**
      * Changes this current view to the statisticsview. Used when the statisticsview button is clicked.

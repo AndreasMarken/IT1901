@@ -63,7 +63,6 @@ public class LocalMmtAccess implements IAccess {
             //Do nothing if the file already exists
         }
         
-        //this.movieList = mapper.readValue(new File("movie.json"), MovieList.class);
         try {
             if (testingMode) {
                 return mapper.readValue(getSaveFilePath("movieTest.json").toFile(), MovieList.class);
@@ -110,7 +109,6 @@ public class LocalMmtAccess implements IAccess {
             saveMovieList(ml);
             return true;
         } catch (Exception e) {
-            // TODO: handle exception
             System.out.println(e);
             return false;
         }

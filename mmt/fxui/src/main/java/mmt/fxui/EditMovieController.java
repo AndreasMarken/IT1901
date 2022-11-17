@@ -200,9 +200,7 @@ public class EditMovieController {
             throw new IllegalStateException("You should not have the oppertunity to edit a movie when you havent selected a movie to edit.");
         }
         movieTitleField.setText(movie.getTitle());  
-        //hours.increment(movie.getDuration().getHours());
         hours.increment(Integer.parseInt(movie.getDuration().toString().substring(0, 2)));
-        //minutes.increment(movie.getDuration().getMinutes());
         minutes.increment(Integer.parseInt(movie.getDuration().toString().substring(3, 5)));
         date.setValue(movie.getReleaseDate().toLocalDate());
         watchListCheckBox.setSelected(movie.getWatchlist());

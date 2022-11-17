@@ -120,11 +120,9 @@ public class EditMovieControllerTest extends ApplicationTest{
 
         Assertions.assertEquals(movieTitle, addedMovie.getTitle(),
                        "Wrong movietitle set");
-        //Assertions.assertEquals(new Time(durationHours, durationMinutes, 0), addedMovie.getDuration(),
         //               "Wrong duration set");
         Assertions.assertEquals(Time.valueOf(Integer.toString(durationHours)+ ":" + Integer.toString(durationMinutes) + ":00"), addedMovie.getDuration(),
                        "Wrong duration set");
-        //Assertions.assertEquals(new Date(2022 - 1900, 9, 6), addedMovie.getReleaseDate(),
         //               "Wrong releasedate set");
         Assertions.assertEquals(Date.valueOf("2022-10-06"), addedMovie.getReleaseDate(),
                        "Wrong releasedate set");

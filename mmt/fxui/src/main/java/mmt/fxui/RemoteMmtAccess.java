@@ -37,8 +37,6 @@ public class RemoteMmtAccess implements IAccess {
     }
     
     public void saveMovieList(MovieList movieList){
-        //Never used
-        
     }
 
     @Override
@@ -103,12 +101,6 @@ public class RemoteMmtAccess implements IAccess {
                 return false;
             }
             return true;
-            /* Boolean successfullyAdded = oMapper.readValue(response.body(), Boolean.class);
-            if (!(successfullyAdded != null && successfullyAdded)) {
-                System.err.println("Failed to update movie: " + movie.getTitle());
-                return false;
-            }
-            return true; */
             
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
@@ -133,12 +125,6 @@ public class RemoteMmtAccess implements IAccess {
                 return false;
             }
             return true;
-            /* Boolean successfullyAdded = oMapper.readValue(response.body(), Boolean.class);
-            if (!(successfullyAdded != null && successfullyAdded)) {
-                System.err.println("Failed to delete movie: " + movie.getTitle());
-                return false;
-            }
-            return true; */
         }                        
         catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
