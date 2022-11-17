@@ -191,10 +191,13 @@ public class MyMovieTrackerController {
 
 
     protected void setTestingMode(boolean testingMode) throws IOException {
-        dataAccess.setTestMode(testingMode);
-        this.movieList = new MovieList();
-        dataAccess.saveMovieList(movieList);
-        updateMovieListView();
+        if (this.dataAccess instanceof LocalMmtAccess){
+            LocalMmtAccess localAccess = (LocalMmtAccess) dataAccess;
+            localAccess.setTestMode(testingMode);
+            this.movieList = new MovieList();
+            dataAccess.saveMovieList(movieList);
+            updateMovieListView();
+        }
     }
 
     /**

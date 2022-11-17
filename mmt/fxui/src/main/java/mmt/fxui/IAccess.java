@@ -28,13 +28,6 @@ public interface IAccess{
      * @return MovieList that was loaded
      */
     public MovieList loadMovieList() throws IOException;
-    
-    /** 
-    * Method used to set testmode (true or false).
-    *
-    * @param testingMode boolean to set
-    */ 
-    public void setTestMode(boolean testingMode) throws IOException;
 
     public void addMovie(Movie movie);
 

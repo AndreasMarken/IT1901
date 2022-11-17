@@ -128,11 +128,5 @@ public class RemoteMmtAccess implements IAccess {
             throw new RuntimeException(e);
         }  
     }
-
-    @Override
-    public void setTestMode(boolean testingMode) throws IOException {
-        // TODO Auto-generated method stub
-        
-    }   
 }
 
