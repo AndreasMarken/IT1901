@@ -2,7 +2,11 @@ package mmt.restserver;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+
+import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,6 +27,10 @@ public class MmtServerTest extends JerseyTest{
     private ObjectMapper oMapper;
 
 
+    private final static String initMovie = "{\"title\":\"Bond\",\"releaseDate\":\"2002-01-02\",\"duration\":\"01:50:00\",\"rating\":{\"rating\":9,\"comment\":\"Very good.\"},\"watchlist\":false,\"cast\":[null],\"ID\":\"id1\"}";
+    private final static String movieToBePut = "{\"title\":\"James\",\"releaseDate\":\"2002-01-02\",\"duration\":\"01:50:00\",\"rating\":{\"rating\":9,\"comment\":\"Very good.\"},\"watchlist\":false,\"cast\":[null],\"ID\":\"id2\"}";
+
+
     @Override
     protected ResourceConfig configure() {
         final MmtConfig config = new MmtConfig();
@@ -37,12 +45,10 @@ public class MmtServerTest extends JerseyTest{
     public void setUp() throws Exception {
         super.setUp();
         oMapper = MyMovieConfig.createOMapper();
-
     }
 
     @Test
     public void testApiGetMethod(){
-        System.out.println("er vi her");
         Response response = target(MmtService.MMT_SERVICE_PATH)
             .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER + "=UTF-8")
             .get();
@@ -55,5 +61,78 @@ public class MmtServerTest extends JerseyTest{
         } catch (JsonProcessingException e) {
             fail(e.getMessage());
         }
+    }
+
+    @Test
+    public void testApiPostMethod(){
+        Response response = target(MmtService.MMT_SERVICE_PATH)
+            .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER + "=UTF-8")
+            .post(Entity.entity(initMovie, MediaType.APPLICATION_JSON));
+        assertEquals(200, response.getStatus());
+        try {
+            boolean post = oMapper.readValue(response.readEntity(String.class), Boolean.class);
+            assertTrue(post);
+     
+        } catch (JsonProcessingException e) {
+            fail(e.getMessage());
+        }
+    }  
+
+    @Test
+    public void testApiDeleteMethod(){
+        Response response = target(MmtService.MMT_SERVICE_PATH)
+            .path("/" + "id1")
+            .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER + "=UTF-8")
+            .delete();
+
+        assertEquals(200, response.getStatus());
+
+        try {
+            boolean movieList = oMapper.readValue(response.readEntity(String.class), Boolean.class);
+            assertTrue(movieList);
+        } catch (JsonProcessingException e) {
+            fail(e.getMessage());
+        }
+
+        Response response2 = target(MmtService.MMT_SERVICE_PATH)
+            .path("/" + "nonexistingID")
+            .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER + "=UTF-8")
+            .delete();
+
+        assertEquals(200, response.getStatus());
+
+        try {
+            Boolean movieList = oMapper.readValue(response2.readEntity(String.class), Boolean.class);
+            assertFalse(movieList);
+            
+        } catch (JsonProcessingException e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testApiPutMethod(){
+        target(MmtService.MMT_SERVICE_PATH)
+            .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER + "=UTF-8")
+            .post(Entity.entity(initMovie, MediaType.APPLICATION_JSON));
+
+        Response response = target(MmtService.MMT_SERVICE_PATH)
+            .path("/" + "id1")
+            .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER + "=UTF-8")
+            .put(Entity.entity(movieToBePut, MediaType.APPLICATION_JSON));
+
+        assertEquals(200, response.getStatus());
+
+        try {
+            boolean put = oMapper.readValue(response.readEntity(String.class), Boolean.class);
+            assertTrue(put);
+        } catch (JsonProcessingException e) {
+            fail(e.getMessage());
+        }
+
+        target(MmtService.MMT_SERVICE_PATH)
+            .path("/" + "id2")
+            .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER + "=UTF-8")
+            .delete();
     }
 }
