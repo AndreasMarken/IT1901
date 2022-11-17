@@ -283,8 +283,18 @@ public class EditMovieController {
             HBox.setHgrow(pane, Priority.ALWAYS);
             button.setOnAction(event -> {String actorToBeRemoved = getItem();
                                         getListView().getItems().remove(actorToBeRemoved);
-                                        IActor actorObjToBeRemoved = movie.getCast().stream().filter(actor -> actor.getName().equals(actorToBeRemoved)).findAny().orElse(null);
-                                        movie.removeActor(actorObjToBeRemoved);                                                                            
+                                        if(movie == null){
+                                            IActor actorObjToBeRemoved = null;
+                                            for (IActor actor : actors) {
+                                                if (actor.getName().equals(actorToBeRemoved)){
+                                                    actorObjToBeRemoved = actor;
+                                                }                                                
+                                            }
+                                            actors.remove(actorObjToBeRemoved);
+                                        } else{
+                                            IActor actorObjToBeRemoved = movie.getCast().stream().filter(actor -> actor.getName().equals(actorToBeRemoved)).findAny().orElse(null);
+                                            movie.removeActor(actorObjToBeRemoved); 
+                                        }                                                                           
             });
             button.setId("removeActorFromMovie");
         }

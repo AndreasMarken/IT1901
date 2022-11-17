@@ -115,15 +115,15 @@ public class LocalMmtAccess implements IAccess {
         
     }
 
-
-   
-
-
     @Override
     public void deleteMovie(Movie movie) {
         try {
             MovieList ml = loadMovieList();
-            ml.removeMovie(movie);
+            String movieID = movie.getID();
+            Movie movieToBeRemoved = (Movie) ml.getMovies().stream().filter(m -> m.getID().equals(movieID)).findAny().orElse(null);
+            System.out.println(ml.toString());
+            ml.removeMovie(movieToBeRemoved);
+            System.out.println(ml.toString());
             saveMovieList(ml);
         } catch (Exception e) {
             System.out.println(e);
