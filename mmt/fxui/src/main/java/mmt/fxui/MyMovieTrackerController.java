@@ -308,7 +308,7 @@ public class MyMovieTrackerController {
             if (movie.getTitle().contains(actorInputField.getText())) {
                 movieListActors.addMovie(movie);
             }
-            try {
+            if (movie.getCast() != null){
                 for (IActor actor : movie.getCast()) {
                     if (actor.getName().contains(actorInputField.getText())) {
                         if (movieListActors.getMovie(movie.getTitle()) == null) {
@@ -317,8 +317,6 @@ public class MyMovieTrackerController {
                         }
                     }
                 }
-            } catch (NullPointerException e) {
-                //Movie has got no cast, skip this movie and check next.
             }
         }
         displayMovieListView(watchList.isSelected(), movieListActors);

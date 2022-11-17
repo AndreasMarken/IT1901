@@ -72,7 +72,7 @@ public class EditMovieController {
     private void edit() {
         if (isValidTitleName(movieTitleField.getText())) {
             String title = movieTitleField.getText();
-            if (title.equals("") || title.equals(null)) {
+            if (title.equals("")) {
                 errorMessage.setText("The title name is not valid.");
                 return;
             }
@@ -83,17 +83,15 @@ public class EditMovieController {
                 errorMessage.setText("The movie must have a duration.");
                 return;
             }
+            Date releaseDate;
+
             try {
-                date.getValue().getYear();
-                date.getValue().getMonth();
-                date.getValue().getDayOfMonth();
-                
-            } catch (NullPointerException e) {
+                releaseDate = Date.valueOf(date.getValue().getYear() + "-" + date.getValue().getMonthValue() + "-" + date.getValue().getDayOfMonth());
+            } catch (Exception e) {
                 errorMessage.setText("You must choose a valid date.");
                 return;
             }
-            //Date releaseDate = new Date(date.getValue().getYear() - 1900, date.getValue().getMonthValue() - 1, date.getValue().getDayOfMonth());
-            Date releaseDate = Date.valueOf(date.getValue().getYear() + "-" + date.getValue().getMonthValue() + "-" + date.getValue().getDayOfMonth());
+
             boolean watchList = watchListCheckBox.isSelected();
 
             try {
@@ -104,9 +102,7 @@ public class EditMovieController {
                     for (IActor actor : actors) {
                         movie.addActor(actor);
                     }
-                    if(movie instanceof Movie){
-                        myMovieTrackerController.dataAccess.addMovie((Movie) movie);
-                    }
+                    myMovieTrackerController.dataAccess.addMovie((Movie) movie);
                 } else {
                     editExistingMovie(title, time, releaseDate, watchList);
                     this.movie = null;
@@ -232,13 +228,11 @@ public class EditMovieController {
     @FXML
     private void addActorToMovie() {
         try {
-            try {
+            if (movie != null && movie.getCast() != null) {
                 if (movie.getCast().stream().anyMatch(a-> a.getName().equals(actorNameField.getText()))) {
                     errorMessage.setText("The actor is already added to the movie");
                     return;
                 }
-            } catch (NullPointerException e) {
-                //No actors? No problem, add this one
             }
             
             Actor actor = new Actor(actorNameField.getText());
@@ -316,8 +310,7 @@ public class EditMovieController {
     */
     private void updateActorsListView(){
         ObservableList<String> observableActorList = FXCollections.observableArrayList();
-        try {
-            if (movie != null) {
+            if (movie != null && movie.getCast() != null) {
                 Collection<IActor> actors = movie.getCast();
     
                 for (IActor actor : actors){
@@ -332,9 +325,6 @@ public class EditMovieController {
                     }
                 }
             }
-        } catch (NullPointerException e) {
-            //No actors in this movie
-        }
         actorListView.setItems(observableActorList);
         actorListView.setCellFactory(x -> new ActorListViewCell());
         actorNameField.clear();
