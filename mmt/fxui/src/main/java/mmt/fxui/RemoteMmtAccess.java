@@ -66,7 +66,7 @@ public class RemoteMmtAccess implements IAccess {
                 .build()
                 .send(request, HttpResponse.BodyHandlers.ofString());
 
-            Boolean successfullyAdded =  Boolean.parseBoolean(response.body());
+            Boolean successfullyAdded = Boolean.parseBoolean(response.body());
             if (!(successfullyAdded != null && successfullyAdded)) {
                 System.err.println("Failed to store movie: " + movie.getTitle());
             }
@@ -92,12 +92,11 @@ public class RemoteMmtAccess implements IAccess {
                 .build()
                 .send(request, HttpResponse.BodyHandlers.ofString());
 
-                Boolean successfullyAdded =  Boolean.parseBoolean(response.body());         
-                if (!(successfullyAdded != null && successfullyAdded)) {
-                    System.err.println("Failed to update movie: " + movie.getTitle());
-                }
-                return successfullyAdded;
-
+            Boolean successfullyAdded = Boolean.parseBoolean(response.body());
+            if (!(successfullyAdded != null && successfullyAdded)) {
+                System.err.println("Failed to update movie: " + movie.getTitle());
+            }
+            return successfullyAdded;
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -113,19 +112,18 @@ public class RemoteMmtAccess implements IAccess {
                 .header("Content-Type", "application/json")
                 .DELETE()
                 .build();
-            
+
             final HttpResponse<String> response = HttpClient
                 .newBuilder()
                 .build()
                 .send(request, HttpResponse.BodyHandlers.ofString());
 
-            Boolean successfullyAdded =  Boolean.parseBoolean(response.body());         
+            Boolean successfullyAdded = Boolean.parseBoolean(response.body());
             if (!(successfullyAdded != null && successfullyAdded)) {
                 System.err.println("Failed to delete movie: " + movie.getTitle());
             }
-            
-            return successfullyAdded;
 
+            return successfullyAdded;
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
