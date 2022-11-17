@@ -155,7 +155,7 @@ Magnus is a construction worker in a mid-sized company. He is 27 years old and h
 
 
 ## Live Langåsen
-![Image was not shown](images-userstories/Live.jpeg)
+![Image was not shown](images-userstories/Live-personas.jpeg)
 
 *Photo is private*
 
