@@ -17,6 +17,15 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import mmt.core.Actor;
+import mmt.core.IMovie;
+import mmt.core.Movie;
+import mmt.core.MovieList;
+import mmt.core.Rating;
+
 public class MovieModuleTest {
     private static ObjectMapper mapper;
 
@@ -26,12 +35,10 @@ public class MovieModuleTest {
         mapper.registerModule(new MovieModule());
     }
 
-    private static final String movieWithOneRating =
-        "{\"title\":\"Bond\",\"releaseDate\":\"2002-01-02\",\"duration\":\"01:50:00\",\"rating\":{\"rating\":9,\"comment\":\"Very good.\"},\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}";
-    private static final String movieListWithThreeMovies =
-        "{\"movies\":[{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"},{\"title\":\"Lange flate ballær\",\"releaseDate\":\"2022-09-05\",\"duration\":\"02:03:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"},{\"title\":\"iodhosa\",\"releaseDate\":\"2022-09-02\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}]}";
-    private static final String duplicateMovieList =
-        "{\"movies\":[{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"},{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}]}";
+    private final static String movieWithOneRating = "{\"title\":\"Bond\",\"releaseDate\":\"2002-01-02\",\"duration\":\"01:50:00\",\"rating\":{\"rating\":9,\"comment\":\"Very good.\"},\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}";
+    private final static String movieWithOneRatingAndAnActor = "{\"title\":\"Bond\",\"releaseDate\":\"2002-01-02\",\"duration\":\"01:50:00\",\"rating\":{\"rating\":9,\"comment\":\"Very good.\"},\"watchlist\":false,\"cast\":[{\"name\":\"Daniel Craig\"}],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}";
+    private final static String movieListWithThreeMovies = "{\"movies\":[{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"},{\"title\":\"Lange flate ballær\",\"releaseDate\":\"2022-09-05\",\"duration\":\"02:03:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"},{\"title\":\"iodhosa\",\"releaseDate\":\"2022-09-02\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}]}";
+    private final static String duplicateMovieList = "{\"movies\":[{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"},{\"title\":\"James Bond \",\"releaseDate\":\"2022-09-09\",\"duration\":\"02:02:00\",\"rating\":null,\"watchlist\":false,\"cast\":[null],\"ID\":\"e65b957e-6415-11ed-81ce-0242ac120002\"}]}";
 
     private static Stream<Arguments> testMovieListDeserializer() {
         return Stream.of(
@@ -103,6 +110,21 @@ public class MovieModuleTest {
         movie.setRating(new Rating(9, "Very good."));
         try {
             Assertions.assertEquals(movieWithOneRating, mapper.writeValueAsString(movie));
+        } catch (JsonProcessingException e) {
+            Assertions.fail();
+        }
+    }
+
+    @Test
+    @DisplayName("Test that the Movie, Rating and Actor serializers works as intended.")
+    public void testMovieSerializerWithActor() {
+        Date date = Date.valueOf("2002-01-02");
+        Time time = Time.valueOf("01:50:00");
+        Movie movie = new Movie("Bond", time, date, "e65b957e-6415-11ed-81ce-0242ac120002");
+        movie.setRating(new Rating(9, "Very good."));
+        movie.addActor(new Actor("Daniel Craig"));
+        try {
+            Assertions.assertEquals(movieWithOneRatingAndAnActor, mapper.writeValueAsString(movie));
         } catch (JsonProcessingException e) {
             Assertions.fail();
         }
@@ -206,5 +228,46 @@ public class MovieModuleTest {
         } catch (JsonProcessingException e) {
             Assertions.fail();
         }
+    }
+
+    @Test
+    @DisplayName("Test that the actor serializer works as intended with correct input")
+    public void testActorSerializer() {
+        Actor actor = new Actor("Tom Cruise");    
+        String expectedString = "{\"name\":\"Tom Cruise\"}";
+
+        try {
+            Assertions.assertEquals(expectedString, mapper.writeValueAsString(actor));
+        } catch (JsonProcessingException e) {
+            Assertions.fail();
+        }
+    }
+
+    @Test
+    @DisplayName("Test that the actor deserializer works as intended with correct input")
+    public void testActorDeserializer() {
+        String inputString = "{\"name\":\"Tom Cruise\"}";
+        Actor actor = null;
+        try {
+            actor = mapper.readValue(inputString, Actor.class);
+        } catch (JsonProcessingException e) {
+            Assertions.fail();
+        }
+
+        Assertions.assertNotNull(actor);
+        Assertions.assertEquals("Tom Cruise", actor.getName());
+    }
+
+    @Test
+    @DisplayName("Test that the actor deserializer works as intended with illegal input")
+    public void testActorDeserializerIllegalInput() {
+        String inputString = "{name:This is not an actor}";
+        Actor actor = null;
+        try {
+            actor = mapper.readValue(inputString, Actor.class);
+        } catch (JsonProcessingException e) {
+        }
+
+        Assertions.assertNull(actor);
     }
 }
