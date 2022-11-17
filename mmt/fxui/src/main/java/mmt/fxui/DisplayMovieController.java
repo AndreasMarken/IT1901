@@ -71,13 +71,13 @@ public class DisplayMovieController {
         );
         watchList.setText(movie.getWatchlist() ? "Watchlist" : "Not on watchlist");
         releaseDate.setText(movie.getReleaseDate().toString());
-        try {
+        if (movie.getCast() != null) {
             String cast = "";
             for (IActor actor : movie.getCast()) {
                 cast += ", " + actor.getName();
             }
             actors.setText(cast.substring(2));
-        } catch (NullPointerException e) {
+        } else {
             actors.setText("No cast set for this movie");
         }
 

@@ -83,22 +83,15 @@ public class EditMovieController {
                 errorMessage.setText("The movie must have a duration.");
                 return;
             }
+            Date releaseDate;
+
             try {
-                date.getValue().getYear();
-                date.getValue().getMonth();
-                date.getValue().getDayOfMonth();
-            } catch (NullPointerException e) {
+                releaseDate = Date.valueOf(date.getValue().getYear() + "-" + date.getValue().getMonthValue() + "-" + date.getValue().getDayOfMonth());
+            } catch (Exception e) {
                 errorMessage.setText("You must choose a valid date.");
                 return;
             }
-            //Date releaseDate = new Date(date.getValue().getYear() - 1900, date.getValue().getMonthValue() - 1, date.getValue().getDayOfMonth());
-            Date releaseDate = Date.valueOf(
-                date.getValue().getYear() +
-                "-" +
-                date.getValue().getMonthValue() +
-                "-" +
-                date.getValue().getDayOfMonth()
-            );
+
             boolean watchList = watchListCheckBox.isSelected();
 
             try {

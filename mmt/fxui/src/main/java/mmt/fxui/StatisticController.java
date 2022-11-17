@@ -116,7 +116,7 @@ public class StatisticController {
         for (IMovie movie : moviesWithRating) {
             rating += movie.getRatingNumber();
         }
-        return rating / moviesWithRating.size();
+        return rating / (float) moviesWithRating.size();
     }
 
     /**
@@ -172,14 +172,12 @@ public class StatisticController {
         Map<String, Integer> actorsmap = new HashMap<>();
 
         for (IMovie movie : movieList) {
-            try {
+            if(movie.getCast() != null)
                 for (IActor actor : movie.getCast()) {
                     actorsmap.put(actor.getName(), actorsmap.getOrDefault(actor.getName(), 0) + 1);
                 }
-            } catch (NullPointerException e) {
-                //No actors? No problem, skip this movie
-            }
         }
+        
         if (actorsmap.size() == 0) {
             return "No actors";
         }

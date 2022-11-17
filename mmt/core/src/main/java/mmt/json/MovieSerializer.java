@@ -39,14 +39,18 @@ public class MovieSerializer extends JsonSerializer<Movie> {
         jsonGen.writeObjectField("rating", movie.getRating());
         jsonGen.writeBooleanField("watchlist", movie.getWatchlist());
         jsonGen.writeArrayFieldStart("cast");
-        try {
+        // try {
+        if (movie.getCast() == null){
+            jsonGen.writeNull();
+        } else{
             for (IActor actor : movie.getCast()) {
                 jsonGen.writeObject(actor);
             }
-        } catch (NullPointerException e) {
-            //No actors
-            jsonGen.writeNull();
         }
+        // } catch (NullPointerException e) {
+        //     //No actors
+        //     jsonGen.writeNull();
+        // }
         jsonGen.writeEndArray();
         jsonGen.writeStringField("ID", movie.getID());
         jsonGen.writeEndObject();
