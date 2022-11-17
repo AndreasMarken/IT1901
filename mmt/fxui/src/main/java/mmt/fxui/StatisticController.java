@@ -159,7 +159,6 @@ public class StatisticController {
             minutes += Integer.parseInt(movie.getDuration().toString().substring(3, 5));
         }
         minutes = minutes / numberOfMovies;
-        //return new Time(minutes / 60, minutes % 60, 0);
         return Time.valueOf(minutes / 60 + ":" + minutes % 60 + ":00");
     }
 

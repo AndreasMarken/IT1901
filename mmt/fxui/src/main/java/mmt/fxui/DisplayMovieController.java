@@ -61,14 +61,7 @@ public class DisplayMovieController {
      */
     public void setMovieInformation() {
         title.setText(movie.getTitle());
-        //duration.setText(String.format("%02d:%02d", movie.getDuration().getHours(), movie.getDuration().getMinutes()));
-        duration.setText(
-            String.format(
-                "%02d:%02d",
-                Integer.parseInt(movie.getDuration().toString().substring(0, 2)),
-                Integer.parseInt(movie.getDuration().toString().substring(3, 5))
-            )
-        );
+        duration.setText(String.format("%02d:%02d", Integer.parseInt(movie.getDuration().toString().substring(0, 2)), Integer.parseInt(movie.getDuration().toString().substring(3, 5))));
         watchList.setText(movie.getWatchlist() ? "Watchlist" : "Not on watchlist");
         releaseDate.setText(movie.getReleaseDate().toString());
         if (movie.getCast() != null) {

@@ -90,7 +90,7 @@ public class MyMovieTrackerController {
     @FXML
     private void handleSortRating() {
         Collections.sort((List<IMovie>) movieList.getMovies(), Comparators.sortByHighestRating());
-        updateMovieListView();
+        searchActor();
     }
 
     /**
@@ -99,7 +99,7 @@ public class MyMovieTrackerController {
     @FXML
     private void handleSortTitle() {
         Collections.sort((List<IMovie>) movieList.getMovies(), Comparators.sortByTitle());
-        updateMovieListView();
+        searchActor();
     }
 
     /**
@@ -108,7 +108,7 @@ public class MyMovieTrackerController {
     @FXML
     private void handleSortDuration() {
         Collections.sort((List<IMovie>) movieList.getMovies(), Comparators.sortByDuration());
-        updateMovieListView();
+        searchActor();
     }
 
     /**
@@ -151,11 +151,9 @@ public class MyMovieTrackerController {
             double offsetX = movieListView.getPrefWidth() / 2;
             double offsetY = -1.0;
 
-            //Collection<IMovie> movies = this.getMovies();
             Collection<IMovie> movies = movieList.getMovies();
 
             if (watchList) {
-                //movies = this.getMovies().stream().filter(m -> m.getWatchlist()).toList();
                 movies = movies.stream().filter(m -> m.getWatchlist()).toList();
             }
 

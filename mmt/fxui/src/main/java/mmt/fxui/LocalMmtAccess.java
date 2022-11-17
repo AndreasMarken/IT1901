@@ -57,8 +57,7 @@ public class LocalMmtAccess implements IAccess {
             //If the file already exist, FileAlreadyExistException will be thrown.
             //Do nothing if the file already exists
         }
-
-        //this.movieList = mapper.readValue(new File("movie.json"), MovieList.class);
+        
         try {
             if (testingMode) {
                 return mapper.readValue(getSaveFilePath("movieTest.json").toFile(), MovieList.class);

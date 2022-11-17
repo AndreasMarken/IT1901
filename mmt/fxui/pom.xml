@@ -150,6 +150,14 @@
           <javaOptions>
             <option>-Dfile.encoding=UTF-8</option>
           </javaOptions>
+
+          <linuxShortcut>true</linuxShortcut>
+          <linuxMenuGroup>MMTFX</linuxMenuGroup>
+
+          <winDirChooser>true</winDirChooser>
+          <winShortcut>true</winShortcut>
+          <winMenu>true</winMenu>
+          <winMenuGroup>MMTFX</winMenuGroup>
         </configuration>
       </plugin>
 

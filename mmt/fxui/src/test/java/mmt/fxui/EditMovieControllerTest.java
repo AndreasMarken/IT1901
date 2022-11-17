@@ -137,8 +137,8 @@ public class EditMovieControllerTest extends ApplicationTest {
 
         IMovie addedMovie = myMovieTrackerController.getMovieList().getMovie(movieTitle);
 
-        Assertions.assertEquals(movieTitle, addedMovie.getTitle(), "Wrong movietitle set");
-        //Assertions.assertEquals(new Time(durationHours, durationMinutes, 0), addedMovie.getDuration(),
+        Assertions.assertEquals(movieTitle, addedMovie.getTitle(),
+                       "Wrong movietitle set");
         //               "Wrong duration set");
         Assertions.assertEquals(
             Time.valueOf(Integer.toString(durationHours) + ":" + Integer.toString(durationMinutes) + ":00"),
