@@ -16,15 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import mmt.core.Actor;
-import mmt.core.IMovie;
-import mmt.core.Movie;
-import mmt.core.MovieList;
-import mmt.core.Rating;
 
 public class MovieModuleTest {
     private static ObjectMapper mapper;
