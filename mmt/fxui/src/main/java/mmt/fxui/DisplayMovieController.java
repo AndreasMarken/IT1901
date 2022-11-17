@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import mmt.core.IActor;
 import mmt.core.IMovie;
 
 /**
@@ -12,7 +13,6 @@ import mmt.core.IMovie;
  * Sets the movie-information and shows it to the user. Used in the displayMovieListView method.
  */
 public class DisplayMovieController {
-
     @FXML
     private Label title;
 
@@ -27,6 +27,9 @@ public class DisplayMovieController {
 
     @FXML
     private Label ratingScore;
+
+    @FXML
+    private Label actors;
 
     @FXML
     private Label ratingComment;
@@ -58,9 +61,19 @@ public class DisplayMovieController {
      */
     public void setMovieInformation() {
         title.setText(movie.getTitle());
-        duration.setText(String.format("%02d:%02d", movie.getDuration().getHours(), movie.getDuration().getMinutes()));
+        duration.setText(String.format("%02d:%02d", Integer.parseInt(movie.getDuration().toString().substring(0, 2)), Integer.parseInt(movie.getDuration().toString().substring(3, 5))));
         watchList.setText(movie.getWatchlist() ? "Watchlist" : "Not on watchlist");
         releaseDate.setText(movie.getReleaseDate().toString());
+        if (movie.getCast() != null) {
+            String cast = "";
+            for (IActor actor : movie.getCast()) {
+                cast += ", " + actor.getName();
+            }
+            actors.setText(cast.substring(2));
+        } else {
+            actors.setText("No cast set for this movie");
+        }
+
         if (movie.getRating() == null) {
             ratingScore.setText("You have not rated this movie yet.");
             ratingComment.setText("You have not rated this movie yet.");

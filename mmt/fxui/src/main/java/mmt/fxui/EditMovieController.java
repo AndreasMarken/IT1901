@@ -2,13 +2,23 @@ package mmt.fxui;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDate;
+import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import mmt.core.Actor;
+import mmt.core.IActor;
 import mmt.core.IMovie;
 import mmt.core.Movie;
 
@@ -18,12 +28,14 @@ import mmt.core.Movie;
  * until th user has chosen to edit or add a movie to the movielist.
  */
 public class EditMovieController {
-
     @FXML
     private MyMovieTrackerController myMovieTrackerController;
 
-    @FXML 
+    @FXML
     private TextField movieTitleField;
+
+    @FXML
+    private TextField actorNameField;
 
     @FXML
     private Spinner<Integer> hours;
@@ -43,12 +55,16 @@ public class EditMovieController {
     @FXML
     protected Label errorMessage;
 
+    @FXML
+    protected ListView<String> actorListView;
 
     private IMovie movie;
 
+    private ArrayList<IActor> temporaryActors = new ArrayList<>();
+
     /**
      * The method that is called when the user has completed the editing/adding
-     * of a movie. Saves the updated movie or adds the movie to the movielist, and
+     * of a movie and clicks the save button. Saves the updated movie or adds the movie to the movielist, and
      * updates the movielistview.
      * If invalid information is given by the user, an errormessage is shown in the view.
      */
@@ -56,38 +72,51 @@ public class EditMovieController {
     private void edit() {
         if (isValidTitleName(movieTitleField.getText())) {
             String title = movieTitleField.getText();
-            if (title.equals("") || title.equals(null)) {
+            if (title.equals("")) {
                 errorMessage.setText("The title name is not valid.");
                 return;
             }
-            Time time = new Time(hours.getValue(), minutes.getValue(), 0);
-            if (time.getHours() <= 00 && time.getMinutes() <= 00) {
+            //Time time = new Time(hours.getValue(), minutes.getValue(), 0);
+            Time time = Time.valueOf(hours.getValue() + ":" + minutes.getValue() + ":00");
+            //if (time.getHours() <= 00 && time.getMinutes() <= 00) {
+            if (hours.getValue() <= 00 && minutes.getValue() <= 00) {
                 errorMessage.setText("The movie must have a duration.");
                 return;
             }
+            Date releaseDate;
+
             try {
-                date.getValue().getYear();
-                date.getValue().getMonth();
-                date.getValue().getDayOfMonth();
-                
-            } catch (NullPointerException e) {
+                releaseDate =
+                    Date.valueOf(
+                        date.getValue().getYear() +
+                        "-" +
+                        date.getValue().getMonthValue() +
+                        "-" +
+                        date.getValue().getDayOfMonth()
+                    );
+            } catch (Exception e) {
                 errorMessage.setText("You must choose a valid date.");
                 return;
             }
-            Date releaseDate = new Date(date.getValue().getYear() - 1900, date.getValue().getMonthValue() - 1, date.getValue().getDayOfMonth());
+
             boolean watchList = watchListCheckBox.isSelected();
 
             try {
                 if (this.movie == null) {
                     IMovie movie = new Movie(title, time, releaseDate);
                     movie.setOnTakeOfWatchlist(watchList);
+                    for (IActor actor : temporaryActors) {
+                        movie.addActor(actor);
+                    }
                     myMovieTrackerController.addMovie(movie);
+
+                    myMovieTrackerController.dataAccess.addMovie((Movie) movie);
                 } else {
                     editExistingMovie(title, time, releaseDate, watchList);
                     this.movie = null;
                 }
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.out.println(e);
             }
             clearInputFields();
             myMovieTrackerController.updateMovieListView();
@@ -104,13 +133,26 @@ public class EditMovieController {
      * @param title : The new title to be given
      * @param duration : The new duration to be given
      * @param releaseDate : The new releasedate to be given
-     * @param watchList : The new watchlist-status to be given 
+     * @param watchList : The new watchlist-status to be given
      */
     private void editExistingMovie(String title, Time duration, Date releaseDate, boolean watchList) {
+        String oldMovieID = movie.getID();
         movie.setTitle(title);
         movie.setDuration(duration);
         movie.setReleaseDate(releaseDate);
         movie.setOnTakeOfWatchlist(watchList);
+        if (movie.getCast() != null) {
+            for (IActor actor : movie.getCast()) {
+                movie.removeActor(actor);
+            }
+        }
+        for (IActor actor : temporaryActors) {
+            movie.addActor(actor);
+        }
+
+        if (movie instanceof Movie) {
+            myMovieTrackerController.dataAccess.updateMovie((Movie) movie, oldMovieID);
+        }
     }
 
     /**
@@ -125,7 +167,7 @@ public class EditMovieController {
     }
 
     /**
-     * Clears the inputfields in the app. 
+     * Clears the inputfields in the app.
      */
     private void clearInputFields() {
         movieTitleField.clear();
@@ -133,6 +175,8 @@ public class EditMovieController {
         minutes.decrement(minutes.getValue() % 60);
         date.setValue(null);
         watchListCheckBox.setSelected(false);
+        actorListView.getItems().clear();
+        temporaryActors.clear();
     }
 
     /**
@@ -152,8 +196,11 @@ public class EditMovieController {
     protected void editMovie(IMovie movie) {
         errorMessage.setText("");
         this.movie = movie;
-        if (this.movie != null) {
+        if (movie != null) {
             newEditMovieTab.setText("Edit movie");
+            if (movie.getCast() != null) {
+                temporaryActors = new ArrayList<>(movie.getCast());
+            }
             fillFields();
         } else {
             newEditMovieTab.setText("New Movie:");
@@ -161,22 +208,21 @@ public class EditMovieController {
         }
     }
 
-    protected void setDatePickerValue(LocalDate object) {
-        date.setValue(object);
-    }
-
     /**
      * Fills the inputfields with the information of the movie that is to be edited.
      */
     private void fillFields() {
         if (this.movie == null) {
-            throw new IllegalStateException("You should not have the oppertunity to edit a movie when you havent selected a movie to edit.");
+            throw new IllegalStateException(
+                "You should not have the oppertunity to edit a movie when you havent selected a movie to edit."
+            );
         }
         movieTitleField.setText(movie.getTitle());  
-        hours.increment(movie.getDuration().getHours());
-        minutes.increment(movie.getDuration().getMinutes());
+        hours.increment(Integer.parseInt(movie.getDuration().toString().substring(0, 2)));
+        minutes.increment(Integer.parseInt(movie.getDuration().toString().substring(3, 5)));
         date.setValue(movie.getReleaseDate().toLocalDate());
         watchListCheckBox.setSelected(movie.getWatchlist());
+        updateActorsListView();
     }
 
     /**
@@ -191,5 +237,87 @@ public class EditMovieController {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Method used to add actors to a movie.
+     * Gets the text from the input field, and adds it to the movie.
+     */
+    @FXML
+    private void addActorToMovie() {
+        if (actorNameField.getText().isEmpty()) {
+            errorMessage.setText("You must write a name for the actor you want to add.");
+        }
+
+        for (IActor actor : temporaryActors) {
+            if (actorNameField.getText().equals(actor.getName())) {
+                errorMessage.setText("The actor is already added to the movie");
+                return;
+            }
+        }
+
+        Actor actor = new Actor(actorNameField.getText());
+
+        temporaryActors.add(actor);
+
+        updateActorsListView();
+    }
+
+    /**
+     * Modify cells in the cast-listview to match the specifications for our app.
+     */
+    private class ActorListViewCell extends ListCell<String> {
+        HBox hbox = new HBox();
+        Label label = new Label("");
+        Pane pane = new Pane();
+        Button button = new Button("X");
+
+        public ActorListViewCell() {
+            super();
+            button.setStyle("-fx-background-color: white; -fx-border-color: red; -fx-border-radius: 5;");
+            hbox.getChildren().addAll(label, pane, button);
+            HBox.setHgrow(pane, Priority.ALWAYS);
+            button.setOnAction(
+                event -> {
+                    String nameOfActorToBeRemoved = getItem();
+                    getListView().getItems().remove(nameOfActorToBeRemoved);
+                    Actor actorToBeRemoved = null;
+                    for (IActor actor : temporaryActors) {
+                        if (actor.getName().equals(nameOfActorToBeRemoved)) {
+                            actorToBeRemoved = (Actor) actor;
+                        }
+                    }
+                    temporaryActors.remove(actorToBeRemoved);
+                }
+            );
+            button.setId("removeActorFromMovie");
+        }
+
+        @Override
+        protected void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+            setText(null);
+            setGraphic(null);
+
+            if (item != null && !empty) {
+                label.setText(item);
+                setGraphic(hbox);
+            }
+        }
+    }
+
+    /**
+     * Every time an actor is added to the Movie, the actor list view gets updated.
+     */
+    private void updateActorsListView() {
+        ObservableList<String> observableActorList = FXCollections.observableArrayList();
+
+        for (IActor actor : temporaryActors) {
+            observableActorList.add(actor.getName());
+        }
+
+        actorListView.setItems(observableActorList);
+        actorListView.setCellFactory(x -> new ActorListViewCell());
+        actorNameField.clear();
     }
 }

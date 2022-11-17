@@ -12,7 +12,6 @@
   <artifactId>fxui</artifactId>
 
   <dependencies>
-
     <dependency>
       <groupId>it1901.mmt</groupId>
       <artifactId>core</artifactId>
@@ -29,13 +28,6 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-    </dependency>
-
-     <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
-     <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-fxml</artifactId>
-      <version>16</version>
     </dependency>
 
     <!-- javafx -->
@@ -63,31 +55,40 @@
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-params</artifactId>
     </dependency>
+
+    <!-- Test with TextFX -->
     <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-params</artifactId>
-      <version>5.8.1</version>
+      <groupId>org.testfx</groupId>
+      <artifactId>testfx-core</artifactId>
+      <version>4.0.16-alpha</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testfx</groupId>
+      <artifactId>testfx-junit5</artifactId>
+      <version>4.0.16-alpha</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest</artifactId>
+      <version>2.2</version>
+      <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>com.github.tomakehurst</groupId>
+      <artifactId>wiremock-jre8</artifactId>
+      <version>2.27.2</version>
       <scope>test</scope>
     </dependency>
 
-    <!-- Test with TextFX -->
-		<dependency>
-			<groupId>org.testfx</groupId>
-			<artifactId>testfx-core</artifactId>
-			<version>4.0.16-alpha</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.testfx</groupId>
-			<artifactId>testfx-junit5</artifactId>
-			<version>4.0.16-alpha</version>
-			<scope>test</scope>
-    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.testng/testng -->
     <dependency>
-       <groupId>org.hamcrest</groupId>
-       <artifactId>hamcrest</artifactId>
-       <version>2.2</version>
-       <scope>test</scope>
+        <groupId>org.testng</groupId>
+        <artifactId>testng</artifactId>
+        <version>7.4.0</version>
+        <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -102,14 +103,12 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.0.0-M5</version>
-          <configuration>
-            <argLine>
-              @{argLine} 
-              --add-opens javafx.graphics/com.sun.javafx.application=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
-              </argLine>
-          </configuration>
+        <configuration>
+          <argLine>
+            @{argLine} --add-opens javafx.graphics/com.sun.javafx.application=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+          </argLine>
+        </configuration>
       </plugin>
-
 
       <plugin>
         <groupId>org.jacoco</groupId>
@@ -119,15 +118,60 @@
       <plugin>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-maven-plugin</artifactId>
-        <version>0.0.6</version>
+        <version>0.0.5</version>
         <!-- Default configuration for running -->
         <!-- Usage: mvn javafx:run -->
+        <!-- Used for shippable product -->
         <configuration>
           <mainClass>mmt.fxui.MmtApp</mainClass>
+          <compress>2</compress>
+          <noHeaderFiles>true</noHeaderFiles>
+          <stripDebug>true</stripDebug>
+          <noManPages>true</noManPages>
+          <launcher>mmt</launcher>
+          <jlinkImageName>mmt</jlinkImageName>
+          <jlinkZipName>mmt</jlinkZipName>
         </configuration>
       </plugin>
 
-    </plugins>
+      <!-- Used for shippable product -->
+      <plugin>
+        <groupId>org.panteleyev</groupId>
+        <artifactId>jpackage-maven-plugin</artifactId>
+        <version>1.4.0</version>
+        <configuration>
+          <name>My Movie Tracker</name>
+          <appVersion>1.0.0</appVersion>
+          <vendor>it1901</vendor>
+          <destination>target/dist</destination>
+          <module>mmt.fxui/mmt.fxui.MmtApp</module>
+          <runtimeImage>target/mmt</runtimeImage>
+          <icon>${project.basedir}/appicon.icns</icon>
+          <javaOptions>
+            <option>-Dfile.encoding=UTF-8</option>
+          </javaOptions>
 
+          <linuxShortcut>true</linuxShortcut>
+          <linuxMenuGroup>MMTFX</linuxMenuGroup>
+
+          <winDirChooser>true</winDirChooser>
+          <winShortcut>true</winShortcut>
+          <winMenu>true</winMenu>
+          <winMenuGroup>MMTFX</winMenuGroup>
+        </configuration>
+      </plugin>
+
+      <!-- Checkstyle -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+      </plugin>
+
+      <!-- Spotbugs -->
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
   </build>
 </project>

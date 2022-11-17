@@ -4,7 +4,6 @@ package mmt.core;
  * Rating interface.
  */
 public interface IRating {
-
     /**
      * Method to set a rating for the specific movie.
      *

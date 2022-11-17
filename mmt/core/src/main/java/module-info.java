@@ -3,8 +3,8 @@ module mmt.core {
 
     requires transitive java.sql;
 
-    opens mmt.json;
-    
-    exports mmt.core;
-    exports mmt.json;
+    opens mmt.json ;
+
+    exports mmt.core ;
+    exports mmt.json ;
 }

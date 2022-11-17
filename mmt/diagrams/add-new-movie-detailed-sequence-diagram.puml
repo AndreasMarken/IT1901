@@ -1,0 +1,33 @@
+
+@startuml "sequence-diagram"
+actor User as user
+database MyMovieConfig as storage order 5
+participant "MmtService" as rest  <<rest>> order 3
+
+
+
+
+user -> MyMovieTrackerController: click "New Movie"
+
+MyMovieTrackerController --> MyMovieTrackerController: addNewMovie()
+MyMovieTrackerController --> MyMovieTrackerController: editMovie(null)
+MyMovieTrackerController -> EditMovieController: editMovie(null)
+MyMovieTrackerController --> MyMovieTrackerController: hideEditMovie(true);
+EditMovieController --> EditMovieController: clearInputFields()
+user -> EditMovieController: fill fields and click "save"
+EditMovieController --> EditMovieController: edit()
+EditMovieController --> EditMovieController: validate and initialize new Movie
+EditMovieController --> MyMovieTrackerController:addMovie(movie)
+EditMovieController -> RemoteMmtAccess:addMovie(movie)
+RemoteMmtAccess -> rest: POST[serialize(movie)]; mmt
+rest -> storage: store
+rest <-- storage: stored
+RemoteMmtAccess <-- rest: response
+EditMovieController <-- RemoteMmtAccess:added
+EditMovieController --> MyMovieTrackerController: updateMovieListView();
+MyMovieTrackerController --> MyMovieTrackerController: displayMovieListView()
+EditMovieController --> MyMovieTrackerController: hideEditMovie(false);
+user <-- MyMovieTrackerController: movie appears
+
+
+@enduml

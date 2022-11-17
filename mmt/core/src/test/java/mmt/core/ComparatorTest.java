@@ -4,14 +4,12 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.Collections;
 import java.util.List;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class ComparatorTest {
-
     private IMovie dune, harryPotter, jamesBond;
     private Time duneT, harryPotterT, jamesBondT;
     private Date duneD, harryPotterD, jamesBondD;
@@ -20,12 +18,12 @@ public class ComparatorTest {
 
     @BeforeEach
     public void setUp() {
-        duneT = new Time(2, 30, 0);
-        harryPotterT = new Time(1, 30, 40);
-        jamesBondT = new Time(3, 20, 20);
-        duneD = new Date(2001, 05, 02);
-        harryPotterD = new Date(2010, 04, 22);
-        jamesBondD = new Date(2016, 10, 02);
+        duneT = Time.valueOf("02:30:00");
+        harryPotterT = Time.valueOf("01:30:40");
+        jamesBondT = Time.valueOf("03:20:20");
+        duneD = Date.valueOf("2001-06-02");
+        harryPotterD = Date.valueOf("2010-05-02");
+        jamesBondD = Date.valueOf("2016-11-02");
         dune = new Movie("Dune", duneT, duneD);
         harryPotter = new Movie("Harry Potter", harryPotterT, harryPotterD);
         jamesBond = new Movie("James Bond", jamesBondT, jamesBondD);
@@ -45,7 +43,6 @@ public class ComparatorTest {
     public void checkSortByHighestRating() {
         Collections.sort((List<IMovie>) movieList.getMovies(), Comparators.sortByHighestRating());
         Assertions.assertEquals(movieList.getMovies(), List.of(jamesBond, harryPotter, dune));
-
     }
 
     @Test
@@ -53,7 +50,6 @@ public class ComparatorTest {
     public void checkSortByTitile() {
         Collections.sort((List<IMovie>) movieList.getMovies(), Comparators.sortByTitle());
         Assertions.assertEquals(movieList.getMovies(), List.of(dune, harryPotter, jamesBond));
-
     }
 
     @Test
@@ -61,7 +57,5 @@ public class ComparatorTest {
     public void checkSortByDuration() {
         Collections.sort((List<IMovie>) movieList.getMovies(), Comparators.sortByDuration());
         Assertions.assertEquals(movieList.getMovies(), List.of(harryPotter, dune, jamesBond));
-
     }
-
 }

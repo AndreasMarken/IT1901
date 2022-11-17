@@ -13,6 +13,11 @@ interface IMovie {
     void setTitle(String title)
     void setDuration(Time duration)
     void setReleaseDate(Date releaseDate)
+    String getID()
+    Collection<IActor> getCast()
+    void addActor(IActor actor)
+    void removeActor(IActor actor)
+    String getID()
 }
 
 class Movie {
@@ -21,6 +26,9 @@ class Movie {
     - Time duration
     - IRating rating
     - Boolean watchlist
+    - String ID
+    - Collection<IActor> cast
+    - String ID
     + Movie(String title, Time duration, Date releaseDate)
     + Movie(String title, Time duration)
     - Boolean checkIfNull(Object input)
@@ -50,13 +58,30 @@ class MovieList {
     + void addMovie(IMovie movie)
     + void removeMovie(IMovie movie)
     + Iterator<IMovie> iterator()
+    + Collection<IAcor> getCast(IMovie movie)
+}
 
+interface IActor {
+    String getName()
+    Collection<IMovie> getStarredMovies()
+    void starredInMovie(IMovie movie) throws IllegalStateException
+    void removeMovieFromStarredList(IMovie movie) throws IllegalArgumentException
+}
+
+class Actor {
+    - String name
+    - Collection<IMovie> starredMovies
+    - final Collection<Character> invalidChars
+    + Actor(String name)
 }
 
 IMovie "movies: *  ." <|--- MovieList
 IRating "rating: 1  ." <|--- Movie
+IMovie "moviesStarredIn * " --- "actorsInMovie *" IActor
 IMovie <|.. Movie
 IRating <|.. Rating
+IActor <|.. Actor
+
 
 
 @enduml
