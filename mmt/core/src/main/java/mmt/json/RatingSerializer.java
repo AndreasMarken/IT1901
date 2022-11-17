@@ -1,6 +1,5 @@
 package mmt.json;
 
-
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -12,7 +11,7 @@ import mmt.core.Rating;
  */
 public class RatingSerializer extends JsonSerializer<Rating> {
 
-    /** 
+    /**
      * Method to serialize (object to text) Rating objects.
      * Format:
      * {
@@ -26,7 +25,8 @@ public class RatingSerializer extends JsonSerializer<Rating> {
      * @throws IOException Method could throw IOException
      */
     @Override
-    public void serialize(Rating rating, JsonGenerator jsonGen, SerializerProvider serializerProvider) throws IOException {
+    public void serialize(Rating rating, JsonGenerator jsonGen, SerializerProvider serializerProvider)
+        throws IOException {
         jsonGen.writeStartObject();
         jsonGen.writeNumberField("rating", rating.getRating());
         jsonGen.writeStringField("comment", rating.getComment());

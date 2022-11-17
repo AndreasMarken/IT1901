@@ -1,7 +1,5 @@
 package mmt.json;
 
-import java.io.IOException;
-
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.TreeNode;
@@ -10,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
-
+import java.io.IOException;
 import mmt.core.Actor;
 
 /**
@@ -18,10 +16,9 @@ import mmt.core.Actor;
  */
 public class ActorDeserializer extends JsonDeserializer<Actor> {
 
-
-    /** 
+    /**
      * Method to deserialize (text to object) Actor objects.
-     * Format: 
+     * Format:
      * {
      * "name" : "..."
      * }
@@ -38,9 +35,9 @@ public class ActorDeserializer extends JsonDeserializer<Actor> {
         return deserialize((JsonNode) treeNode);
     }
 
-    /** 
+    /**
      * Method to deserialize (text to object) Actor objects.
-     * Format: 
+     * Format:
      * {
      * "name" : "..."
      * }
@@ -49,8 +46,8 @@ public class ActorDeserializer extends JsonDeserializer<Actor> {
      * @return Deserialized Actor object
      */
     public Actor deserialize(JsonNode jsonNode) {
-        if (jsonNode instanceof ObjectNode objectNode) {
-            JsonNode nameNode = objectNode.get("name");
+        if (jsonNode instanceof ObjectNode) {
+            JsonNode nameNode = jsonNode.get("name");
 
             if (nameNode instanceof TextNode) {
                 Actor actor = new Actor(nameNode.asText());

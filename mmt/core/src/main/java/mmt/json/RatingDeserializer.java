@@ -16,10 +16,10 @@ import mmt.core.Rating;
  * Class to deserialize (text to object) Rating objects.
  */
 public class RatingDeserializer extends JsonDeserializer<Rating> {
-    
-    /** 
+
+    /**
      * Method to deserialize (text to object) Rating objects.
-     * Format: 
+     * Format:
      * {
      * "rating" :  ...
      * "comment" : "..."
@@ -36,10 +36,10 @@ public class RatingDeserializer extends JsonDeserializer<Rating> {
         TreeNode treeNode = parser.getCodec().readTree(parser);
         return deserialize((JsonNode) treeNode);
     }
-    
-    /** 
+
+    /**
      * Method to deserialize (text to object) Rating objects.
-     * Format: 
+     * Format:
      * {
      * "rating" :  ...
      * "comment" : "..."
