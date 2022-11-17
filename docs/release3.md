@@ -77,24 +77,24 @@ We have added new tests to the new parts of the system. We have written tests th
 
 If you want to view our jacoco reports, you can run the maven test command, described in the [root README](../README.md#testing-the-project), and follow the steps listed in there to view the report.
 
-As we previously have said, making sure that our program is tested, is important for us. Therefore, we have made sure that all classes have a good line testing degree. Under, you can see a table displaying the line testing degree of the different classes. To view a picture of the jacoco report, check out the [images](../mmt/images/) folder.
+As we previously have said, making sure that our program is tested, is important for us. Therefore, we have made sure that all classes have a good line testing degree. Under, you can see a table displaying the line testing degree of the different classes. To view a picture of the jacoco report, check out the [images](../mmt/images/) folder. (core.png, fxui.png and rest.png)
 
 | Class | Line testing degree |
 | --- | --- |
 | Movie | 92% |
-| MovieList |  |
+| MovieList | 73% |
 | Rating | 100% |
 | Actor | 94% |
 | MovieDeserializer | 96% |
 | MovieListDeserializer | 100% |
 | MovieListSerializer | 100% |
 | MovieModule | 100% |
-| MovieSerializer |  |
+| MovieSerializer | 100% |
 | RatingDeserializer | 100% |
 | RatingSerializer | 100% |
-| ActorSerializer |  |
-| ActorDeserializer |  |
-| MyMovieConfig |  |
+| ActorSerializer | 100% |
+| ActorDeserializer | 100% |
+| MyMovieConfig | 76% |
 | DisplayMovieController | 100% |
 | EditMovieController | 89% |
 | GiveRatingController | 100% |
