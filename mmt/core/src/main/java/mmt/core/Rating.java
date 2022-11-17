@@ -1,11 +1,10 @@
 package mmt.core;
- 
+
 /**
- * The class that creates reviews from users. 
+ * The class that creates reviews from users.
  * Implements the interface IRating.
  */
 public class Rating implements IRating {
-
     private int rating;
     private String comment;
 

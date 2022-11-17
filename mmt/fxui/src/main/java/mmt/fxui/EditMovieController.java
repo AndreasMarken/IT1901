@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collection;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -30,12 +29,14 @@ import mmt.core.Movie;
  * until th user has chosen to edit or add a movie to the movielist.
  */
 public class EditMovieController {
-
     @FXML
     private MyMovieTrackerController myMovieTrackerController;
 
-    @FXML 
-    private TextField movieTitleField, actorNameField;
+    @FXML
+    private TextField movieTitleField;
+
+    @FXML
+    private TextField actorNameField;
 
     @FXML
     private Spinner<Integer> hours;
@@ -55,7 +56,7 @@ public class EditMovieController {
     @FXML
     protected Label errorMessage;
 
-    @FXML 
+    @FXML
     protected ListView<String> actorListView;
 
     private IMovie movie;
@@ -87,13 +88,18 @@ public class EditMovieController {
                 date.getValue().getYear();
                 date.getValue().getMonth();
                 date.getValue().getDayOfMonth();
-                
             } catch (NullPointerException e) {
                 errorMessage.setText("You must choose a valid date.");
                 return;
             }
             //Date releaseDate = new Date(date.getValue().getYear() - 1900, date.getValue().getMonthValue() - 1, date.getValue().getDayOfMonth());
-            Date releaseDate = Date.valueOf(date.getValue().getYear() + "-" + date.getValue().getMonthValue() + "-" + date.getValue().getDayOfMonth());
+            Date releaseDate = Date.valueOf(
+                date.getValue().getYear() +
+                "-" +
+                date.getValue().getMonthValue() +
+                "-" +
+                date.getValue().getDayOfMonth()
+            );
             boolean watchList = watchListCheckBox.isSelected();
 
             try {
@@ -104,7 +110,7 @@ public class EditMovieController {
                     for (IActor actor : actors) {
                         movie.addActor(actor);
                     }
-                    if(movie instanceof Movie){
+                    if (movie instanceof Movie) {
                         myMovieTrackerController.dataAccess.addMovie((Movie) movie);
                     }
                 } else {
@@ -129,7 +135,7 @@ public class EditMovieController {
      * @param title : The new title to be given
      * @param duration : The new duration to be given
      * @param releaseDate : The new releasedate to be given
-     * @param watchList : The new watchlist-status to be given 
+     * @param watchList : The new watchlist-status to be given
      */
     private void editExistingMovie(String title, Time duration, Date releaseDate, boolean watchList) {
         String oldMovieID = movie.getID();
@@ -137,7 +143,7 @@ public class EditMovieController {
         movie.setDuration(duration);
         movie.setReleaseDate(releaseDate);
         movie.setOnTakeOfWatchlist(watchList);
-        if(movie instanceof Movie){
+        if (movie instanceof Movie) {
             myMovieTrackerController.dataAccess.updateMovie((Movie) movie, oldMovieID);
         }
     }
@@ -154,7 +160,7 @@ public class EditMovieController {
     }
 
     /**
-     * Clears the inputfields in the app. 
+     * Clears the inputfields in the app.
      */
     private void clearInputFields() {
         movieTitleField.clear();
@@ -197,9 +203,11 @@ public class EditMovieController {
      */
     private void fillFields() {
         if (this.movie == null) {
-            throw new IllegalStateException("You should not have the oppertunity to edit a movie when you havent selected a movie to edit.");
+            throw new IllegalStateException(
+                "You should not have the oppertunity to edit a movie when you havent selected a movie to edit."
+            );
         }
-        movieTitleField.setText(movie.getTitle());  
+        movieTitleField.setText(movie.getTitle());
         //hours.increment(movie.getDuration().getHours());
         hours.increment(Integer.parseInt(movie.getDuration().toString().substring(0, 2)));
         //minutes.increment(movie.getDuration().getMinutes());
@@ -233,28 +241,28 @@ public class EditMovieController {
     private void addActorToMovie() {
         try {
             try {
-                if (movie.getCast().stream().anyMatch(a-> a.getName().equals(actorNameField.getText()))) {
+                if (movie.getCast().stream().anyMatch(a -> a.getName().equals(actorNameField.getText()))) {
                     errorMessage.setText("The actor is already added to the movie");
                     return;
                 }
             } catch (NullPointerException e) {
                 //No actors? No problem, add this one
             }
-            
+
             Actor actor = new Actor(actorNameField.getText());
-            
+
             if (movie != null) {
                 try {
                     movie.addActor(actor);
                 } catch (IllegalStateException e) {
-                    //Actor already added to movie
                     errorMessage.setText("The actor is already added to the movie");
                 }
+                //TODO trengs denne
                 if (!movie.getCast().contains(actor)) {
-                    
+                    //Do nothing
                 }
             } else {
-                if (actors.stream().anyMatch(a-> a.getName().equals(actorNameField.getText()))) {
+                if (actors.stream().anyMatch(a -> a.getName().equals(actorNameField.getText()))) {
                     errorMessage.setText("The actor is already added to the movie");
                     return;
                 }
@@ -281,24 +289,32 @@ public class EditMovieController {
             button.setStyle("-fx-background-color: white; -fx-border-color: red; -fx-border-radius: 5;");
             hbox.getChildren().addAll(label, pane, button);
             HBox.setHgrow(pane, Priority.ALWAYS);
-            button.setOnAction(event -> {String actorToBeRemoved = getItem();
-                                        getListView().getItems().remove(actorToBeRemoved);
-                                        if(movie == null){
-                                            IActor actorObjToBeRemoved = null;
-                                            for (IActor actor : actors) {
-                                                if (actor.getName().equals(actorToBeRemoved)){
-                                                    actorObjToBeRemoved = actor;
-                                                }                                                
-                                            }
-                                            actors.remove(actorObjToBeRemoved);
-                                        } else{
-                                            IActor actorObjToBeRemoved = movie.getCast().stream().filter(actor -> actor.getName().equals(actorToBeRemoved)).findAny().orElse(null);
-                                            movie.removeActor(actorObjToBeRemoved); 
-                                        }                                                                           
-            });
+            button.setOnAction(
+                event -> {
+                    String actorToBeRemoved = getItem();
+                    getListView().getItems().remove(actorToBeRemoved);
+                    if (movie == null) {
+                        IActor actorObjToBeRemoved = null;
+                        for (IActor actor : actors) {
+                            if (actor.getName().equals(actorToBeRemoved)) {
+                                actorObjToBeRemoved = actor;
+                            }
+                        }
+                        actors.remove(actorObjToBeRemoved);
+                    } else {
+                        IActor actorObjToBeRemoved = movie
+                            .getCast()
+                            .stream()
+                            .filter(actor -> actor.getName().equals(actorToBeRemoved))
+                            .findAny()
+                            .orElse(null);
+                        movie.removeActor(actorObjToBeRemoved);
+                    }
+                }
+            );
             button.setId("removeActorFromMovie");
         }
-                                        
+
         @Override
         protected void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
@@ -311,24 +327,25 @@ public class EditMovieController {
             }
         }
     }
+
     /**
-    * Every time an actor is added to the Movie, the actor list view gets updated.
-    */
-    private void updateActorsListView(){
+     * Every time an actor is added to the Movie, the actor list view gets updated.
+     */
+    private void updateActorsListView() {
         ObservableList<String> observableActorList = FXCollections.observableArrayList();
         try {
             if (movie != null) {
                 Collection<IActor> actors = movie.getCast();
-    
-                for (IActor actor : actors){
-                    if(!observableActorList.contains(actor.getName())){
-                    observableActorList.add(actor.getName());
+
+                for (IActor actor : actors) {
+                    if (!observableActorList.contains(actor.getName())) {
+                        observableActorList.add(actor.getName());
                     }
                 }
             } else {
-                for (IActor actor : this.actors){
-                    if(!observableActorList.contains(actor.getName())){
-                    observableActorList.add(actor.getName());
+                for (IActor actor : this.actors) {
+                    if (!observableActorList.contains(actor.getName())) {
+                        observableActorList.add(actor.getName());
                     }
                 }
             }
