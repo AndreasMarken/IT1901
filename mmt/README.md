@@ -76,7 +76,7 @@ We have choosen to create a class diagram displaying the interaction between the
 ### Sequence diagram
 We have also updated the sequence diagram from release 2. We have addded the method-calls that happens between the server and ui when adding a movie. The other base endpoint calls you can make is all pretty similar to the one shown here, and can be read more about in detail [in the rest README](rest/README.md) file.
 
-![Image was not shown](diagrams/sequence-diagram-v2.png)
+![Image was not shown](diagrams/add-new-movie-detailed-sequence-diagram.png)
 
 ## Shippable product - Export the project
 The goal with making the project shippable, is to be able to open the app without using an editor or maven commands. This will download an app that the user can place on their own computer. The plugin JLink assembles the projects modules and dependencies into a new folder using the JavaFx developers plugin. JPackage is the pluging that creates the app for the user.  
@@ -86,4 +86,4 @@ To run this plugin you have to be in a terminal window. From there, you have to 
 ```
 mvn clean compile javafx:jlink jpackage:jpackage
 ```
-This will generate a `.dmg` if you are on OSX system, `.exe` on windows and `.run` on linux, file in the `mmt/fxui/target/dist` folder. This will give the app that it can use to open the MMT app.
+This will generate a `.dmg` if you are on OSX system, `.exe` on windows or `.run` on linux, file in the `mmt/fxui/target/dist` folder. This will give the app that it can use to open the MMT app.

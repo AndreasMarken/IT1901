@@ -16,6 +16,7 @@ interface IMovie {
     Collection<IActor> getCast()
     void addActor(IActor actor)
     void removeActor(IActor actor)
+    String getID()
 }
 
 class Movie {
@@ -25,6 +26,7 @@ class Movie {
     - IRating rating
     - Boolean watchlist
     - Collection<IActor> cast
+    - String ID
     + Movie(String title, Time duration, Date releaseDate)
     + Movie(String title, Time duration)
     - Boolean checkIfNull(Object input)

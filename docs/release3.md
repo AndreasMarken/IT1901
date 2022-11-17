@@ -13,11 +13,9 @@ The actor class has given movies another dimension, where one actor can be linke
 
 The implementation of the REST-API gives the user the possibility to either run the application on locally stored files or using a server. To make this possible we have created an interface named IAccess, which we have implemented in LocalMmtAccess and RemoteMmtAcces. This gives us two different implementations of the way mmt can be stored. You can read more about our API set up and base endpoints [here](../mmt/rest/README.md), or continue reading the [API-setup](#api-setup) section in this file.
 
-To read more about the implementations and how it is intended to use the mmt app, read [here](../mmt/README.md#my-movie-tracker).
-
 We have also made our product shippable, as the requirements in `arbeidskrav` states. To read more about the shippable configuration, read [here](../mmt/README.md#shippable-product---export-the-project).
 
-We have also updated the diagrams we created for deliverable 2. To read more about the diagrams, check out the [diagrams section](../mmt/README.md#diagrams) in the mmt README file. We have also created diagrams that displays the endpoint usage, you can view them [here](TODO:)
+We have also updated the diagrams we created for deliverable 2. To read more about the diagrams, check out the [diagrams section](../mmt/README.md#diagrams) in the mmt README file. We have also created a diagram that displays the endpoint usage, you can view it [here](../mmt/rest/README.md).
 
 As our focus have been in prior sprints, our focus has been on having descriptive branch names, as well as branches that links to each userstorie/issue. Our branches are ment to have the same start as the names in the table in the root [readme file](../README.md#commits). Followed by a descriptive name of the issue it is linked with. We have also decided to create a table showing witch issue is linked to which userstory. Under the last table row, you can see the issues we feel are essential for the project, but not necessarily linked to a userstory.
 
@@ -50,6 +48,8 @@ Issues based on requirements in `arbeidskrav` or project related issues:
 | User interface | #11, #17, #45, #43 |
 | Ci | #12 |
 | Testing | #37, #39 |
+
+To read more about the implementations and how it is intended to use the mmt app, read [here](../mmt/README.md#my-movie-tracker).
 
 ## Modularization and architecture
 The new modules added to the project is:
