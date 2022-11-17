@@ -11,13 +11,43 @@ import java.util.stream.Collectors;
  * Class to represent Actor objects.
  * Implements the interface IActor.
  */
-public class Actor implements IActor{
+public class Actor implements IActor {
     private String name;
     private Collection<IMovie> starredMovies = new ArrayList<>();
     private final Collection<Character> invalidChars = Arrays.asList(
-    '0','1','2','3','4','5','6','7','8','9',
-    '\\','/',':','*','"','<','>','|','~','!','@','#','$','%',
-    '^','&','(',')','{','}','_',';');
+        '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '\\',
+        '/',
+        ':',
+        '*',
+        '"',
+        '<',
+        '>',
+        '|',
+        '~',
+        '!',
+        '@',
+        '#',
+        '$',
+        '%',
+        '^',
+        '&',
+        '(',
+        ')',
+        '{',
+        '}',
+        '_',
+        ';'
+    );
 
     /**
      * Constructor for Actor class.
@@ -25,12 +55,18 @@ public class Actor implements IActor{
      * @param name of the actor
      */
     public Actor(String name) {
-        if (name == (null) || name.isBlank() || !Collections.disjoint(invalidChars, name.chars().mapToObj(e -> (char)e).collect(Collectors.toList()))) {
+        Boolean actorNameIsNotValid =
+            (
+                name == (null) ||
+                name.isBlank() ||
+                !Collections.disjoint(invalidChars, name.chars().mapToObj(e -> (char) e).collect(Collectors.toList()))
+            );
+        if (actorNameIsNotValid) {
             throw new IllegalArgumentException("The input must be valid");
         }
         this.name = name;
     }
-  
+
     @Override
     public String getName() {
         return this.name;
@@ -52,7 +88,9 @@ public class Actor implements IActor{
     @Override
     public void removeMovieFromStarredList(IMovie movie) throws IllegalArgumentException {
         if (!starredMovies.contains(movie)) {
-            throw new IllegalArgumentException("You cannot remove a movie from the actors starring list if the actor doesnt have the movie in its starringlist.");
+            throw new IllegalArgumentException(
+                "You cannot remove a movie from the actors starring list if the actor doesnt have the movie in its starringlist."
+            );
         }
         this.starredMovies.remove(movie);
     }

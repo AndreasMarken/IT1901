@@ -22,14 +22,12 @@ import mmt.core.IMovie;
 import mmt.core.Movie;
 import mmt.core.MovieList;
 
-
 /**
  * The main controller used for the My Movie Tracker Application.
  * This controller controls the logic in the app, and delegates tasks to other controllers.
  * Is connected to the MyMovieTracker.fxml file, which contains the application layout.
  */
 public class MyMovieTrackerController {
-
     @FXML
     EditMovieController editMovieController = new EditMovieController();
 
@@ -40,16 +38,16 @@ public class MyMovieTrackerController {
     private Button statisticButton;
 
     private MovieList movieList = new MovieList();
-    
+
     @FXML
     protected VBox editMovieWindow;
-    
+
     @FXML
     protected VBox giveRating;
-    
+
     @FXML
     private CheckBox watchList;
-    
+
     @FXML
     private TextField actorInputField;
 
@@ -60,7 +58,7 @@ public class MyMovieTrackerController {
     private Text accessFeedback;
 
     protected IAccess dataAccess;
-    
+
     /**
      * Method that runs upon initializing the controller and app.
      * Tries connecting to server, if not possible it runs localy
@@ -71,22 +69,20 @@ public class MyMovieTrackerController {
     void initialize() throws IOException {
         editMovieController.setMyMovieTrackerController(this);
         hideEditMovie(false);
-        try{
+        try {
             this.dataAccess = new RemoteMmtAccess(apiUri);
             movieList = dataAccess.loadMovieList();
             accessFeedback.setText("Connected to server");
             accessFeedback.setFill(Color.GREEN);
-        } catch (Exception e){
+        } catch (Exception e) {
             this.dataAccess = new LocalMmtAccess();
             movieList = dataAccess.loadMovieList();
             accessFeedback.setText("Not connected to server");
             accessFeedback.setFill(Color.RED);
         }
 
-       updateMovieListView();
+        updateMovieListView();
     }
-
-   
 
     /**
      * Sorts the movielist based on rating from best to worst.
@@ -173,7 +169,7 @@ public class MyMovieTrackerController {
                     offsetY = moviePane.getPrefHeight();
                 }
                 int numberOfMoviesCalc = (int) numberOfMovies / 2;
-                
+
                 moviePane.setLayoutY(offsetY * numberOfMoviesCalc);
                 moviePane.setLayoutX(offsetX * (numberOfMovies % 2));
                 moviePane.setId("Movie" + String.valueOf(numberOfMovies));
@@ -181,15 +177,21 @@ public class MyMovieTrackerController {
             }
             int numberOfMoviesCalc = (int) numberOfMovies / 2;
             movieListView.setLayoutY(numberOfMoviesCalc);
-
         } catch (IOException e) {
             //If the movie was not able to be displayed, try skipping this movie.
         }
     }
 
-
+    /**
+     * Method used to set the testingmode. When performing the test, you do not want to destroy
+     * the users database. Therefore you can set the controller to testing mode, which changes the file
+     * that this controller writes to.
+     *
+     * @param testingMode True if testingmode is to be set, false if not.
+     * @throws IOException If it was unable to save the movielist to file.
+     */
     protected void setTestingMode(boolean testingMode) throws IOException {
-        if (this.dataAccess instanceof LocalMmtAccess){
+        if (this.dataAccess instanceof LocalMmtAccess) {
             LocalMmtAccess localAccess = (LocalMmtAccess) dataAccess;
             localAccess.setTestMode(testingMode);
             this.movieList = new MovieList();
@@ -223,9 +225,9 @@ public class MyMovieTrackerController {
      */
     protected void deleteMovie(IMovie movie) {
         movieList.removeMovie(movie);
-        if(movie instanceof Movie){
+        if (movie instanceof Movie) {
             dataAccess.deleteMovie((Movie) movie);
-        }     
+        }
         updateMovieListView();
     }
 
@@ -278,21 +280,22 @@ public class MyMovieTrackerController {
 
     @FXML
     private void searchActor() {
-        getMoviesFromActorSearch(() -> {
-            if (actorInputField.getText().equals("")) {
-                updateMovieListView();
+        getMoviesFromActorSearch(
+            () -> {
+                if (actorInputField.getText().equals("")) {
+                    updateMovieListView();
+                }
             }
-        });
+        );
     }
 
-    
     private void getMoviesFromActorSearch(Runnable search) {
         MovieList movieListActors = new MovieList();
         for (IMovie movie : this.movieList) {
             if (movie.getTitle().contains(actorInputField.getText())) {
                 movieListActors.addMovie(movie);
             }
-            try {
+            if (movie.getCast() != null){
                 for (IActor actor : movie.getCast()) {
                     if (actor.getName().contains(actorInputField.getText())) {
                         if (movieListActors.getMovie(movie.getTitle()) == null) {
@@ -301,8 +304,6 @@ public class MyMovieTrackerController {
                         }
                     }
                 }
-            } catch (NullPointerException e) {
-                //Movie has got no cast, skip this movie and check next.
             }
         }
         displayMovieListView(watchList.isSelected(), movieListActors);
@@ -315,7 +316,7 @@ public class MyMovieTrackerController {
      * @param access to be set
      */
     public void setAccess(IAccess access) {
-        if(access != null){
+        if (access != null) {
             this.dataAccess = access;
         }
     }

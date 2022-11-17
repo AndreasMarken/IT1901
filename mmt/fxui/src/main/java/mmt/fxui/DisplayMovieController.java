@@ -13,7 +13,6 @@ import mmt.core.IMovie;
  * Sets the movie-information and shows it to the user. Used in the displayMovieListView method.
  */
 public class DisplayMovieController {
-
     @FXML
     private Label title;
 
@@ -65,16 +64,16 @@ public class DisplayMovieController {
         duration.setText(String.format("%02d:%02d", Integer.parseInt(movie.getDuration().toString().substring(0, 2)), Integer.parseInt(movie.getDuration().toString().substring(3, 5))));
         watchList.setText(movie.getWatchlist() ? "Watchlist" : "Not on watchlist");
         releaseDate.setText(movie.getReleaseDate().toString());
-        try {
+        if (movie.getCast() != null) {
             String cast = "";
             for (IActor actor : movie.getCast()) {
                 cast += ", " + actor.getName();
             }
             actors.setText(cast.substring(2));
-        } catch (NullPointerException e) {
+        } else {
             actors.setText("No cast set for this movie");
         }
-        
+
         if (movie.getRating() == null) {
             ratingScore.setText("You have not rated this movie yet.");
             ratingComment.setText("You have not rated this movie yet.");
