@@ -31,7 +31,6 @@ import org.junit.jupiter.api.Test;
 public class RemoteMmtAccessTest {
     private ObjectMapper oMapper;
 
-    private static RemoteMmtAccess access = new RemoteMmtAccess("http://localhost:8089/mmt/");
     private WireMockConfiguration config;
     private WireMockServer wireMockServer;
     private RemoteMmtAccess mmtAccess;
@@ -60,7 +59,7 @@ public class RemoteMmtAccessTest {
         wireMockServer = new WireMockServer(config.portNumber());
         wireMockServer.start();
         WireMock.configureFor("localhost", config.portNumber());
-        mmtAccess = new RemoteMmtAccess("http://localhost:" + wireMockServer.port() + "/mmt");
+        mmtAccess = new RemoteMmtAccess("http://localhost:" + wireMockServer.port() + "/mmt/");
     }
 
     @AfterEach
@@ -71,7 +70,7 @@ public class RemoteMmtAccessTest {
     @Test
     public void testLoad() {
         stubFor(
-            get(urlEqualTo("/mmt"))
+            get(urlEqualTo("/mmt/"))
                 .withHeader("Accept", equalTo("application/json"))
                 .willReturn(
                     aResponse()
@@ -91,7 +90,7 @@ public class RemoteMmtAccessTest {
     @Test
     public void testAdd() {
         stubFor(
-            post(urlEqualTo("/mmt"))
+            post(urlEqualTo("/mmt/"))
                 .withHeader("Accept", equalTo("application/json"))
                 .willReturn(aResponse().withStatus(200).withHeader("Content-Type", "application/json").withBody("true"))
         );
@@ -104,10 +103,10 @@ public class RemoteMmtAccessTest {
         stubFor(
             delete(urlEqualTo("/mmt/id1"))
                 .withHeader("Accept", equalTo("application/json"))
-                .willReturn(aResponse().withStatus(200).withHeader("Content-Type", "application/json").withBody(movie))
+                .willReturn(aResponse().withStatus(200).withHeader("Content-Type", "application/json").withBody("true"))
         );
 
-        assertTrue(access.deleteMovie(newMovie));
+        assertTrue(mmtAccess.deleteMovie(newMovie));
     }
 
     @Test
@@ -118,7 +117,7 @@ public class RemoteMmtAccessTest {
                 .willReturn(aResponse().withStatus(200).withHeader("Content-Type", "application/json").withBody(movie2))
         );
 
-        assertFalse(access.deleteMovie(newMovie));
+        assertFalse(mmtAccess.deleteMovie(newMovie));
     }
 
     @Test
@@ -126,10 +125,10 @@ public class RemoteMmtAccessTest {
         stubFor(
             put(urlEqualTo("/mmt/id1"))
                 .withHeader("Accept", equalTo("application/json"))
-                .willReturn(aResponse().withStatus(200).withHeader("Content-Type", "application/json").withBody(movie))
+                .willReturn(aResponse().withStatus(200).withHeader("Content-Type", "application/json").withBody("true"))
         );
 
-        assertTrue(access.updateMovie(avengers, "id1"));
+        assertTrue(mmtAccess.updateMovie(avengers, "id1"));
     }
 
     @Test
@@ -140,6 +139,6 @@ public class RemoteMmtAccessTest {
                 .willReturn(aResponse().withStatus(200).withHeader("Content-Type", "application/json").withBody(movie2))
         );
 
-        assertFalse(access.updateMovie(avengers, "id1"));
+        assertFalse(mmtAccess.updateMovie(avengers, "id1"));
     }
 }
