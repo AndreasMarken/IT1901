@@ -14,7 +14,6 @@ import mmt.core.Rating;
  * Controller that is used to giving a movie a rating. Sets a new rating to the movie, based on the input values from the user.
  */
 public class GiveRatingController {
-
     private MyMovieTrackerController myMovieTrackerController;
 
     private IMovie movieToRate;
@@ -59,7 +58,7 @@ public class GiveRatingController {
     }
 
     /**
-     * Saves the review to the given movie. 
+     * Saves the review to the given movie.
      * Closes the tab and updates the movielistview to the user.
      */
     @FXML
@@ -69,13 +68,13 @@ public class GiveRatingController {
         String comment = ratingCommentField.getText();
 
         if (comment.equals("")) {
-            movieToRate.setRating(new Rating(rating,""));
+            movieToRate.setRating(new Rating(rating, ""));
         } else {
             movieToRate.setRating(new Rating(rating, comment));
         }
         cancelEditReview();
-        if(movieToRate instanceof Movie){
-            myMovieTrackerController.dataAccess.updateMovie((Movie)movieToRate, oldMovieID);
+        if (movieToRate instanceof Movie) {
+            myMovieTrackerController.dataAccess.updateMovie((Movie) movieToRate, oldMovieID);
         }
         myMovieTrackerController.updateMovieListView();
     }

@@ -2,14 +2,6 @@ package mmt.fxui;
 
 import java.sql.Date;
 import java.sql.Time;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.testfx.framework.junit5.ApplicationTest;
-import org.testfx.util.WaitForAsyncUtils;
-
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,16 +13,29 @@ import mmt.core.IMovie;
 import mmt.core.Movie;
 import mmt.core.MovieList;
 import mmt.core.Rating;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.util.WaitForAsyncUtils;
 
-public class StatisticControllerTest extends ApplicationTest{
-    
+public class StatisticControllerTest extends ApplicationTest {
     private StatisticController statisticController;
     private MovieList movieList;
     private IMovie movie1 = new Movie("Shawshank Redemption", Time.valueOf("02:22:00"), Date.valueOf("1994-01-06"));
-    private IMovie movie2 = new Movie("James Bond no time to die", Time.valueOf("02:43:00"), Date.valueOf("2022-10-01"));
+    private IMovie movie2 = new Movie(
+        "James Bond no time to die",
+        Time.valueOf("02:43:00"),
+        Date.valueOf("2022-10-01")
+    );
     private IMovie movie3 = new Movie("Joker", Time.valueOf("02:02:00"), Date.valueOf("2019-10-04"));
     private IMovie movie4 = new Movie("Spider-Man: No way home", Time.valueOf("02:28:00"), Date.valueOf("2021-01-28"));
-    private IMovie movie5 = new Movie("Spider-Man: Far from home", Time.valueOf("02:10:00"), Date.valueOf("2019-07-02"));
+    private IMovie movie5 = new Movie(
+        "Spider-Man: Far from home",
+        Time.valueOf("02:10:00"),
+        Date.valueOf("2019-07-02")
+    );
 
     private IActor actor1 = new Actor("Actor one");
     private IActor actor2 = new Actor("Actor two");
@@ -72,23 +77,29 @@ public class StatisticControllerTest extends ApplicationTest{
         this.movieList.addMovie(movie3);
         this.movieList.addMovie(movie4);
         this.movieList.addMovie(movie5);
-        
+
         //Implementation of actor is pending
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                statisticController.setMovieList(movieList);
+        Platform.runLater(
+            new Runnable() {
+
+                @Override
+                public void run() {
+                    statisticController.setMovieList(movieList);
+                }
             }
-        });
-        
+        );
     }
 
     @Test
     @DisplayName("Test that you cannot set null as the movielist")
     public void testSetMovieList() {
-        Assertions.assertThrows(NullPointerException.class, () ->  {
-            this.statisticController.setMovieList(null);
-        }, "You cannot set null as the movielist in the statistics view.");
+        Assertions.assertThrows(
+            NullPointerException.class,
+            () -> {
+                this.statisticController.setMovieList(null);
+            },
+            "You cannot set null as the movielist in the statistics view."
+        );
     }
 
     @Test

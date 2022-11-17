@@ -4,14 +4,12 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.Collections;
 import java.util.List;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class ComparatorTest {
-
     private IMovie dune, harryPotter, jamesBond;
     private Time duneT, harryPotterT, jamesBondT;
     private Date duneD, harryPotterD, jamesBondD;
@@ -45,7 +43,6 @@ public class ComparatorTest {
     public void checkSortByHighestRating() {
         Collections.sort((List<IMovie>) movieList.getMovies(), Comparators.sortByHighestRating());
         Assertions.assertEquals(movieList.getMovies(), List.of(jamesBond, harryPotter, dune));
-
     }
 
     @Test
@@ -53,7 +50,6 @@ public class ComparatorTest {
     public void checkSortByTitile() {
         Collections.sort((List<IMovie>) movieList.getMovies(), Comparators.sortByTitle());
         Assertions.assertEquals(movieList.getMovies(), List.of(dune, harryPotter, jamesBond));
-
     }
 
     @Test
@@ -61,7 +57,5 @@ public class ComparatorTest {
     public void checkSortByDuration() {
         Collections.sort((List<IMovie>) movieList.getMovies(), Comparators.sortByDuration());
         Assertions.assertEquals(movieList.getMovies(), List.of(harryPotter, dune, jamesBond));
-
     }
-
 }

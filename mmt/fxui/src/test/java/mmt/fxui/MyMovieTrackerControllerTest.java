@@ -1,15 +1,7 @@
 package mmt.fxui;
 
 import java.time.LocalDate;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import javafx.application.Platform;
-import org.testfx.framework.junit5.ApplicationTest;
-import org.testfx.util.WaitForAsyncUtils;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,18 +10,30 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import mmt.core.IMovie;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.util.WaitForAsyncUtils;
 
-public class MyMovieTrackerControllerTest extends ApplicationTest{
-
+public class MyMovieTrackerControllerTest extends ApplicationTest {
     private MyMovieTrackerController myMovieTrackerController;
-    
+
     private String movieTitle = "Test Title";
     private String releaseDate = "06.10.2022";
     private int durationHours = 2;
     private int durationMinutes = 32;
     private boolean isOnWatchlist = true;
 
-    private void writeMovie(String movieTitle, String releaseDate, int durationHours, int durationMinutes, boolean isOnWatchlist, String... cast) {
+    private void writeMovie(
+        String movieTitle,
+        String releaseDate,
+        int durationHours,
+        int durationMinutes,
+        boolean isOnWatchlist,
+        String... cast
+    ) {
         clickOn("#movieTitleField");
         WaitForAsyncUtils.waitForFxEvents();
         write(movieTitle);
@@ -39,7 +43,13 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
         WaitForAsyncUtils.waitForFxEvents();
 
         try {
-            ((DatePicker)lookup("#date").queryAll().stream().findFirst().get()).setValue(LocalDate.of(Integer.parseInt(releaseDate.substring(6)), Integer.parseInt(releaseDate.substring(3, 5)), Integer.parseInt(releaseDate.substring(0,2))));
+            ((DatePicker) lookup("#date").queryAll().stream().findFirst().get()).setValue(
+                    LocalDate.of(
+                        Integer.parseInt(releaseDate.substring(6)),
+                        Integer.parseInt(releaseDate.substring(3, 5)),
+                        Integer.parseInt(releaseDate.substring(0, 2))
+                    )
+                );
         } catch (NullPointerException e) {
             //Skip date if null is used as input
         }
@@ -59,7 +69,7 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
             WaitForAsyncUtils.waitForFxEvents();
         }
 
-        if(cast != null){
+        if (cast != null) {
             for (String actor : cast) {
                 clickOn("#actorNameField");
                 WaitForAsyncUtils.waitForFxEvents();
@@ -80,13 +90,21 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
 
         clickOn("#addNewMovie");
         WaitForAsyncUtils.waitForFxEvents();
-        writeMovie("Test Movie 2", releaseDate, durationHours, durationMinutes-2, false, "Dwayne Johnson", "Mark Clerk");
+        writeMovie(
+            "Test Movie 2",
+            releaseDate,
+            durationHours,
+            durationMinutes - 2,
+            false,
+            "Dwayne Johnson",
+            "Mark Clerk"
+        );
         clickOn("#submitButton");
         WaitForAsyncUtils.waitForFxEvents();
 
         clickOn("#addNewMovie");
         WaitForAsyncUtils.waitForFxEvents();
-        writeMovie("Test Movie 3", releaseDate, durationHours, durationMinutes-3, true, "John", "Jonas", "Joseph");
+        writeMovie("Test Movie 3", releaseDate, durationHours, durationMinutes - 3, true, "John", "Jonas", "Joseph");
         clickOn("#submitButton");
         WaitForAsyncUtils.waitForFxEvents();
     }
@@ -106,19 +124,25 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
     public void clearMovieListForTestMovies() {
         IMovie movie = myMovieTrackerController.getMovieList().getMovie(movieTitle);
         if (movie != null) {
-            Platform.runLater(new Runnable(){
-                @Override
-                public void run() {
-                    myMovieTrackerController.deleteMovie(movie);
+            Platform.runLater(
+                new Runnable() {
+
+                    @Override
+                    public void run() {
+                        myMovieTrackerController.deleteMovie(movie);
+                    }
                 }
-            });
+            );
         }
     }
 
     @Test
     @DisplayName("Test that the initialize method sets the correct controllers.")
     public void testInitialize() {
-        Assertions.assertNotNull(myMovieTrackerController.getEditMovieController(), "The EditMovieController should be loaded and not null.");
+        Assertions.assertNotNull(
+            myMovieTrackerController.getEditMovieController(),
+            "The EditMovieController should be loaded and not null."
+        );
     }
 
     @Test
@@ -126,8 +150,11 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
     public void testOpenAddEditMovieWindow() {
         clickOn("#addNewMovie");
         WaitForAsyncUtils.waitForFxEvents();
-        
-        Assertions.assertTrue(myMovieTrackerController.editMovieWindow.isVisible(), "The window that allows the user to edit a movie should be visible.");
+
+        Assertions.assertTrue(
+            myMovieTrackerController.editMovieWindow.isVisible(),
+            "The window that allows the user to edit a movie should be visible."
+        );
     }
 
     @Test
@@ -161,11 +188,17 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
         clickOn("#submitButton");
         WaitForAsyncUtils.waitForFxEvents();
 
-        Assertions.assertEquals(numberOfMoviesBeforeAddingNew+1, myMovieTrackerController.getMovies().size(),
-         "The amount of moviews should be incremented by one after adding a new movie. Not two.");
+        Assertions.assertEquals(
+            numberOfMoviesBeforeAddingNew + 1,
+            myMovieTrackerController.getMovies().size(),
+            "The amount of moviews should be incremented by one after adding a new movie. Not two."
+        );
 
-        Assertions.assertEquals("The title name is already used", myMovieTrackerController.getEditMovieController().errorMessage.getText(),
-                            "The errormessage shown to the user was incorrect.");
+        Assertions.assertEquals(
+            "The title name is already used",
+            myMovieTrackerController.getEditMovieController().errorMessage.getText(),
+            "The errormessage shown to the user was incorrect."
+        );
     }
 
     @Test
@@ -192,7 +225,12 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
         clickOn("#watchList");
         WaitForAsyncUtils.waitForFxEvents();
 
-        int numberOfMoviesThatShouldBeOnDisplay = myMovieTrackerController.getMovies().stream().filter(m -> m.getWatchlist()).toList().size();
+        int numberOfMoviesThatShouldBeOnDisplay = myMovieTrackerController
+            .getMovies()
+            .stream()
+            .filter(m -> m.getWatchlist())
+            .toList()
+            .size();
         int numberOfMoviesOnDisplay = myMovieTrackerController.movieListView.getChildren().size();
 
         Assertions.assertEquals(numberOfMoviesThatShouldBeOnDisplay, numberOfMoviesOnDisplay);
@@ -209,9 +247,18 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
         clickOn("#sortDuration");
         WaitForAsyncUtils.waitForFxEvents();
 
-        Assertions.assertEquals("Test Movie 3", ((Label) (lookup("#Movie0").queryAll().stream().findFirst().get()).lookup("#title")).getText());
-        Assertions.assertEquals("Test Movie 2", ((Label) (lookup("#Movie1").queryAll().stream().findFirst().get()).lookup("#title")).getText());
-        Assertions.assertEquals(movieTitle, ((Label) (lookup("#Movie2").queryAll().stream().findFirst().get()).lookup("#title")).getText());
+        Assertions.assertEquals(
+            "Test Movie 3",
+            ((Label) (lookup("#Movie0").queryAll().stream().findFirst().get()).lookup("#title")).getText()
+        );
+        Assertions.assertEquals(
+            "Test Movie 2",
+            ((Label) (lookup("#Movie1").queryAll().stream().findFirst().get()).lookup("#title")).getText()
+        );
+        Assertions.assertEquals(
+            movieTitle,
+            ((Label) (lookup("#Movie2").queryAll().stream().findFirst().get()).lookup("#title")).getText()
+        );
 
         clickOn("#menuButton");
         WaitForAsyncUtils.waitForFxEvents();
@@ -219,9 +266,18 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
         clickOn("#sortTitle");
         WaitForAsyncUtils.waitForFxEvents();
 
-        Assertions.assertEquals("Test Movie 2", ((Label) (lookup("#Movie0").queryAll().stream().findFirst().get()).lookup("#title")).getText());
-        Assertions.assertEquals("Test Movie 3", ((Label) (lookup("#Movie1").queryAll().stream().findFirst().get()).lookup("#title")).getText());
-        Assertions.assertEquals(movieTitle, ((Label) (lookup("#Movie2").queryAll().stream().findFirst().get()).lookup("#title")).getText());
+        Assertions.assertEquals(
+            "Test Movie 2",
+            ((Label) (lookup("#Movie0").queryAll().stream().findFirst().get()).lookup("#title")).getText()
+        );
+        Assertions.assertEquals(
+            "Test Movie 3",
+            ((Label) (lookup("#Movie1").queryAll().stream().findFirst().get()).lookup("#title")).getText()
+        );
+        Assertions.assertEquals(
+            movieTitle,
+            ((Label) (lookup("#Movie2").queryAll().stream().findFirst().get()).lookup("#title")).getText()
+        );
 
         clickOn("#menuButton");
         WaitForAsyncUtils.waitForFxEvents();
@@ -229,9 +285,18 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
         clickOn("#sortRating");
         WaitForAsyncUtils.waitForFxEvents();
 
-        Assertions.assertEquals("Test Movie 2", ((Label) (lookup("#Movie0").queryAll().stream().findFirst().get()).lookup("#title")).getText());
-        Assertions.assertEquals("Test Movie 3", ((Label) (lookup("#Movie1").queryAll().stream().findFirst().get()).lookup("#title")).getText());
-        Assertions.assertEquals(movieTitle, ((Label) (lookup("#Movie2").queryAll().stream().findFirst().get()).lookup("#title")).getText());
+        Assertions.assertEquals(
+            "Test Movie 2",
+            ((Label) (lookup("#Movie0").queryAll().stream().findFirst().get()).lookup("#title")).getText()
+        );
+        Assertions.assertEquals(
+            "Test Movie 3",
+            ((Label) (lookup("#Movie1").queryAll().stream().findFirst().get()).lookup("#title")).getText()
+        );
+        Assertions.assertEquals(
+            movieTitle,
+            ((Label) (lookup("#Movie2").queryAll().stream().findFirst().get()).lookup("#title")).getText()
+        );
     }
 
     @Test
@@ -260,9 +325,13 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
         write(comment);
 
         clickOn("#submitReview");
-        
-        int actualScore = Integer.parseInt(((Label)(lookup("#Movie0").queryAll().stream().findFirst().get()).lookup("#ratingScore")).getText().substring(0, 2));
-        String actualComent = ((Label)(lookup("#Movie0").queryAll().stream().findFirst().get()).lookup("#ratingComment")).getText();
+
+        int actualScore = Integer.parseInt(
+            ((Label) (lookup("#Movie0").queryAll().stream().findFirst().get()).lookup("#ratingScore")).getText()
+                .substring(0, 2)
+        );
+        String actualComent =
+            ((Label) (lookup("#Movie0").queryAll().stream().findFirst().get()).lookup("#ratingComment")).getText();
 
         Assertions.assertEquals(ratingScore, actualScore);
         Assertions.assertEquals(comment, actualComent);
@@ -290,9 +359,13 @@ public class MyMovieTrackerControllerTest extends ApplicationTest{
         release(KeyCode.ENTER);
 
         clickOn("#submitReview");
-        
-        int actualScore = Integer.parseInt(((Label)(lookup("#Movie0").queryAll().stream().findFirst().get()).lookup("#ratingScore")).getText().substring(0, 1));
-        String actualComent = ((Label)(lookup("#Movie0").queryAll().stream().findFirst().get()).lookup("#ratingComment")).getText();
+
+        int actualScore = Integer.parseInt(
+            ((Label) (lookup("#Movie0").queryAll().stream().findFirst().get()).lookup("#ratingScore")).getText()
+                .substring(0, 1)
+        );
+        String actualComent =
+            ((Label) (lookup("#Movie0").queryAll().stream().findFirst().get()).lookup("#ratingComment")).getText();
 
         Assertions.assertEquals(ratingScore, actualScore);
         Assertions.assertEquals("", actualComent);

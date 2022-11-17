@@ -1,7 +1,6 @@
 package mmt.fxui;
 
 import java.io.IOException;
-
 import mmt.core.Movie;
 import mmt.core.MovieList;
 
@@ -9,8 +8,7 @@ import mmt.core.MovieList;
  * Interface accesstype.
  * Makes it more readable in MyMovieTracker
  */
-public interface IAccess{
-
+public interface IAccess {
     /**
      * Generates a PUT-Request to the server.
      * Sends movielist to server
@@ -24,8 +22,8 @@ public interface IAccess{
      * Generates a GET-Request to the server.
      * Retrieves Movielist from server
      *
-     * @throws IOException If the movies cannot be loaded from the file.
      * @return MovieList that was loaded
+     * @throws IOException If the movies cannot be loaded from the file.
      */
     public MovieList loadMovieList() throws IOException;
 
@@ -34,6 +32,4 @@ public interface IAccess{
     public boolean updateMovie(Movie movie, String oldMovieID);
 
     public boolean deleteMovie(Movie movie);
-        
-    
 }

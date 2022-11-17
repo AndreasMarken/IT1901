@@ -6,11 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import mmt.core.MovieList;
+import mmt.json.MyMovieConfig;
+import mmt.restapi.MmtService;
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
@@ -18,18 +21,13 @@ import org.glassfish.jersey.test.TestProperties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import mmt.core.MovieList;
-import mmt.json.MyMovieConfig;
-import mmt.restapi.MmtService;
-
-public class MmtServerTest extends JerseyTest{
-    
+public class MmtServerTest extends JerseyTest {
     private ObjectMapper oMapper;
 
-
-    private final static String initMovie = "{\"title\":\"Bond\",\"releaseDate\":\"2002-01-02\",\"duration\":\"01:50:00\",\"rating\":{\"rating\":9,\"comment\":\"Very good.\"},\"watchlist\":false,\"cast\":[null],\"ID\":\"id1\"}";
-    private final static String movieToBePut = "{\"title\":\"James\",\"releaseDate\":\"2002-01-02\",\"duration\":\"01:50:00\",\"rating\":{\"rating\":9,\"comment\":\"Very good.\"},\"watchlist\":false,\"cast\":[null],\"ID\":\"id2\"}";
-
+    private static final String initMovie =
+        "{\"title\":\"Bond\",\"releaseDate\":\"2002-01-02\",\"duration\":\"01:50:00\",\"rating\":{\"rating\":9,\"comment\":\"Very good.\"},\"watchlist\":false,\"cast\":[null],\"ID\":\"id1\"}";
+    private static final String movieToBePut =
+        "{\"title\":\"James\",\"releaseDate\":\"2002-01-02\",\"duration\":\"01:50:00\",\"rating\":{\"rating\":9,\"comment\":\"Very good.\"},\"watchlist\":false,\"cast\":[null],\"ID\":\"id2\"}";
 
     @Override
     protected ResourceConfig configure() {
@@ -48,7 +46,7 @@ public class MmtServerTest extends JerseyTest{
     }
 
     @Test
-    public void testApiGetMethod(){
+    public void testApiGetMethod() {
         Response response = target(MmtService.MMT_SERVICE_PATH)
             .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER + "=UTF-8")
             .get();
@@ -57,14 +55,13 @@ public class MmtServerTest extends JerseyTest{
         try {
             MovieList movieList = oMapper.readValue(response.readEntity(String.class), MovieList.class);
             assertNotNull(movieList);
-            
         } catch (JsonProcessingException e) {
             fail(e.getMessage());
         }
     }
 
     @Test
-    public void testApiPostMethod(){
+    public void testApiPostMethod() {
         Response response = target(MmtService.MMT_SERVICE_PATH)
             .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER + "=UTF-8")
             .post(Entity.entity(initMovie, MediaType.APPLICATION_JSON));
@@ -72,14 +69,13 @@ public class MmtServerTest extends JerseyTest{
         try {
             boolean post = oMapper.readValue(response.readEntity(String.class), Boolean.class);
             assertTrue(post);
-     
         } catch (JsonProcessingException e) {
             fail(e.getMessage());
         }
-    }  
+    }
 
     @Test
-    public void testApiDeleteMethod(){
+    public void testApiDeleteMethod() {
         Response response = target(MmtService.MMT_SERVICE_PATH)
             .path("/" + "id1")
             .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER + "=UTF-8")
@@ -104,14 +100,13 @@ public class MmtServerTest extends JerseyTest{
         try {
             Boolean movieList = oMapper.readValue(response2.readEntity(String.class), Boolean.class);
             assertFalse(movieList);
-            
         } catch (JsonProcessingException e) {
             fail(e.getMessage());
         }
     }
 
     @Test
-    public void testApiPutMethod(){
+    public void testApiPutMethod() {
         target(MmtService.MMT_SERVICE_PATH)
             .request(MediaType.APPLICATION_JSON + ";" + MediaType.CHARSET_PARAMETER + "=UTF-8")
             .post(Entity.entity(initMovie, MediaType.APPLICATION_JSON));

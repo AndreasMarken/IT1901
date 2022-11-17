@@ -13,17 +13,17 @@ import javafx.stage.Stage;
 public class MmtApp extends Application {
 
     /**
-    * Method used in MmtAppIT.
-    */
+     * Method used in MmtAppIT.
+     */
     public static void headless() {
         if (Boolean.getBoolean("headless")) {
-          System.setProperty("testfx.robot", "glass");
-          System.setProperty("testfx.headless", "true");
-          System.setProperty("prism.order", "sw");
-          System.setProperty("prism.text", "t2k");
-          System.setProperty("java.awt.headless", "true");
+            System.setProperty("testfx.robot", "glass");
+            System.setProperty("testfx.headless", "true");
+            System.setProperty("prism.order", "sw");
+            System.setProperty("prism.text", "t2k");
+            System.setProperty("java.awt.headless", "true");
         }
-      }
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
